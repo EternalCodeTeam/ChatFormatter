@@ -18,6 +18,6 @@ public class PlayerChatListener implements Listener {
             .replace("%nick%", player.getName())
             .replace("%message%", message);
 
-        event.setFormat(ChatUtils.sanitize(player, message));
+        event.setFormat(ChatUtils.sanitize(player, formatterMessage));
     }
 }
