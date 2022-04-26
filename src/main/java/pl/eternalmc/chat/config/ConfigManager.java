@@ -31,16 +31,12 @@ public class ConfigManager {
             .orElseThrow(RuntimeException::new);
     }
 
-    public Cdn getCdn() {
-        return cdn;
+    public <T extends ConfigWithResource> void render(T config) {
+        cdn.render(config, config.getResource())
+            .orElseThrow(RuntimeException::new);
     }
 
     public PluginConfig getPluginConfig() {
         return pluginConfig;
-    }
-
-    public <T extends ConfigWithResource> void render(T config) {
-        cdn.render(config, config.getResource())
-            .orElseThrow(RuntimeException::new);
     }
 }

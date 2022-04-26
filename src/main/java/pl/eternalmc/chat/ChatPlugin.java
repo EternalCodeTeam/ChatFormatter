@@ -46,7 +46,7 @@ public class ChatPlugin extends JavaPlugin {
 
 
         Stream.of(
-            new PlayerChatListener()
+            new PlayerChatListener(pluginConfig)
         ).forEach(listener -> this.getServer().getPluginManager().registerEvents(listener, this));
 
 
