@@ -25,11 +25,9 @@ public class ChatPlugin extends JavaPlugin {
     }
 
     public void onEnable() {
-        instance = this;
-
         Stopwatch stopwatch = Stopwatch.createStarted();
-        Server server = this.getServer();
 
+        instance = this;
 
         this.configManager = new ConfigManager(this.getDataFolder());
         this.configManager.loadAndRenderConfigs();
