@@ -6,6 +6,7 @@
 .gradle/
 out/
 build/
+run/
 
 .DS_Store
 [Dd]esktop.ini
