@@ -36,18 +36,10 @@ public final class ChatUtils {
     }
 
     public static String sanitize(Player player, String text) {
-        if (ChatPlugin.getInstance().getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
             return color(PlaceholderAPI.setPlaceholders(player, text));
-        } else {
-            return color(text);
-        }
     }
 
     public static List<String> sanitize(Player player, List<String> texts) {
-        if (ChatPlugin.getInstance().getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
             return color(PlaceholderAPI.setPlaceholders(player, texts));
-        } else {
-            return color(texts);
-        }
     }
 }
