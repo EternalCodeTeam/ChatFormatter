@@ -21,10 +21,6 @@ repositories {
 }
 
 dependencies {
-    // lombok
-    compileOnly("org.projectlombok:lombok:1.18.22")
-    annotationProcessor("org.projectlombok:lombok:1.18.22")
-
     // spigot api
     compileOnly("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
     implementation("net.kyori:adventure-platform-bukkit:4.1.0")
@@ -52,7 +48,7 @@ tasks.withType<JavaCompile> {
 }
 
 bukkit {
-    main = "pl.eternalmc.chat.ChatPlugin"
+    main = "pl.eternalmc.chat.ChatFormatterPlugin"
     apiVersion = "1.13"
     prefix = "EternalMC-ChatFormatter"
     author = "EternalMC"

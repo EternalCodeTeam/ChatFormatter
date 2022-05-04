@@ -50,6 +50,8 @@ public class ChatFormatterPlugin extends JavaPlugin {
             .typeBind(PluginConfig.class, () -> pluginConfig)
             .typeBind(ConfigManager.class, () -> this.configManager)
             .typeBind(PlaceholderRegistry.class, () -> this.placeholderRegistry)
+            .typeBind(MiniMessage.class, () -> this.miniMessage)
+            .typeBind(AudienceProvider.class, () -> this.audienceProvider)
 
             .command(ChatFormatterCommand.class)
             .register();
