@@ -2,7 +2,8 @@ package pl.eternalmc.chat.config;
 
 import net.dzikoysk.cdn.Cdn;
 import net.dzikoysk.cdn.CdnFactory;
-import pl.eternalmc.chat.config.impl.PluginConfig;
+import net.dzikoysk.cdn.source.Resource;
+import net.dzikoysk.cdn.source.Source;
 
 import java.io.File;
 
@@ -14,29 +15,29 @@ public class ConfigManager {
         .build();
 
     private final PluginConfig pluginConfig;
+    private final File dataFolder;
 
     public ConfigManager(File dataFolder) {
-        this.pluginConfig = new PluginConfig(dataFolder, "config.yml");
+        this.pluginConfig = new PluginConfig();
+        this.dataFolder = dataFolder;
     }
 
     public void loadAndRenderConfigs() {
-        this.loadAndRender(pluginConfig);
+        this.loadAndRender(this.pluginConfig, "config.yml");
     }
 
-    public <T extends ConfigWithResource> void loadAndRender(T config) {
-        cdn.load(config.getResource(), config)
+    public <T> void loadAndRender(T config, String file) {
+        Resource resource = Source.of(this.dataFolder, file);
+
+        this.cdn.load(resource, config)
             .orElseThrow(RuntimeException::new);
 
-        cdn.render(config, config.getResource())
-            .orElseThrow(RuntimeException::new);
-    }
-
-    public <T extends ConfigWithResource> void render(T config) {
-        cdn.render(config, config.getResource())
+        this.cdn.render(config, resource)
             .orElseThrow(RuntimeException::new);
     }
 
     public PluginConfig getPluginConfig() {
         return pluginConfig;
     }
+
 }

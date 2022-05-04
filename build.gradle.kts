@@ -17,6 +17,7 @@ repositories {
     maven { url = uri("https://repo.panda-lang.org/releases") }
     maven { url = uri("https://papermc.io/repo/repository/maven-public/") }
     maven { url = uri("https://repo.extendedclip.com/content/repositories/placeholderapi/") }
+    maven { url = uri("https://jitpack.io") }
 }
 
 dependencies {
@@ -26,6 +27,8 @@ dependencies {
 
     // spigot api
     compileOnly("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
+    implementation("net.kyori:adventure-platform-bukkit:4.1.0")
+    implementation("net.kyori:adventure-text-minimessage:4.10.0-SNAPSHOT")
 
     // LiteCommands
     implementation("dev.rollczi.litecommands:bukkit:1.9.1")
@@ -35,6 +38,7 @@ dependencies {
 
     // placeholderapi
     compileOnly("me.clip:placeholderapi:2.11.1")
+    compileOnly("com.github.MilkBowl:VaultAPI:1.7")
 }
 
 
@@ -54,6 +58,7 @@ bukkit {
     author = "EternalMC"
     name = "EternalMC-ChatFormatter"
     version = "${project.version}"
+    depend = listOf("PlaceholderAPI")
 }
 
 tasks {
@@ -76,4 +81,5 @@ tasks.withType <ShadowJar> {
 
     relocate("net.dzikoysk", "com.eternalcode.core.libs.net.dzikoysk")
     relocate("dev.rollczi", "com.eternalcode.core.libs.dev.rollczi")
+    relocate("net.kyori", "com.eternalcode.core.libs.net.kyori")
 }
