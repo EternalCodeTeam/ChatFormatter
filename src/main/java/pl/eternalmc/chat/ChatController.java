@@ -6,7 +6,7 @@ import net.kyori.adventure.platform.AudienceProvider;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -54,11 +54,13 @@ class ChatController implements Listener {
 
         String raw = this.settings.preFormatting()
             ? event.getFormat()
-            : this.settings.format(this.rankProvider.getRank(event.getPlayer()))
-                .replace("{displayname}", "%1$s")
-                .replace("{message}", "%2$s");
+            : this.settings.format(this.rankProvider.getRank(event.getPlayer()));
 
         String formatted = this.placeholderRegistry.format(raw, player);
+
+        formatted = StringUtils.replace(formatted, "{displayname}", "%1$s"); // TODO: Cringowe te API bukkita ale nie mam czasu na lepsze rozwiązania
+        formatted = StringUtils.replace(formatted, "{message}", "%2$s");
+
         String message = String.format(formatted, player.getDisplayName(), event.getMessage());
 
         TextComponent colorsFromSection = Legacy.LEGACY_SERIALIZER.deserialize(message);

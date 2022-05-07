@@ -4,12 +4,11 @@ import com.google.common.collect.ImmutableMap;
 import net.dzikoysk.cdn.entity.Description;
 import panda.utilities.StringUtils;
 import pl.eternalmc.chat.ChatSettings;
+import pl.eternalmc.chat.placeholder.PlaceholderStack;
 
-import java.io.File;
 import java.util.Map;
 
-public class PluginConfig implements ChatSettings {
-
+public class PluginConfig implements ChatSettings, PlaceholderStack {
 
     @Description(StringUtils.EMPTY)
     @Description("# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #")
@@ -29,6 +28,11 @@ public class PluginConfig implements ChatSettings {
         .put("admin", "&c{displayname} &c-> {message}")
         .build();
 
+    @Description({ StringUtils.EMPTY, "# Placeholders " })
+    public Map<String, String> placeholders = new ImmutableMap.Builder<String, String>()
+        .put("{custom}", "SIEMA")
+        .build();
+
     @Override
     public boolean preFormatting() {
         return false;
@@ -38,4 +42,16 @@ public class PluginConfig implements ChatSettings {
     public String format(String rank) {
         return format.getOrDefault(rank, defaultFormat);
     }
+
+    @Override
+    public String apply(String text) {
+        String value = text;
+
+        for (Map.Entry<String, String> entry : placeholders.entrySet()) {
+            value = value.replace(entry.getKey(), entry.getValue());
+        }
+
+        return value;
+    }
+
 }

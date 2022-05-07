@@ -51,6 +51,8 @@ public class ChatFormatterPlugin extends JavaPlugin {
 
         PluginConfig pluginConfig = this.configManager.getPluginConfig();
 
+        this.placeholderRegistry.stack(pluginConfig);
+
         this.liteCommands = LiteBukkitFactory.builder(this.getServer(), "eternalmc-chatformatter")
             .typeBind(PluginConfig.class, () -> pluginConfig)
             .typeBind(ConfigManager.class, () -> this.configManager)
