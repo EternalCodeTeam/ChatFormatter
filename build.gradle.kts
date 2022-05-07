@@ -77,5 +77,7 @@ tasks.withType <ShadowJar> {
 
     relocate("net.dzikoysk", "com.eternalcode.core.libs.net.dzikoysk")
     relocate("dev.rollczi", "com.eternalcode.core.libs.dev.rollczi")
+    relocate("panda", "com.eternalcode.core.libs.org.panda")
+    relocate("org.panda_lang", "com.eternalcode.core.libs.org.panda")
     relocate("net.kyori", "com.eternalcode.core.libs.net.kyori")
 }

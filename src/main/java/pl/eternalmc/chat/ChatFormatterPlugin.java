@@ -6,14 +6,17 @@ import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
 import net.kyori.adventure.platform.AudienceProvider;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.eternalmc.chat.config.PluginConfig;
 import pl.eternalmc.chat.config.ConfigManager;
 import pl.eternalmc.chat.hook.PlaceholderAPIStack;
 import pl.eternalmc.chat.hook.VaultRankProvider;
+import pl.eternalmc.chat.legacy.Legacy;
 import pl.eternalmc.chat.placeholder.PlaceholderRegistry;
 
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 public class ChatFormatterPlugin extends JavaPlugin {
@@ -39,7 +42,9 @@ public class ChatFormatterPlugin extends JavaPlugin {
         this.rankProvider = new VaultRankProvider(this.getServer());
 
         this.audienceProvider = BukkitAudiences.create(this);
-        this.miniMessage = MiniMessage.miniMessage();
+        this.miniMessage = MiniMessage.builder()
+            .postProcessor(component -> component.replaceText(builder -> builder.match(Pattern.compile(".*")).replacement((matchResult, builder1) -> Legacy.LEGACY_AMPERSAND_SERIALIZER.deserialize(matchResult.group()))))
+            .build();
 
         this.configManager = new ConfigManager(this.getDataFolder());
         this.configManager.loadAndRenderConfigs();
