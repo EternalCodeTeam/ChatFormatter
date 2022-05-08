@@ -54,7 +54,7 @@ bukkit {
     author = "EternalMC"
     name = "EternalMC-ChatFormatter"
     version = "${project.version}"
-    depend = listOf("PlaceholderAPI")
+    depend = listOf("PlaceholderAPI", "Vault")
 }
 
 tasks {
