@@ -1,4 +1,4 @@
-package pl.eternalmc.chat.placeholder;
+package com.eternalcode.formatter.placeholder;
 
 @FunctionalInterface
 public interface Placeholder {

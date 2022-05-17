@@ -1,4 +1,4 @@
-package pl.eternalmc.chat.placeholder;
+package com.eternalcode.formatter.placeholder;
 
 import org.bukkit.entity.Player;
 

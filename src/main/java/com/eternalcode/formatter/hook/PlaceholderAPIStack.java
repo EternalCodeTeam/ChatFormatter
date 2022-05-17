@@ -1,8 +1,8 @@
-package pl.eternalmc.chat.hook;
+package com.eternalcode.formatter.hook;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.entity.Player;
-import pl.eternalmc.chat.placeholder.PlayerPlaceholderStack;
+import com.eternalcode.formatter.placeholder.PlayerPlaceholderStack;
 
 public class PlaceholderAPIStack implements PlayerPlaceholderStack {
 

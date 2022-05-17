@@ -1,4 +1,4 @@
-package pl.eternalmc.chat;
+package com.eternalcode.formatter;
 
 import org.bukkit.entity.Player;
 

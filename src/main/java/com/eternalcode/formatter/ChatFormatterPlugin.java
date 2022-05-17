@@ -1,5 +1,11 @@
-package pl.eternalmc.chat;
+package com.eternalcode.formatter;
 
+import com.eternalcode.formatter.config.ConfigManager;
+import com.eternalcode.formatter.config.PluginConfig;
+import com.eternalcode.formatter.hook.PlaceholderAPIStack;
+import com.eternalcode.formatter.hook.VaultRankProvider;
+import com.eternalcode.formatter.legacy.Legacy;
+import com.eternalcode.formatter.placeholder.PlaceholderRegistry;
 import com.google.common.base.Stopwatch;
 import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
@@ -7,12 +13,6 @@ import net.kyori.adventure.platform.AudienceProvider;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.plugin.java.JavaPlugin;
-import pl.eternalmc.chat.config.ConfigManager;
-import pl.eternalmc.chat.config.PluginConfig;
-import pl.eternalmc.chat.hook.PlaceholderAPIStack;
-import pl.eternalmc.chat.hook.VaultRankProvider;
-import pl.eternalmc.chat.legacy.Legacy;
-import pl.eternalmc.chat.placeholder.PlaceholderRegistry;
 
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;

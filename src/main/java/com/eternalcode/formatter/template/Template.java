@@ -1,4 +1,4 @@
-package pl.eternalmc.chat.template;
+package com.eternalcode.formatter.template;
 
 import panda.std.Result;
 import panda.utilities.text.Joiner;

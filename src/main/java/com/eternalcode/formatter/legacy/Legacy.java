@@ -1,4 +1,4 @@
-package pl.eternalmc.chat.legacy;
+package com.eternalcode.formatter.legacy;
 
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 

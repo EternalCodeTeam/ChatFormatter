@@ -1,10 +1,10 @@
-package pl.eternalmc.chat.hook;
+package com.eternalcode.formatter.hook;
 
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
-import pl.eternalmc.chat.ChatRankProvider;
+import com.eternalcode.formatter.ChatRankProvider;
 
 public class VaultRankProvider implements ChatRankProvider {
 

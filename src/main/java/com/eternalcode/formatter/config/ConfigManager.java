@@ -1,4 +1,4 @@
-package pl.eternalmc.chat.config;
+package com.eternalcode.formatter.config;
 
 import net.dzikoysk.cdn.Cdn;
 import net.dzikoysk.cdn.CdnFactory;

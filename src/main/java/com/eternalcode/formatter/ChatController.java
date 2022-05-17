@@ -1,5 +1,7 @@
-package pl.eternalmc.chat;
+package com.eternalcode.formatter;
 
+import com.eternalcode.formatter.legacy.Legacy;
+import com.eternalcode.formatter.placeholder.PlaceholderRegistry;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.identity.Identity;
 import net.kyori.adventure.platform.AudienceProvider;
@@ -12,8 +14,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import pl.eternalmc.chat.legacy.Legacy;
-import pl.eternalmc.chat.placeholder.PlaceholderRegistry;
 
 class ChatController implements Listener {
 

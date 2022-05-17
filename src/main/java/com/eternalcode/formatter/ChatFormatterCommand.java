@@ -1,5 +1,6 @@
-package pl.eternalmc.chat;
+package com.eternalcode.formatter;
 
+import com.eternalcode.formatter.config.ConfigManager;
 import com.google.common.base.Stopwatch;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Permission;
@@ -8,7 +9,6 @@ import net.kyori.adventure.platform.AudienceProvider;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
-import pl.eternalmc.chat.config.ConfigManager;
 
 import java.util.concurrent.TimeUnit;
 

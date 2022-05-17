@@ -23,11 +23,13 @@ repositories {
 dependencies {
     // spigot api
     compileOnly("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
+
+    // Kyori
     implementation("net.kyori:adventure-platform-bukkit:4.1.0")
-    implementation("net.kyori:adventure-text-minimessage:4.10.0-SNAPSHOT")
+    implementation("net.kyori:adventure-text-minimessage:4.10.1")
 
     // LiteCommands
-    implementation("dev.rollczi.litecommands:bukkit:1.9.1")
+    implementation("dev.rollczi.litecommands:bukkit:1.9.2")
 
     // cdn configs
     implementation("net.dzikoysk:cdn:1.13.22")
@@ -53,11 +55,11 @@ tasks.withType<JavaCompile> {
 }
 
 bukkit {
-    main = "pl.eternalmc.chat.ChatFormatterPlugin"
+    main = "com.eternalcode.chat.ChatFormatterPlugin"
     apiVersion = "1.13"
-    prefix = "EternalMC-ChatFormatter"
-    author = "EternalMC"
-    name = "EternalMC-ChatFormatter"
+    prefix = "ChatFormatter"
+    author = "EternalCodeTeam"
+    name = "ChatFormatter"
     version = "${project.version}"
     depend = listOf("PlaceholderAPI", "Vault")
 }
@@ -69,22 +71,21 @@ tasks {
 }
 
 tasks.withType <ShadowJar> {
-    archiveFileName.set("EternalMC-ChatFormatter v${project.version}.jar")
+    archiveFileName.set("ChatFormatter v${project.version}.jar")
 
     exclude("org/intellij/lang/annotations/**")
     exclude("org/jetbrains/annotations/**")
     exclude("META-INF/**")
     exclude("javax/**")
 
-
     mergeServiceFiles()
     minimize()
 
-    relocate("net.dzikoysk", "com.eternalcode.core.libs.net.dzikoysk")
-    relocate("dev.rollczi", "com.eternalcode.core.libs.dev.rollczi")
-    relocate("panda", "com.eternalcode.core.libs.org.panda")
-    relocate("org.panda_lang", "com.eternalcode.core.libs.org.panda")
-    relocate("net.kyori", "com.eternalcode.core.libs.net.kyori")
+    relocate("net.dzikoysk", "com.eternalcode.formatter.libs.net.dzikoysk")
+    relocate("dev.rollczi", "com.eternalcode.formatter.libs.dev.rollczi")
+    relocate("panda", "com.eternalcode.formatter.libs.org.panda")
+    relocate("org.panda_lang", "com.eternalcode.formatter.libs.org.panda")
+    relocate("net.kyori", "com.eternalcode.formatter.libs.net.kyori")
 }
 
 tasks.getByName<Test>("test") {

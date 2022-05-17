@@ -1,10 +1,10 @@
-package pl.eternalmc.chat.config;
+package com.eternalcode.formatter.config;
 
 import com.google.common.collect.ImmutableMap;
 import net.dzikoysk.cdn.entity.Description;
 import panda.utilities.StringUtils;
-import pl.eternalmc.chat.ChatSettings;
-import pl.eternalmc.chat.placeholder.PlaceholderStack;
+import com.eternalcode.formatter.ChatSettings;
+import com.eternalcode.formatter.placeholder.PlaceholderStack;
 
 import java.util.Map;
 
