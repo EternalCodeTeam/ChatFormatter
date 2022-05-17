@@ -35,6 +35,11 @@ dependencies {
     // placeholderapi
     compileOnly("me.clip:placeholderapi:2.11.1")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7")
+
+    // test
+    testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.21")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
 }
 
 
@@ -80,4 +85,8 @@ tasks.withType <ShadowJar> {
     relocate("panda", "com.eternalcode.core.libs.org.panda")
     relocate("org.panda_lang", "com.eternalcode.core.libs.org.panda")
     relocate("net.kyori", "com.eternalcode.core.libs.net.kyori")
+}
+
+tasks.getByName<Test>("test") {
+    useJUnitPlatform()
 }
