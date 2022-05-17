@@ -12,6 +12,7 @@ import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
 import net.kyori.adventure.platform.AudienceProvider;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.concurrent.TimeUnit;
@@ -52,7 +53,7 @@ public class ChatFormatterPlugin extends JavaPlugin {
 
         this.placeholderRegistry.stack(pluginConfig);
 
-        this.liteCommands = LiteBukkitFactory.builder(this.getServer(), "eternalmc-chatformatter")
+        this.liteCommands = LiteBukkitFactory.builder(this.getServer(), "chat-formatter")
             .typeBind(PluginConfig.class, () -> pluginConfig)
             .typeBind(ConfigManager.class, () -> this.configManager)
             .typeBind(PlaceholderRegistry.class, () -> this.placeholderRegistry)
@@ -61,6 +62,9 @@ public class ChatFormatterPlugin extends JavaPlugin {
 
             .command(ChatFormatterCommand.class)
             .register();
+
+        // bStats metrics
+        new Metrics(this, 15199);
 
         Stream.of(
             new ChatController(this.audienceProvider, this.miniMessage, pluginConfig, this.rankProvider, placeholderRegistry)

@@ -34,6 +34,9 @@ dependencies {
     // cdn configs
     implementation("net.dzikoysk:cdn:1.13.22")
 
+    // bStats
+    implementation("org.bstats:bstats-bukkit:3.0.0")
+
     // placeholderapi
     compileOnly("me.clip:placeholderapi:2.11.1")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7")
