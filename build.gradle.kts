@@ -58,7 +58,7 @@ tasks.withType<JavaCompile> {
 }
 
 bukkit {
-    main = "com.eternalcode.chat.ChatFormatterPlugin"
+    main = "com.eternalcode.formatter.ChatFormatterPlugin"
     apiVersion = "1.13"
     prefix = "ChatFormatter"
     author = "EternalCodeTeam"
@@ -89,6 +89,7 @@ tasks.withType <ShadowJar> {
     relocate("panda", "com.eternalcode.formatter.libs.org.panda")
     relocate("org.panda_lang", "com.eternalcode.formatter.libs.org.panda")
     relocate("net.kyori", "com.eternalcode.formatter.libs.net.kyori")
+    relocate("org.bstats", "com.eternalcode.formatter.libs.org.bstats")
 }
 
 tasks.getByName<Test>("test") {

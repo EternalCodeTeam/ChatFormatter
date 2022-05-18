@@ -32,7 +32,7 @@ class ChatFormatterCommand {
 
         this.configManager.loadAndRenderConfigs();
         long millis = stopwatch.elapsed(TimeUnit.MILLISECONDS);
-        Component deserialized = this.miniMessage.deserialize("<green>Successfully reloaded configs in " + millis + "ms!");
+        Component deserialized = this.miniMessage.deserialize("<b><gradient:#29fbff:#38b3ff>ChatFormatter:</gradient></b> <green>Successfully reloaded configs in " + millis + "ms!");
 
         this.provider.player(player.getUniqueId()).sendMessage(deserialized);
     }
