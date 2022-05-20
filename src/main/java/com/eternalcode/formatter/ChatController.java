@@ -2,13 +2,13 @@ package com.eternalcode.formatter;
 
 import com.eternalcode.formatter.legacy.Legacy;
 import com.eternalcode.formatter.placeholder.PlaceholderRegistry;
+import com.eternalcode.formatter.template.TemplateService;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.identity.Identity;
 import net.kyori.adventure.platform.AudienceProvider;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -19,16 +19,19 @@ class ChatController implements Listener {
 
     private final AudienceProvider audienceProvider;
     private final MiniMessage miniMessage;
+
     private final ChatSettings settings;
     private final ChatRankProvider rankProvider;
     private final PlaceholderRegistry placeholderRegistry;
+    private final TemplateService templateService;
 
-    ChatController(AudienceProvider audienceProvider, MiniMessage miniMessage, ChatSettings settings, ChatRankProvider rankProvider, PlaceholderRegistry placeholderRegistry) {
+    ChatController(AudienceProvider audienceProvider, MiniMessage miniMessage, ChatSettings settings, ChatRankProvider rankProvider, PlaceholderRegistry placeholderRegistry, TemplateService templateService) {
         this.audienceProvider = audienceProvider;
         this.miniMessage = miniMessage;
         this.settings = settings;
         this.rankProvider = rankProvider;
         this.placeholderRegistry = placeholderRegistry;
+        this.templateService = templateService;
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -56,17 +59,14 @@ class ChatController implements Listener {
             ? event.getFormat()
             : this.settings.format(this.rankProvider.getRank(event.getPlayer()));
 
-        String formatted = this.placeholderRegistry.format(raw, player);
+        String withTemplates = this.templateService.applyTemplates(raw);
+        String withFormat = this.placeholderRegistry.format(withTemplates, player);
+        String withMessage = String.format(withFormat, player.getDisplayName(), event.getMessage());
 
-        formatted = StringUtils.replace(formatted, "{displayname}", "%1$s"); // TODO: Cringowe te API bukkita ale nie mam czasu na lepsze rozwiązania
-        formatted = StringUtils.replace(formatted, "{message}", "%2$s");
+        TextComponent withLegacyColors = Legacy.LEGACY_SERIALIZER.deserialize(withMessage);
+        String withAmpersands = Legacy.LEGACY_AMPERSAND_SERIALIZER.serialize(withLegacyColors);
 
-        String message = String.format(formatted, player.getDisplayName(), event.getMessage());
-
-        TextComponent colorsFromSection = Legacy.LEGACY_SERIALIZER.deserialize(message);
-        String noColored = Legacy.LEGACY_AMPERSAND_SERIALIZER.serialize(colorsFromSection);
-
-        Component component = miniMessage.deserialize(noColored);
+        Component component = miniMessage.deserialize(withAmpersands);
 
         for (Player recipient : event.getRecipients()) {
             Audience recipientAudience = audienceProvider.player(recipient.getUniqueId());

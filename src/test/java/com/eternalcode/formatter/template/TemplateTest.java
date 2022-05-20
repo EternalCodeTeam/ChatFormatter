@@ -9,15 +9,21 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TemplateTest {
 
+    private final TemplateService templateService = new TemplateService(() -> List.of(
+        Template.of("two", List.of("arg1", "arg2"), "> $arg1 + $arg2 <"),
+        Template.of("three", List.of("arg1", "arg2", "arg3"), "< $arg1 + $arg2 + $arg3 >")
+    ));
+
     @Test
     void parseTest() {
-        Result<Template, String> result = Template.parse("($arg1, $arg2, $arg3) -> \"SIEMA\"");
+        Result<Template, String> result = Template.parse("$test($arg1, $arg2, $arg3) -> \"SIEMA\"");
 
         assertTrue(result.isOk());
 
         Template template = result.get();
         List<String> arguments = template.getArguments();
 
+        assertEquals("test", template.getName());
         assertEquals(3, arguments.size());
         assertEquals("arg1", arguments.get(0));
         assertEquals("arg2", arguments.get(1));
@@ -27,13 +33,14 @@ class TemplateTest {
 
     @Test
     void parseTestWithIncorrectQuote() {
-        Result<Template, String> result = Template.parse("($arg1, $arg2, $arg3) -> \"SIEMA\"\"");
+        Result<Template, String> result = Template.parse("$test($arg1, $arg2, $arg3) -> \"SIEMA\"\"");
 
         assertTrue(result.isOk());
 
         Template template = result.get();
         List<String> arguments = template.getArguments();
 
+        assertEquals("test", template.getName());
         assertEquals(3, arguments.size());
         assertEquals("arg1", arguments.get(0));
         assertEquals("arg2", arguments.get(1));
@@ -43,7 +50,7 @@ class TemplateTest {
 
     @Test
     void parseAndToStringCompareTest() {
-        String original = "($arg1, $arg2, $arg3, $arg4) -> \"SIEMA\"";
+        String original = "$test($arg1, $arg2, $arg3, $arg4) -> \"SIEMA\"";
         Result<Template, String> result = Template.parse(original);
 
         assertTrue(result.isOk());
@@ -52,6 +59,22 @@ class TemplateTest {
         String deserialized = template.toString();
 
         assertEquals(original, deserialized);
+    }
+
+    @Test
+    void testApplyTemplate() {
+        Template template = Template.of("test", List.of("arg"), "- $arg -");
+        String text = template.apply("% $test(SIEMA) %");
+
+        assertEquals("% - SIEMA - %", text);
+    }
+
+
+    @Test
+    void testApplyTemplateService() {
+        String text = templateService.applyTemplates("% $two(1, 2) $three(1, 2, 3) %");
+
+        assertEquals("% > 1 + 2 < < 1 + 2 + 3 > %", text);
     }
 
 }

@@ -1,14 +1,18 @@
 package com.eternalcode.formatter.config;
 
+import com.eternalcode.formatter.template.Template;
+import com.eternalcode.formatter.template.TemplateRepository;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import net.dzikoysk.cdn.entity.Description;
 import panda.utilities.StringUtils;
 import com.eternalcode.formatter.ChatSettings;
 import com.eternalcode.formatter.placeholder.PlaceholderStack;
 
+import java.util.List;
 import java.util.Map;
 
-public class PluginConfig implements ChatSettings, PlaceholderStack {
+public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRepository {
 
     @Description({ StringUtils.EMPTY })
     @Description("#    ____ _           _   _____      ChatFormatter       _   _            ")
@@ -46,18 +50,25 @@ public class PluginConfig implements ChatSettings, PlaceholderStack {
         " "
     })
     public Map<String, String> format = new ImmutableMap.Builder<String, String>()
-        .put("default", "{member] &f{displayname} &8{arrow_right} {message} ")
-        .put("admin", "{admin} &c{displayname} &8{arrow_right} {message}")
+        .put("default", "{member} &f{displayname} &8{arrow_right} {message} ")
+        .put("admin", "$template({admin}, &c)")
+        .build();
+
+    public List<Template> templates = new ImmutableList.Builder<Template>()
+        .add(Template.of("template", List.of("rank", "color"), "$rank $color{displayname} &8{arrow_right} $color{message}"))
         .build();
 
     @Description({ StringUtils.EMPTY, "# Placeholdery, pozwala skrócić tekst, możesz tutaj użyć np. prefixów, znaczków itd. " })
     public Map<String, String> placeholders = new ImmutableMap.Builder<String, String>()
+        .put("{displayname}", "%1$s")
+        .put("{message}", "%2$s")
         .put("{prefix}", "<b><gradient:#29fbff:#38b3ff>ChatFormatter</gradient></b>")
         .put("{member}", "<b><color:#6e6764>Member</color></b>")
         .put("{admin}", "<b><color:#ff4400>Admin</color></b>")
         .put("{arrow_right}", "»")
         .put("{arrow_left}", "«")
         .build();
+
 
     @Override
     public boolean preFormatting() {
@@ -80,4 +91,8 @@ public class PluginConfig implements ChatSettings, PlaceholderStack {
         return value;
     }
 
+    @Override
+    public List<Template> getTemplates() {
+        return templates;
+    }
 }

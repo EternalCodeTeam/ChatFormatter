@@ -1,5 +1,6 @@
 package com.eternalcode.formatter.config;
 
+import com.eternalcode.formatter.template.Template;
 import net.dzikoysk.cdn.Cdn;
 import net.dzikoysk.cdn.CdnFactory;
 import net.dzikoysk.cdn.source.Resource;
@@ -12,6 +13,7 @@ public class ConfigManager {
     private final Cdn cdn = CdnFactory
         .createYamlLike()
         .getSettings()
+        .withComposer(Template.class, new TemplateComposer())
         .build();
 
     private final PluginConfig pluginConfig;
