@@ -37,7 +37,7 @@ public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRep
         "# ",
         "# Hover message:",
         "# One line: <hover:show_text:'<red>test'>TEST",
-        "# Multiple lines: <hover:show_text:'<red>test'>Test\nTest2</hover>",
+        "# Multiple lines: <hover:show_text:'<red>test'>Test<newline>Test2</hover>",
         "# ",
         "# Click message:",
         "# Open URL: <click:open_url:'https://webui.adventure.kyori.net'>TEST</click>",
