@@ -58,7 +58,7 @@ public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRep
         .add(Template.of("template", List.of("rank", "color"), "$rank $color{displayname} &8{arrow_right} $color{message}"))
         .build();
 
-    @Description({ StringUtils.EMPTY, "# Placeholdery, pozwala skrócić tekst, możesz tutaj użyć np. prefixów, znaczków itd. " })
+    @Description({ StringUtils.EMPTY, "# Placeholders, it allows you to make a shorter text, you can use some prefixes, characters etc. " })
     public Map<String, String> placeholders = new ImmutableMap.Builder<String, String>()
         .put("{displayname}", "%1$s")
         .put("{message}", "%2$s")
