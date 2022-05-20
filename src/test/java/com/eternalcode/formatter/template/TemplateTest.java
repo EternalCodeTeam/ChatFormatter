@@ -16,7 +16,7 @@ class TemplateTest {
 
     @Test
     void parseTest() {
-        Result<Template, String> result = Template.parse("$test($arg1, $arg2, $arg3) -> \"SIEMA\"");
+        Result<Template, String> result = Template.parse("$test($arg1, $arg2, $arg3) -> 'SIEMA'");
 
         assertTrue(result.isOk());
 
@@ -33,7 +33,7 @@ class TemplateTest {
 
     @Test
     void parseTestWithIncorrectQuote() {
-        Result<Template, String> result = Template.parse("$test($arg1, $arg2, $arg3) -> \"SIEMA\"\"");
+        Result<Template, String> result = Template.parse("$test($arg1, $arg2, $arg3) -> 'SIEMA''");
 
         assertTrue(result.isOk());
 
@@ -45,12 +45,12 @@ class TemplateTest {
         assertEquals("arg1", arguments.get(0));
         assertEquals("arg2", arguments.get(1));
         assertEquals("arg3", arguments.get(2));
-        assertEquals("SIEMA\"", template.getContent());
+        assertEquals("SIEMA'", template.getContent());
     }
 
     @Test
     void parseAndToStringCompareTest() {
-        String original = "$test($arg1, $arg2, $arg3, $arg4) -> \"SIEMA\"";
+        String original = "$test($arg1, $arg2, $arg3, $arg4) -> 'SIEMA'";
         Result<Template, String> result = Template.parse(original);
 
         assertTrue(result.isOk());

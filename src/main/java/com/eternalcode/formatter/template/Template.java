@@ -11,12 +11,12 @@ import java.util.regex.Pattern;
 
 public class Template {
 
-    private static final String TEMPLATE = "$%s(%s) -> \"%s\"";
+    private static final String TEMPLATE = "$%s(%s) -> '%s'";
     private static final String ARGUMENT = "$%s";
     private static final String SEPARATOR = ", ";
 
     public static final Pattern TEMPLATE_EXECUTE = Pattern.compile("\\$(\\w+)\\(([^()]+(?:,\\s*[^()]+)*)\\)");
-    private static final Pattern TEMPLATE_REGEX = Pattern.compile("^\\$(\\w+)\\((\\$\\w+(?:,\\s*\\$\\w+)*)\\)\\s*->\\s*\"(.*)\"$", Pattern.CASE_INSENSITIVE);
+    private static final Pattern TEMPLATE_REGEX = Pattern.compile("^\\$(\\w+)\\((\\$\\w+(?:,\\s*\\$\\w+)*)\\)\\s*->\\s*'(.*)'$", Pattern.CASE_INSENSITIVE);
 
     private final String name;
     private final List<String> arguments;
