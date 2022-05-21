@@ -57,7 +57,7 @@ class ChatController implements Listener {
 
         String raw = this.settings.preFormatting()
             ? event.getFormat()
-            : this.settings.format(this.rankProvider.getRank(event.getPlayer()));
+            : this.settings.format(this.rankProvider.getRank(player));
 
         String withTemplates = this.templateService.applyTemplates(raw);
         String withFormat = this.placeholderRegistry.format(withTemplates, player);

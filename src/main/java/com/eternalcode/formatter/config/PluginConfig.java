@@ -54,6 +54,8 @@ public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRep
         .put("admin", "$template({admin}, &c)")
         .build();
 
+
+    @Description({ StringUtils.EMPTY, "# It is used to shorten the text even more and keep the clean file!" })
     public List<Template> templates = new ImmutableList.Builder<Template>()
         .add(Template.of("template", List.of("rank", "color"), "$rank $color{displayname} &8{arrow_right} $color{message}"))
         .build();
