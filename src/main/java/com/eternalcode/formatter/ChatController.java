@@ -7,7 +7,6 @@ import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.identity.Identity;
 import net.kyori.adventure.platform.AudienceProvider;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -63,16 +62,15 @@ class ChatController implements Listener {
         String withFormat = this.placeholderRegistry.format(withTemplates, player);
         String withMessage = String.format(withFormat, player.getDisplayName(), event.getMessage());
 
-        TextComponent withLegacyColors = Legacy.LEGACY_SERIALIZER.deserialize(withMessage);
-        String withAmpersands = Legacy.LEGACY_AMPERSAND_SERIALIZER.serialize(withLegacyColors);
-
-        Component component = miniMessage.deserialize(withAmpersands);
+        String decolor = Legacy.decolor(withMessage);
+        Component component = miniMessage.deserialize(decolor);
 
         for (Player recipient : event.getRecipients()) {
             Audience recipientAudience = audienceProvider.player(recipient.getUniqueId());
 
             recipientAudience.sendMessage(identity, component);
         }
+
     }
 
 }
