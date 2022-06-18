@@ -6,39 +6,40 @@ import com.eternalcode.formatter.hook.PlaceholderAPIStack;
 import com.eternalcode.formatter.hook.VaultRankProvider;
 import com.eternalcode.formatter.legacy.LegacyProcessor;
 import com.eternalcode.formatter.placeholder.PlaceholderRegistry;
+import com.eternalcode.formatter.preparatory.ChatPreparatoryService;
 import com.eternalcode.formatter.template.TemplateService;
 import com.google.common.base.Stopwatch;
 import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
 import net.kyori.adventure.platform.AudienceProvider;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bstats.bukkit.Metrics;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
-public class ChatFormatterPlugin extends JavaPlugin {
-
-    private static ChatFormatterPlugin instance;
+public class ChatFormatterPlugin extends JavaPlugin implements ChatFormatter {
 
     private ConfigManager configManager;
 
     private PlaceholderRegistry placeholderRegistry;
     private TemplateService templateService;
     private ChatRankProvider rankProvider;
+    private ChatPreparatoryService chatPreparatoryService;
 
     private AudienceProvider audienceProvider;
     private MiniMessage miniMessage;
 
-    private LiteCommands liteCommands;
+    private LiteCommands<CommandSender> liteCommands;
 
     @Override
     public void onEnable() {
         Stopwatch stopwatch = Stopwatch.createStarted();
-
-        instance = this;
 
         this.configManager = new ConfigManager(this.getDataFolder());
         this.configManager.loadAndRenderConfigs();
@@ -50,6 +51,7 @@ public class ChatFormatterPlugin extends JavaPlugin {
         this.placeholderRegistry.playerStack(new PlaceholderAPIStack());
         this.templateService = new TemplateService(pluginConfig);
         this.rankProvider = new VaultRankProvider(this.getServer());
+        this.chatPreparatoryService = new ChatPreparatoryService();
 
         this.audienceProvider = BukkitAudiences.create(this);
         this.miniMessage = MiniMessage.builder()
@@ -70,27 +72,38 @@ public class ChatFormatterPlugin extends JavaPlugin {
         new Metrics(this, 15199);
 
         Stream.of(
-            new ChatController(this.audienceProvider, this.miniMessage, pluginConfig, this.rankProvider, this.placeholderRegistry, templateService)
+            new ChatController(this.audienceProvider, this.miniMessage, pluginConfig, this.rankProvider, this.placeholderRegistry, templateService, chatPreparatoryService)
         ).forEach(listener -> this.getServer().getPluginManager().registerEvents(listener, this));
+
+        ChatFormatterProvider.enable(this);
 
         this.getLogger().info("Plugin enabled in " + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
     @Override
     public void onDisable() {
-        this.liteCommands.getPlatformManager().unregisterCommands();
+        ChatFormatterProvider.disable();
+        this.liteCommands.getPlatform().unregisterAll();
     }
 
+    @Override
     public PlaceholderRegistry getPlaceholderRegistry() {
         return placeholderRegistry;
     }
 
+    @Override
     public TemplateService getTemplateService() {
         return templateService;
     }
 
+    @Override
     public ChatRankProvider getRankProvider() {
         return rankProvider;
+    }
+
+    @Override
+    public ChatPreparatoryService getChatPreparatoryService() {
+        return chatPreparatoryService;
     }
 
 }

@@ -4,11 +4,13 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.TextReplacementConfig;
+import net.md_5.bungee.api.ChatColor;
 
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
 import java.util.regex.MatchResult;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class LegacyProcessor implements UnaryOperator<Component> {
@@ -38,9 +40,11 @@ public final class LegacyProcessor implements UnaryOperator<Component> {
 
         @Override
         public ComponentLike apply(MatchResult matchResult, TextComponent.Builder builder) {
-            return Legacy.LEGACY_AMPERSAND_SERIALIZER.deserialize(matchResult.group());
+            return Legacy.LEGACY_SERIALIZER.deserialize(Legacy.colorShadow(matchResult.group()));
         }
 
     }
+
+
 
 }
