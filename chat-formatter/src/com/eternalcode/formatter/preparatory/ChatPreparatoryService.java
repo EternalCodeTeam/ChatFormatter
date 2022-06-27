@@ -17,8 +17,8 @@ public class ChatPreparatoryService {
         return this.preparations.isEmpty();
     }
 
-    public ChatPrepareResult prepare(Player player, Set<Player> receivers, String json, String message) {
-        ChatPrepareResult result = new ChatPrepareResult(json, receivers, false);
+    public ChatPrepareResult prepare(Player player, Set<Player> receivers, String jsonFormat, String message) {
+        ChatPrepareResult result = new ChatPrepareResult(jsonFormat, receivers, false);
 
         for (ChatPreparatory preparation : preparations) {
             result = preparation.prepare(player, result.getReceivers(), result.getRawMessage(), message, result.isCancelled());

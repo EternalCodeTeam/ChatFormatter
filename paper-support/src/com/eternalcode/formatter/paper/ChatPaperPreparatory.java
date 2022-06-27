@@ -24,9 +24,9 @@ class ChatPaperPreparatory implements ChatPreparatory {
     }
 
     @Override
-    public ChatPrepareResult prepare(Player player, Set<Player> receivers, String rawJson, String message, boolean canceled) {
-        ChatRenderer renderer = (source, sourceDisplayName, ignoredMessage, viewer) -> GSON.deserialize(rawJson);
-        Component messageComponent = GSON.deserialize(message);
+    public ChatPrepareResult prepare(Player player, Set<Player> receivers, String jsonFormat, String message, boolean canceled) {
+        ChatRenderer renderer = (source, sourceDisplayName, ignoredMessage, viewer) -> GSON.deserialize(jsonFormat);
+        Component messageComponent = Component.text(message);
         HashSet<Audience> audiences = new HashSet<>(receivers);
         AsyncChatEvent event = new AsyncChatEvent(true, player, audiences, renderer, messageComponent, messageComponent);
 

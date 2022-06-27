@@ -11,6 +11,7 @@ import net.kyori.adventure.platform.AudienceProvider;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -72,11 +73,11 @@ class ChatController implements Listener {
         String withMessage = String.format(withFormat, player.getDisplayName(), "<message>");
         String decolor = Legacy.deColor(withMessage);
 
-        String shadowed = player.hasPermission("eternalmc.chat.color")
-            ? event.getMessage()
-            : Legacy.shadow(event.getMessage());
+        TagResolver.Single shadowed = player.hasPermission("eternalmc.chat.color")
+            ? Placeholder.parsed("message", event.getMessage())
+            : Placeholder.unparsed("message", Legacy.shadow(event.getMessage()));
 
-        Component message = miniMessage.deserialize(decolor, Placeholder.unparsed("message", shadowed));
+        Component message = miniMessage.deserialize(decolor, shadowed);
 
         Set<Player> recipients = event.getRecipients();
 
