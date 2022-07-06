@@ -56,7 +56,7 @@ project(":chat-formatter") {
         compileOnly("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
 
         // Kyori Adventure & MiniMessage
-        implementation("net.kyori:adventure-platform-bukkit:4.1.0")
+        implementation("net.kyori:adventure-platform-bukkit:4.1.1")
         implementation("net.kyori:adventure-text-minimessage:4.11.0")
 
         // LiteCommands & CDN
