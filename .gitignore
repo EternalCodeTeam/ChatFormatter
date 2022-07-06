@@ -6,6 +6,7 @@
 .gradle/
 out/
 build/
+node_modules/
 run/
 
 .DS_Store
