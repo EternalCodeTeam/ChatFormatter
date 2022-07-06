@@ -40,5 +40,5 @@ jobs:
       - name: Upload a paper-support build artifact
         uses: actions/upload-artifact@v3.0.0
         with:
-            name: 'Successfully build EternalCore JDK${{ matrix.jdk }}'
+            name: 'Successfully build paper-support JDK${{ matrix.jdk }}'
             path: paper-support/build/libs/*.jar
