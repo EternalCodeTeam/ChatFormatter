@@ -1,72 +1,77 @@
 package com.eternalcode.formatter.legacy;
 
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import net.md_5.bungee.api.ChatColor;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class Legacy {
 
+
     public static final char AMPERSAND = '&';
-    public static final char COLOR_CHAR = '\u00A7';
+    public static final char SECTION = '\u00A7';
+    public static final String SHADOW = "<ampersand>";
 
-    public static final Pattern STRIP_COLOR_PATTERN = Pattern.compile( "(?i)" + COLOR_CHAR + "[0-9A-FK-ORX]" );
-    public static final Pattern STRIP_AMPERSAND_COLOR = Pattern.compile( "(?i)" + AMPERSAND + "[0-9A-FK-ORX]" );
-    public static final Pattern SHADOW_COLOR_PATTERN = Pattern.compile( "(?i)" + AMPERSAND + "+[0-9A-FK-ORX]" );
-
+    public static final Pattern ALL_PATTERN = Pattern.compile(".*");
+    public static final Pattern AMPERSAND_PATTERN = Pattern.compile( "(?i)" + AMPERSAND + "[0-9A-FK-ORX#]" );
+    public static final Pattern SHADOW_PATTERN = Pattern.compile( "(?i)" + SHADOW + "[0-9A-FK-ORX#]" );
 
     private Legacy() {
     }
 
-    public final static LegacyComponentSerializer LEGACY_SERIALIZER = LegacyComponentSerializer.builder()
+    public static final LegacyComponentSerializer LEGACY_SERIALIZER = LegacyComponentSerializer.builder()
         .hexColors()
+        .character('&')
+        .hexCharacter('#')
         .useUnusualXRepeatedCharacterHexFormat()
         .build();
 
-    public static String deColor(String text) {
-        Matcher matcher = STRIP_COLOR_PATTERN.matcher(text);
-        StringBuilder builder = new StringBuilder(text);
+    static String clearSection(String text) {
+        return text.replace(SECTION, AMPERSAND);
+    }
 
-        while (matcher.find()) {
-            String color = matcher.group(0);
+    public static String toBukkitFormat(String text) {
+        return text
+            .replace("<displayname>", "%1$s")
+            .replace("<message>", "%2$s");
+    }
 
-            builder.replace(matcher.start(), matcher.end(), String.valueOf( AMPERSAND ) + color.charAt(1));
-        }
-
-        return builder.toString();
+    public static String toAdventureFormat(String text) {
+        return text
+            .replace("%1$s", "<displayname>")
+            .replace("%2$s", "<message>");
     }
 
     public static String shadow(String text) {
-        Matcher matcher = STRIP_AMPERSAND_COLOR.matcher(text);
         StringBuilder builder = new StringBuilder(text);
+        Matcher colorMatcher = AMPERSAND_PATTERN.matcher(builder.toString());
 
         int matched = 0;
-        while (matcher.find()) {
-            String color = matcher.group(0);
+        while (colorMatcher.find()) {
+            String color = colorMatcher.group(0);
 
-            builder.replace(matcher.start() + matched, matcher.end() + matched, String.valueOf( AMPERSAND ) + AMPERSAND + color.charAt(1));
+            builder.replace(colorMatcher.start() + matched, colorMatcher.end() + matched, SHADOW + color.charAt(1));
             matched++;
         }
 
         return builder.toString();
     }
 
-    public static String colorShadow(String text) {
-        Matcher matcher = SHADOW_COLOR_PATTERN.matcher(text);
+    static Component deshadow(Component component) {
+        return component.replaceText(shadowBuilder -> shadowBuilder
+            .match(ALL_PATTERN)
+            .replacement((matchResult, builder) -> Component.text(Legacy.deshadow(matchResult.group()))));
+    }
+
+    static String deshadow(String text) {
+        Matcher matcher = SHADOW_PATTERN.matcher(text);
         StringBuilder builder = new StringBuilder(text);
 
-        int removed = 0;
+        int matched = 0;
         while (matcher.find()) {
-            String color = matcher.group(0);
-
-            if (color.length() != 2) {
-                builder.replace(matcher.start() - removed, matcher.end() - removed, color.substring(1));
-                removed++;
-                continue;
-            }
-
-            builder.replace(matcher.start() - removed, matcher.end() - removed, String.valueOf( COLOR_CHAR ) + color.charAt(1));
+            int length = (matcher.end() - matcher.start()) - 1;
+            builder.replace(matcher.start() + matched, matcher.end() + matched - 1, String.valueOf( AMPERSAND ));
+            matched += length;
         }
 
         return builder.toString();

@@ -23,7 +23,7 @@ import java.util.Set;
 
 class ChatController implements Listener {
 
-    private final static GsonComponentSerializer GSON = GsonComponentSerializer.gson();
+    private static final GsonComponentSerializer GSON = GsonComponentSerializer.gson();
 
     private final AudienceProvider audienceProvider;
     private final MiniMessage miniMessage;
@@ -46,16 +46,15 @@ class ChatController implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     void onPreChat(AsyncPlayerChatEvent event) {
-        if (!this.settings.preFormatting()) {
+        if (!this.settings.isPreFormatting()) {
             return;
         }
 
-        String raw = this.settings.format(rankProvider.getRank(event.getPlayer()));
-        String replaced = raw
-            .replace("{displayname}", "%1$s")
-            .replace("{message}", "%2$s");
+        String rank = this.rankProvider.getRank(event.getPlayer());
+        String raw = this.settings.getRawFormat(rank);
+        String format = Legacy.toBukkitFormat(raw);
 
-        event.setFormat(replaced);
+        event.setFormat(format);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -64,41 +63,50 @@ class ChatController implements Listener {
 
         Player player = event.getPlayer();
         Identity identity = Identity.identity(player.getUniqueId());
-        String raw = this.settings.preFormatting()
-            ? event.getFormat()
-            : this.settings.format(this.rankProvider.getRank(player));
 
-        String withTemplates = this.templateService.applyTemplates(raw);
-        String withFormat = this.placeholderRegistry.format(withTemplates, player);
-        String withMessage = String.format(withFormat, player.getDisplayName(), "<message>");
-        String decolor = Legacy.deColor(withMessage);
+        String message = this.settings.isPreFormatting()
+            ? Legacy.toAdventureFormat(event.getFormat())
+            : this.settings.getRawFormat(this.rankProvider.getRank(player));
 
-        TagResolver.Single shadowed = player.hasPermission("eternalmc.chat.color")
-            ? Placeholder.parsed("message", event.getMessage())
-            : Placeholder.unparsed("message", Legacy.shadow(event.getMessage()));
+        message = this.templateService.applyTemplates(message);
+        message = this.placeholderRegistry.format(message, player);
 
-        Component message = miniMessage.deserialize(decolor, shadowed);
+        Component messageComponent = miniMessage.deserialize(message, this.messageTag(event), this.displaynameTag(event));
 
         Set<Player> recipients = event.getRecipients();
 
         if (!preparatoryService.isEmpty()) {
-            ChatPrepareResult result = preparatoryService.prepare(player, recipients, GSON.serialize(message), event.getMessage());
+            ChatPrepareResult result = preparatoryService.prepare(player, recipients, GSON.serialize(messageComponent), event.getMessage());
 
             if (result.isCancelled()) {
                 return;
             }
 
-            message = GSON.deserialize(result.getRawMessage());
+            messageComponent = GSON.deserialize(result.getRawMessage());
             recipients = result.getReceivers();
         }
 
         for (Player recipient : recipients) {
-            Audience recipientAudience = audienceProvider.player(recipient.getUniqueId());
+            Audience recipientAudience = this.audienceProvider.player(recipient.getUniqueId());
 
-            recipientAudience.sendMessage(identity, message);
+            recipientAudience.sendMessage(identity, messageComponent);
         }
 
-        audienceProvider.console().sendMessage(identity, message);
+        this.audienceProvider.console().sendMessage(identity, messageComponent);
+    }
+
+    private TagResolver.Single messageTag(AsyncPlayerChatEvent event) {
+        String message = event.getMessage();
+        Player player = event.getPlayer();
+
+        return player.hasPermission("eternalmc.chat.color")
+                ? Placeholder.parsed("message", message)
+                : Placeholder.unparsed("message", Legacy.shadow(message));
+    }
+
+
+    private TagResolver.Single displaynameTag(AsyncPlayerChatEvent event) {
+        return Placeholder.parsed("displayname", event.getPlayer().getDisplayName());
     }
 
 }

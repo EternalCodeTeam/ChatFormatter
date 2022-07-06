@@ -8,31 +8,33 @@ class LegacyTest {
 
     @Test
     void decolor() {
-        String text = Legacy.deColor("§c SIEMA § test§a!");
-
-        assertEquals("&c SIEMA § test&a!", text);
+        assertEquals("&c SIEMA & test&a!", Legacy.clearSection("§c SIEMA § test§a!"));
     }
 
     @Test
-    void testShadow() {
-        String text = Legacy.shadow("&c SIEMA & test&a!");
-
-        assertEquals("&&c SIEMA & test&&a!", text);
+    void shadow() {
+        assertShadow("&7", "<ampersand>7");
+        assertShadow("&&7", "&<ampersand>7");
+        assertShadow("&#c", "<ampersand>#c");
+        assertShadow("<ampersand>7", "&7", "<ampersand>7");
+        assertShadow("<ampersand>&7", "<ampersand><ampersand>7");
+        assertShadow("<ampersand><ampersand>&7", "<ampersand><ampersand><ampersand>7");
     }
 
-    @Test
-    void testManyShadow() {
-        String text = Legacy.shadow("&c SIEMA & test&a &&c yoo&a sieema&f!");
+    private void assertShadow(String input, String output, String expectedShadowed) {
+        String shadowed = Legacy.shadow(input);
+        String deshadowed = Legacy.deshadow(shadowed);
 
-        assertEquals("&&c SIEMA & test&&a &&&c yoo&&a sieema&&f!", text);
+        assertEquals(expectedShadowed, shadowed);
+        assertEquals(output, deshadowed);
     }
 
-    @Test
-    void testColorShadow() {
-        String text = Legacy.colorShadow("&c SIEMA & test&a &&c yoo&a sieema&f!");
+    private void assertShadow(String input, String expectedShadowed) {
+        String shadowed = Legacy.shadow(input);
+        String deshadowed = Legacy.deshadow(shadowed);
 
-        assertEquals("§c SIEMA & test§a &c yoo§a sieema§f!", text);
+        assertEquals(expectedShadowed, shadowed);
+        assertEquals(input, deshadowed);
     }
-
 
 }

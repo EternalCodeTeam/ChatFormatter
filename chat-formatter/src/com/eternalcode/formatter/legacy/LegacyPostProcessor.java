@@ -4,47 +4,41 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.TextReplacementConfig;
-import net.md_5.bungee.api.ChatColor;
 
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
 import java.util.regex.MatchResult;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public final class LegacyProcessor implements UnaryOperator<Component> {
+public final class LegacyPostProcessor implements UnaryOperator<Component> {
 
-    private final static Replacer REPLACER = new Replacer();
+    private static final Replacer REPLACER = new Replacer();
 
     @Override
     public Component apply(Component component) {
         return component.replaceText(REPLACER);
     }
 
-    private final static class Replacer implements Consumer<TextReplacementConfig.Builder> {
+    private static final class Replacer implements Consumer<TextReplacementConfig.Builder> {
 
-        private final static Pattern ALL = Pattern.compile(".*");
-        private final static Replacement REPLACEMENT = new Replacement();
+        private static final Replacement REPLACEMENT = new Replacement();
 
         @Override
         public void accept(TextReplacementConfig.Builder builder) {
             builder
-                .match(ALL)
+                .match(Legacy.ALL_PATTERN)
                 .replacement(REPLACEMENT);
         }
 
     }
 
-    private final static class Replacement implements BiFunction<MatchResult, TextComponent.Builder, ComponentLike> {
+    private static final class Replacement implements BiFunction<MatchResult, TextComponent.Builder, ComponentLike> {
 
         @Override
         public ComponentLike apply(MatchResult matchResult, TextComponent.Builder builder) {
-            return Legacy.LEGACY_SERIALIZER.deserialize(Legacy.colorShadow(matchResult.group()));
+            return Legacy.deshadow(Legacy.LEGACY_SERIALIZER.deserialize(matchResult.group()));
         }
 
     }
-
-
 
 }

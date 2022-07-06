@@ -2,8 +2,8 @@ package com.eternalcode.formatter;
 
 public interface ChatSettings {
 
-    boolean preFormatting();
+    boolean isPreFormatting();
 
-    String format(String rank);
+    String getRawFormat(String rank);
 
 }

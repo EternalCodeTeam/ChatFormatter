@@ -11,17 +11,17 @@ import java.util.regex.Pattern;
 
 public class Template {
 
-    private static final String TEMPLATE = "$%s(%s) -> '%s'";
-    private static final String ARGUMENT = "$%s";
-    private static final String SEPARATOR = ", ";
+    private static final String TEMPLATE_FORMAT = "$%s(%s) -> '%s'";
+    private static final String ARGUMENT_FORMAT = "$%s";
+    private static final String SEPARATOR_FORMAT = ", ";
 
-    public static final Pattern TEMPLATE_EXECUTE = Pattern.compile("\\$(\\w+)\\(([^()]+(?:,\\s*[^()]+)*)\\)");
-    private static final Pattern TEMPLATE_REGEX = Pattern.compile("^\\$(\\w+)\\((\\$\\w+(?:,\\s*\\$\\w+)*)\\)\\s*->\\s*'(.*)'$", Pattern.CASE_INSENSITIVE);
+    public static final Pattern TEMPLATE_INVOKE_PATTERN = Pattern.compile("\\$(\\w+)\\(([^()]+(?:,\\s*[^()]+){0,250})\\)");
+    private static final Pattern TEMPLATE_PARSE_PATTERN = Pattern.compile("^\\$(\\w+)\\((\\$\\w+(?:,\\s*\\$\\w+){0,250})\\)\\s*->\\s*'(.*)'$", Pattern.CASE_INSENSITIVE);
 
     private final String name;
     private final List<String> arguments;
     private final String content;
-
+    
     private Template(String name, List<String> arguments, String content) {
         this.name = name;
         this.arguments = arguments;
@@ -41,12 +41,12 @@ public class Template {
     }
 
     public String apply(String text) {
-        Matcher matcher = Template.TEMPLATE_EXECUTE.matcher(text);
+        Matcher matcher = Template.TEMPLATE_INVOKE_PATTERN.matcher(text);
 
         while (matcher.find()) {
-            String name = matcher.group(1);
+            String currentName = matcher.group(1);
 
-            if (!this.name.equals(name)) {
+            if (!this.name.equals(currentName)) {
                 continue;
             }
 
@@ -70,14 +70,14 @@ public class Template {
             String key = this.arguments.get(index);
             String value = toInject.get(index);
 
-            template = template.replace(ARGUMENT.formatted(key), value);
+            template = template.replace(ARGUMENT_FORMAT.formatted(key), value);
         }
 
         return template;
     }
 
     public static Result<Template, String> parse(String text) {
-        Matcher matcher = TEMPLATE_REGEX.matcher(text);
+        Matcher matcher = TEMPLATE_PARSE_PATTERN.matcher(text);
 
         if (!matcher.matches()) {
             return Result.error("Invalid syntax: " + text);
@@ -128,7 +128,7 @@ public class Template {
 
     @Override
     public String toString() {
-        return String.format(TEMPLATE, name, Joiner.on(SEPARATOR).join(this.arguments, arg -> String.format(ARGUMENT, arg)), this.content);
+        return String.format(TEMPLATE_FORMAT, name, Joiner.on(SEPARATOR_FORMAT).join(this.arguments, arg -> String.format(ARGUMENT_FORMAT, arg)), this.content);
     }
 
 }

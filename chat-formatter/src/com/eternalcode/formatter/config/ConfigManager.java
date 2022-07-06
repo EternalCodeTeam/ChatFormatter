@@ -32,10 +32,10 @@ public class ConfigManager {
         Resource resource = Source.of(this.dataFolder, file);
 
         this.cdn.load(resource, config)
-            .orElseThrow(RuntimeException::new);
+            .orThrow(RuntimeException::new);
 
         this.cdn.render(config, resource)
-            .orElseThrow(RuntimeException::new);
+            .orThrow(RuntimeException::new);
     }
 
     public PluginConfig getPluginConfig() {

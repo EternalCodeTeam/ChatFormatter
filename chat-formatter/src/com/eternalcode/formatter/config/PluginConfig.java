@@ -73,12 +73,12 @@ public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRep
 
 
     @Override
-    public boolean preFormatting() {
+    public boolean isPreFormatting() {
         return preFormatting;
     }
 
     @Override
-    public String format(String rank) {
+    public String getRawFormat(String rank) {
         return format.getOrDefault(rank, defaultFormat);
     }
 

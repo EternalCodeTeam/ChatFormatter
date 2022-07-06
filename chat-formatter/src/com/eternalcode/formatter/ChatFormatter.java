@@ -6,7 +6,6 @@ import com.eternalcode.formatter.template.TemplateService;
 
 public interface ChatFormatter {
 
-
     PlaceholderRegistry getPlaceholderRegistry();
 
     TemplateService getTemplateService();
@@ -14,4 +13,5 @@ public interface ChatFormatter {
     ChatRankProvider getRankProvider();
 
     ChatPreparatoryService getChatPreparatoryService();
+
 }

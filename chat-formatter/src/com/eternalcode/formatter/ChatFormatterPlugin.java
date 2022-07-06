@@ -4,7 +4,8 @@ import com.eternalcode.formatter.config.ConfigManager;
 import com.eternalcode.formatter.config.PluginConfig;
 import com.eternalcode.formatter.hook.PlaceholderAPIStack;
 import com.eternalcode.formatter.hook.VaultRankProvider;
-import com.eternalcode.formatter.legacy.LegacyProcessor;
+import com.eternalcode.formatter.legacy.LegacyPostProcessor;
+import com.eternalcode.formatter.legacy.LegacyPreProcessor;
 import com.eternalcode.formatter.placeholder.PlaceholderRegistry;
 import com.eternalcode.formatter.preparatory.ChatPreparatoryService;
 import com.eternalcode.formatter.template.TemplateService;
@@ -13,9 +14,7 @@ import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
 import net.kyori.adventure.platform.AudienceProvider;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -55,7 +54,8 @@ public class ChatFormatterPlugin extends JavaPlugin implements ChatFormatter {
 
         this.audienceProvider = BukkitAudiences.create(this);
         this.miniMessage = MiniMessage.builder()
-            .postProcessor(new LegacyProcessor())
+            .preProcessor(new LegacyPreProcessor())
+            .postProcessor(new LegacyPostProcessor())
             .build();
 
         this.liteCommands = LiteBukkitFactory.builder(this.getServer(), "chat-formatter")
