@@ -34,7 +34,6 @@ module.exports = {
           collapsable: true,
           children: [
             '',
-            'using-vue',
           ]
         }
       ],
