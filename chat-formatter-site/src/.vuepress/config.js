@@ -8,15 +8,17 @@ module.exports = {
   head: [
     ['meta', { name: 'theme-color', content: '#3eaf7c' }],
     ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
-    ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }]
+    ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }],
+      ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }]
   ],
 
   themeConfig: {
     repo: '',
-    editLinks: false,
-    docsDir: '',
+    editLinks: true,
+    docsDir: 'chat-formatter-site',
     editLinkText: '',
-    lastUpdated: false,
+    smoothScroll: true,
+    lastUpdated: true,
     nav: [
       {
         text: 'Guide',
@@ -39,12 +41,17 @@ module.exports = {
       ],
     }
   },
-
-  /**
-   * Apply plugins，ref：https://v1.vuepress.vuejs.org/zh/plugin/
-   */
+    
   plugins: [
-    '@vuepress/plugin-back-to-top',
-    '@vuepress/plugin-medium-zoom',
+      ['@vuepress/back-to-top', true],
+      [
+          '@vuepress/pwa',
+          {
+              serviceWorker: true,
+              updatePopup: true
+          }
+      ],
+      ['@vuepress/medium-zoom', true],
+      ['vuepress-plugin-flowchart']
   ]
 }
