@@ -16,7 +16,7 @@ module.exports = {
     repo: '',
     editLinks: true,
     docsDir: 'chat-formatter-site',
-    editLinkText: '',
+    editLinkText: 'Edit this page on GitHub',
     smoothScroll: true,
     lastUpdated: true,
     nav: [
@@ -41,7 +41,7 @@ module.exports = {
       ],
     }
   },
-    
+
   plugins: [
       ['@vuepress/back-to-top', true],
       [
