@@ -6,9 +6,9 @@ updates:
      interval: daily
      time: "15:00"
      timezone: "Europe/Warsaw"
-  - package-ecosystem: "npm"
-    directory: "/chat-formatter-site"
-    schedule:
+ - package-ecosystem: "npm"
+   directory: "/chat-formatter-site"
+   schedule:
      interval: daily
      time: "15:00"
      timezone: "Europe/Warsaw"
