@@ -106,7 +106,7 @@ class ChatController implements Listener {
 
 
     private TagResolver.Single displaynameTag(AsyncPlayerChatEvent event) {
-        return Placeholder.parsed("displayname", event.getPlayer().getDisplayName());
+        return Placeholder.parsed("displayname", Legacy.clearSection(event.getPlayer().getDisplayName()));
     }
 
 }

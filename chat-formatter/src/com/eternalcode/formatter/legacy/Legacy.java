@@ -26,7 +26,7 @@ public final class Legacy {
         .useUnusualXRepeatedCharacterHexFormat()
         .build();
 
-    static String clearSection(String text) {
+    public static String clearSection(String text) {
         return text.replace(SECTION, AMPERSAND);
     }
 
