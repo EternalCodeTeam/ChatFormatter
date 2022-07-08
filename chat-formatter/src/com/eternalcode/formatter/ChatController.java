@@ -99,7 +99,7 @@ class ChatController implements Listener {
         String message = event.getMessage();
         Player player = event.getPlayer();
 
-        return player.hasPermission("eternalmc.chat.color")
+        return player.hasPermission("chatformatter.chat.color")
                 ? Placeholder.parsed("message", message)
                 : Placeholder.unparsed("message", Legacy.shadow(message));
     }
