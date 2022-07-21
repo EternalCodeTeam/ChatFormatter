@@ -59,13 +59,7 @@ public class ChatFormatterPlugin extends JavaPlugin implements ChatFormatter {
             .build();
 
         this.liteCommands = LiteBukkitFactory.builder(this.getServer(), "chat-formatter")
-            .typeBind(PluginConfig.class, () -> pluginConfig)
-            .typeBind(ConfigManager.class, () -> this.configManager)
-            .typeBind(PlaceholderRegistry.class, () -> this.placeholderRegistry)
-            .typeBind(MiniMessage.class, () -> this.miniMessage)
-            .typeBind(AudienceProvider.class, () -> this.audienceProvider)
-
-            .command(ChatFormatterCommand.class)
+            .commandInstance(new ChatFormatterCommand(this.configManager, this.audienceProvider, this.miniMessage))
             .register();
 
         // bStats metrics
