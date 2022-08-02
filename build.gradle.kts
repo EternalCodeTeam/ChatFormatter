@@ -145,7 +145,7 @@ project(":chat-formatter-test") {
         testImplementation("net.kyori:adventure-platform-bukkit:4.1.1")
         testImplementation("net.kyori:adventure-text-minimessage:4.11.0")
         testImplementation("net.dzikoysk:cdn:1.13.22")
-        testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
+        testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
         testImplementation("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
         testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.0")
     }
