@@ -14,7 +14,8 @@ subprojects {
         mavenLocal()
         maven { url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") }
         maven { url = uri("https://repo.panda-lang.org/releases") }
-        maven { url = uri("https://papermc.io/repo/repository/maven-public/") }
+        maven { url = uri("https://repo.papermc.io/repository/maven-public/") }
+        maven { url = uri("https://repo.eternalcode.pl/releases") }
         maven { url = uri("https://repo.extendedclip.com/content/repositories/placeholderapi/") }
         maven { url = uri("https://jitpack.io") }
     }
@@ -53,7 +54,7 @@ project(":chat-formatter") {
 
     dependencies {
         // Spigot API
-        compileOnly("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
+        compileOnly("org.spigotmc:spigot-api:1.19.1-R0.1-SNAPSHOT")
 
         // Kyori Adventure & MiniMessage
         implementation("net.kyori:adventure-platform-bukkit:4.1.1")
@@ -74,20 +75,22 @@ project(":chat-formatter") {
     tasks.withType <ShadowJar> {
         archiveFileName.set("ChatFormatter v${project.version}.jar")
 
-        exclude("org/intellij/lang/annotations/**")
-        exclude("org/jetbrains/annotations/**")
-        exclude("META-INF/**")
-        exclude("javax/**")
+        exclude("org/intellij/lang/annotations/**","org/jetbrains/annotations/**","META-INF/**","javax/**")
 
         mergeServiceFiles()
         minimize()
 
-        relocate("net.dzikoysk", "com.eternalcode.formatter.libs.net.dzikoysk")
-        relocate("dev.rollczi", "com.eternalcode.formatter.libs.dev.rollczi")
-        relocate("panda", "com.eternalcode.formatter.libs.org.panda")
-        relocate("org.panda_lang", "com.eternalcode.formatter.libs.org.panda")
-        relocate("net.kyori", "com.eternalcode.formatter.libs.net.kyori")
-        relocate("org.bstats", "com.eternalcode.formatter.libs.org.bstats")
+        val prefix = "com.eternalcode.formatter.libs"
+        listOf(
+            "net.dzikoysk",
+            "dev.rollczi",
+            "panda",
+            "org.panda_lang",
+            "net.kyori",
+            "org.bstats"
+        ).forEach { pack ->
+            relocate(pack, "$prefix.$pack")
+        }
     }
 
     tasks {
@@ -119,10 +122,7 @@ project(":paper-support") {
     tasks.withType <ShadowJar> {
         archiveFileName.set("ChatFormatter-PaperSupport v${project.version}.jar")
 
-        exclude("org/intellij/lang/annotations/**")
-        exclude("org/jetbrains/annotations/**")
-        exclude("META-INF/**")
-        exclude("javax/**")
+        exclude("org/intellij/lang/annotations/**","org/jetbrains/annotations/**","META-INF/**","javax/**")
 
         mergeServiceFiles()
         minimize()
