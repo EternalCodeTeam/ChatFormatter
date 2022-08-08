@@ -61,7 +61,7 @@ project(":chat-formatter") {
         implementation("net.kyori:adventure-text-minimessage:4.11.0")
 
         // LiteCommands & CDN
-        implementation("dev.rollczi.litecommands:bukkit:2.4.0")
+        implementation("dev.rollczi.litecommands:bukkit:2.4.2")
         implementation("net.dzikoysk:cdn:1.13.22")
 
         // bStats
@@ -69,7 +69,7 @@ project(":chat-formatter") {
 
         // PlaceholderAPI & Vault
         compileOnly("me.clip:placeholderapi:2.11.2")
-        compileOnly("com.github.MilkBowl:VaultAPI:1.7")
+        compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
     }
 
     tasks.withType <ShadowJar> {
