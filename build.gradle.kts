@@ -61,7 +61,7 @@ project(":chat-formatter") {
         implementation("net.kyori:adventure-text-minimessage:4.11.0")
 
         // LiteCommands & CDN
-        implementation("dev.rollczi.litecommands:bukkit:2.4.0")
+        implementation("dev.rollczi.litecommands:bukkit:2.4.2")
         implementation("net.dzikoysk:cdn:1.13.22")
 
         // bStats
