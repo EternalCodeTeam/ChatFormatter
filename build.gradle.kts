@@ -68,7 +68,7 @@ project(":chat-formatter") {
         implementation("org.bstats:bstats-bukkit:3.0.0")
 
         // PlaceholderAPI & Vault
-        compileOnly("me.clip:placeholderapi:2.11.1")
+        compileOnly("me.clip:placeholderapi:2.11.2")
         compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
     }
 
