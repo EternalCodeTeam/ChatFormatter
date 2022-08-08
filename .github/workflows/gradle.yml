@@ -33,12 +33,12 @@ jobs:
       - name: Build the paper-support jar
         run: './gradlew paper-support:shadowJar'
       - name: Upload a chat-formatter build artifact
-        uses: actions/upload-artifact@v3.0.0
+        uses: actions/upload-artifact@v3.1.0
         with:
           name: 'Successfully build ChatFormatter JDK${{ matrix.jdk }}'
           path: chat-formatter/build/libs/*.jar
       - name: Upload a paper-support build artifact
-        uses: actions/upload-artifact@v3.0.0
+        uses: actions/upload-artifact@v3.1.0
         with:
             name: 'Successfully build paper-support JDK${{ matrix.jdk }}'
             path: paper-support/build/libs/*.jar
