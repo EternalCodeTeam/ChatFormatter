@@ -69,7 +69,7 @@ project(":chat-formatter") {
 
         // PlaceholderAPI & Vault
         compileOnly("me.clip:placeholderapi:2.11.1")
-        compileOnly("com.github.MilkBowl:VaultAPI:1.7")
+        compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
     }
 
     tasks.withType <ShadowJar> {
