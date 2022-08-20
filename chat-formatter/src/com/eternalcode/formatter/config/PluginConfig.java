@@ -14,13 +14,13 @@ import java.util.Map;
 
 public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRepository {
 
-    @Description({ StringUtils.EMPTY })
+    @Description({ " " })
     @Description("#    ____ _           _   _____      ChatFormatter       _   _            ")
     @Description("#   / ___| |__   __ _| |_|  ___|__  _ __ _ __ ___   __ _| |_| |_ ___ _ __ ")
     @Description("#  | |   | '_ \\ / _` | __| |_ / _ \\| '__| '_ ` _ \\ / _` | __| __/ _ \\ '__|")
     @Description("#  | |___| | | | (_| | |_|  _| (_) | |  | | | | | | (_| | |_| ||  __/ |   ")
     @Description("#   \\____|_| |_|\\__,_|\\__|_|  \\___/|_|  |_| |_| |_|\\__,_|\\__|\\__\\___|_|   ")
-    @Description({ StringUtils.EMPTY })
+    @Description({ " " })
 
     @Description("# Do you want to use pre chat format? (Other plugins could join custom prefixes etc.)")
     @Description("# INFO: This option requires to use custom badges like {displayname} and {message} in each message.")
@@ -28,9 +28,9 @@ public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRep
 
     public String defaultFormat = "{displayname} {arrow_right} {message}";
 
-    @Description({ StringUtils.EMPTY, "# Chat format for ranks (Vault) Support mini-messages and legacy colors" })
-    @Description({ StringUtils.EMPTY, "# We're recommending to use webui for mini-messages: https://webui.adventure.kyori.net/" })
-    @Description({ StringUtils.EMPTY, "# documentation is here: https://docs.adventure.kyori.net/minimessage/format.html" })
+    @Description({ " ", "# Chat format for ranks (Vault) Support mini-messages and legacy colors" })
+    @Description({ " ", "# We're recommending to use webui for mini-messages: https://webui.adventure.kyori.net/" })
+    @Description({ " ", "# documentation is here: https://docs.adventure.kyori.net/minimessage/format.html" })
 
     @Description({
         "# Example usages:",
@@ -55,12 +55,12 @@ public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRep
         .build();
 
 
-    @Description({ StringUtils.EMPTY, "# It is used to shorten the text even more and keep the clean file!" })
+    @Description({ " ", "# It is used to shorten the text even more and keep the clean file!" })
     public List<Template> templates = new ImmutableList.Builder<Template>()
         .add(Template.of("template", List.of("rank", "color"), "$rank $color{displayname} &8{arrow_right} $color{message}"))
         .build();
 
-    @Description({ StringUtils.EMPTY, "# Placeholders, it allows you to make a shorter text, you can use some prefixes, characters etc. " })
+    @Description({ " ", "# Placeholders, it allows you to make a shorter text, you can use some prefixes, characters etc. " })
     public Map<String, String> placeholders = new ImmutableMap.Builder<String, String>()
         .put("{displayname}", "<displayname>")
         .put("{message}", "<message>")
