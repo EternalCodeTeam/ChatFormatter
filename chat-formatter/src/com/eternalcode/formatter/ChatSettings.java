@@ -4,7 +4,7 @@ public interface ChatSettings {
 
     boolean isPreFormatting();
 
-    boolean isRelationalPlaceholders();
+    boolean isRelationalPlaceholdersEnabled();
 
     String getRawFormat(String rank);
 

@@ -25,8 +25,6 @@ public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRep
     @Description("# INFO: This option requires to use custom badges like {displayname} and {message} in each message.")
     public boolean preFormatting = false;
 
-    public boolean relationalPlaceholders = false;
-
     public String defaultFormat = "{displayname} {arrow_right} {message}";
 
     @Description({ " ", "# Chat format for ranks (Vault) Support mini-messages and legacy colors" })
@@ -72,6 +70,9 @@ public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRep
         .put("{arrow_left}", "«")
         .build();
 
+    @Description({ " ", "# Do you want to enable PlaceholderAPI relational placeholders?" })
+    public boolean relationalPlaceholdersEnabled = false;
+
 
     @Override
     public boolean isPreFormatting() {
@@ -79,8 +80,8 @@ public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRep
     }
 
     @Override
-    public boolean isRelationalPlaceholders() {
-        return relationalPlaceholders;
+    public boolean isRelationalPlaceholdersEnabled() {
+        return relationalPlaceholdersEnabled;
     }
 
     @Override

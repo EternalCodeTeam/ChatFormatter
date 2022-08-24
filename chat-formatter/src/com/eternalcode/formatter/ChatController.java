@@ -73,7 +73,7 @@ class ChatController implements Listener {
 
         message = this.templateService.applyTemplates(message);
 
-        if (this.settings.isRelationalPlaceholders()) {
+        if (this.settings.isRelationalPlaceholdersEnabled()) {
             Map<Player, Component> messageComponents = new LinkedHashMap<>();
 
             for (Player recipient : new HashSet<>(event.getRecipients())) {
