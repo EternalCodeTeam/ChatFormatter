@@ -19,6 +19,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 
 class ChatController implements Listener {
@@ -69,30 +72,66 @@ class ChatController implements Listener {
             : this.settings.getRawFormat(this.rankProvider.getRank(player));
 
         message = this.templateService.applyTemplates(message);
-        message = this.placeholderRegistry.format(message, player);
 
-        Component messageComponent = miniMessage.deserialize(message, this.messageTag(event), this.displaynameTag(event));
+        if (this.settings.isRelationalPlaceholders()) {
+            Map<Player, Component> messageComponents = new LinkedHashMap<>();
 
-        Set<Player> recipients = event.getRecipients();
+            for (Player recipient : new HashSet<>(event.getRecipients())) {
+                String recipientMessage = this.placeholderRegistry.format(message, player, recipient);
 
-        if (!preparatoryService.isEmpty()) {
-            ChatPrepareResult result = preparatoryService.prepare(player, recipients, GSON.serialize(messageComponent), event.getMessage());
+                Component recipientMessageComponent = miniMessage.deserialize(recipientMessage, this.messageTag(event), this.displaynameTag(event));
 
-            if (result.isCancelled()) {
-                return;
+                if (!preparatoryService.isEmpty()) {
+                    ChatPrepareResult result = preparatoryService.prepare(player, new HashSet<>(Set.of(recipient)), GSON.serialize(recipientMessageComponent), event.getMessage());
+
+                    if (result.isCancelled()) {
+                        return;
+                    }
+
+                    if (!result.getReceivers().contains(recipient)) {
+                        continue;
+                    }
+
+                    recipientMessageComponent = GSON.deserialize(result.getRawMessage());
+                }
+
+                messageComponents.put(recipient, recipientMessageComponent);
             }
 
-            messageComponent = GSON.deserialize(result.getRawMessage());
-            recipients = result.getReceivers();
+            for (Map.Entry<Player, Component> entry : messageComponents.entrySet()) {
+                Player recipient = entry.getKey();
+                Component messageComponent = entry.getValue();
+
+                Audience recipientAudience = this.audienceProvider.player(recipient.getUniqueId());
+
+                recipientAudience.sendMessage(identity, messageComponent);
+            }
+        } else {
+            message = this.placeholderRegistry.format(message, player);
+
+            Component messageComponent = miniMessage.deserialize(message, this.messageTag(event), this.displaynameTag(event));
+
+            Set<Player> recipients = event.getRecipients();
+
+            if (!preparatoryService.isEmpty()) {
+                ChatPrepareResult result = preparatoryService.prepare(player, recipients, GSON.serialize(messageComponent), event.getMessage());
+
+                if (result.isCancelled()) {
+                    return;
+                }
+
+                messageComponent = GSON.deserialize(result.getRawMessage());
+                recipients = result.getReceivers();
+            }
+
+            for (Player recipient : recipients) {
+                Audience recipientAudience = this.audienceProvider.player(recipient.getUniqueId());
+
+                recipientAudience.sendMessage(identity, messageComponent);
+            }
+
+            this.audienceProvider.console().sendMessage(identity, messageComponent);
         }
-
-        for (Player recipient : recipients) {
-            Audience recipientAudience = this.audienceProvider.player(recipient.getUniqueId());
-
-            recipientAudience.sendMessage(identity, messageComponent);
-        }
-
-        this.audienceProvider.console().sendMessage(identity, messageComponent);
     }
 
     private TagResolver.Single messageTag(AsyncPlayerChatEvent event) {

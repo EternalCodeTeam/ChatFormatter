@@ -1,13 +1,12 @@
 package com.eternalcode.formatter.config;
 
+import com.eternalcode.formatter.ChatSettings;
+import com.eternalcode.formatter.placeholder.PlaceholderStack;
 import com.eternalcode.formatter.template.Template;
 import com.eternalcode.formatter.template.TemplateRepository;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import net.dzikoysk.cdn.entity.Description;
-import panda.utilities.StringUtils;
-import com.eternalcode.formatter.ChatSettings;
-import com.eternalcode.formatter.placeholder.PlaceholderStack;
 
 import java.util.List;
 import java.util.Map;
@@ -25,6 +24,8 @@ public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRep
     @Description("# Do you want to use pre chat format? (Other plugins could join custom prefixes etc.)")
     @Description("# INFO: This option requires to use custom badges like {displayname} and {message} in each message.")
     public boolean preFormatting = false;
+
+    public boolean relationalPlaceholders = false;
 
     public String defaultFormat = "{displayname} {arrow_right} {message}";
 
@@ -75,6 +76,11 @@ public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRep
     @Override
     public boolean isPreFormatting() {
         return preFormatting;
+    }
+
+    @Override
+    public boolean isRelationalPlaceholders() {
+        return relationalPlaceholders;
     }
 
     @Override

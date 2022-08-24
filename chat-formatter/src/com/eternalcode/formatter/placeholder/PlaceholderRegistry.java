@@ -11,9 +11,11 @@ public class PlaceholderRegistry {
 
     private final Map<String, Placeholder> placeholders = new HashMap<>();
     private final Map<String, PlayerPlaceholder> playerPlaceholders = new HashMap<>();
+    private final Map<String, DoublePlayerPlaceholder> doublePlayerPlaceholders = new HashMap<>();
 
     private final Set<PlaceholderStack> stacks = new HashSet<>();
     private final Set<PlayerPlaceholderStack> playerStacks = new HashSet<>();
+    private final Set<DoublePlayerPlaceholderStack> doublePlayerStacks = new HashSet<>();
 
     public void placeholder(String key, Placeholder placeholder) {
         this.placeholders.put(key, placeholder);
@@ -23,12 +25,20 @@ public class PlaceholderRegistry {
         this.playerPlaceholders.put(key, placeholder);
     }
 
+    public void doublePlayerPlaceholder(String key, DoublePlayerPlaceholder placeholder) {
+        this.doublePlayerPlaceholders.put(key, placeholder);
+    }
+
     public void stack(PlaceholderStack stack) {
         this.stacks.add(stack);
     }
 
     public void playerStack(PlayerPlaceholderStack stack) {
         this.playerStacks.add(stack);
+    }
+
+    public void doublePlayerStack(DoublePlayerPlaceholderStack stack) {
+        this.doublePlayerStacks.add(stack);
     }
 
     public String format(String text) {
@@ -53,6 +63,18 @@ public class PlaceholderRegistry {
         }
 
         return this.format(text);
+    }
+
+    public String format(String text, Player target, Player otherTarget) {
+        for (DoublePlayerPlaceholderStack stack : doublePlayerStacks) {
+            text = stack.apply(text, target, otherTarget);
+        }
+
+        for (Map.Entry<String, DoublePlayerPlaceholder> entry : doublePlayerPlaceholders.entrySet()) {
+            text = text.replace(entry.getKey(), entry.getValue().extract(target, otherTarget));
+        }
+
+        return this.format(text, target);
     }
 
 }

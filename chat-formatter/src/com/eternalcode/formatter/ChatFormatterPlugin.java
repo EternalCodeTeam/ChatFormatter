@@ -48,6 +48,7 @@ public class ChatFormatterPlugin extends JavaPlugin implements ChatFormatter {
         this.placeholderRegistry = new PlaceholderRegistry();
         this.placeholderRegistry.stack(pluginConfig);
         this.placeholderRegistry.playerStack(new PlaceholderAPIStack());
+        this.placeholderRegistry.doublePlayerStack(new PlaceholderAPIStack());
         this.templateService = new TemplateService(pluginConfig);
         this.rankProvider = new VaultRankProvider(this.getServer());
         this.chatPreparatoryService = new ChatPreparatoryService();
