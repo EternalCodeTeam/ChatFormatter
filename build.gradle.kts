@@ -4,7 +4,7 @@ plugins {
     id("java-library")
     id("com.github.johnrengelman.shadow") version "7.1.2"
     id("net.minecrell.plugin-yml.bukkit") version "0.5.2"
-    id("xyz.jpenilla.run-paper") version "1.0.6"
+    id("xyz.jpenilla.run-paper") version "1.1.0"
 }
 
 subprojects {
@@ -16,12 +16,13 @@ subprojects {
         maven { url = uri("https://repo.panda-lang.org/releases") }
         maven { url = uri("https://repo.papermc.io/repository/maven-public/") }
         maven { url = uri("https://repo.eternalcode.pl/releases") }
+        maven { url = uri("https://repository.minecodes.pl/releases") }
         maven { url = uri("https://repo.extendedclip.com/content/repositories/placeholderapi/") }
         maven { url = uri("https://jitpack.io") }
     }
 
     group = "com.eternalcode.formatter"
-    version = "1.0.2"
+    version = "1.0.3"
 
     apply(plugin = "java-library")
     apply(plugin = "com.github.johnrengelman.shadow")
@@ -54,14 +55,14 @@ project(":chat-formatter") {
 
     dependencies {
         // Spigot API
-        compileOnly("org.spigotmc:spigot-api:1.19.1-R0.1-SNAPSHOT")
+        compileOnly("org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT")
 
         // Kyori Adventure & MiniMessage
         implementation("net.kyori:adventure-platform-bukkit:4.1.2")
         implementation("net.kyori:adventure-text-minimessage:4.11.0")
 
         // LiteCommands & CDN
-        implementation("dev.rollczi.litecommands:bukkit:2.5.0")
+        implementation("dev.rollczi.litecommands:bukkit:2.6.0")
         implementation("net.dzikoysk:cdn:1.14.1")
 
         // bStats
@@ -72,10 +73,10 @@ project(":chat-formatter") {
         compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
     }
 
-    tasks.withType <ShadowJar> {
+    tasks.withType<ShadowJar> {
         archiveFileName.set("ChatFormatter v${project.version}.jar")
 
-        exclude("org/intellij/lang/annotations/**","org/jetbrains/annotations/**","META-INF/**","javax/**")
+        exclude("org/intellij/lang/annotations/**", "org/jetbrains/annotations/**", "META-INF/**", "javax/**")
 
         mergeServiceFiles()
         minimize()
@@ -119,10 +120,10 @@ project(":paper-support") {
         compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
     }
 
-    tasks.withType <ShadowJar> {
+    tasks.withType<ShadowJar> {
         archiveFileName.set("ChatFormatter-PaperSupport v${project.version}.jar")
 
-        exclude("org/intellij/lang/annotations/**","org/jetbrains/annotations/**","META-INF/**","javax/**")
+        exclude("org/intellij/lang/annotations/**", "org/jetbrains/annotations/**", "META-INF/**", "javax/**")
 
         mergeServiceFiles()
         minimize()
