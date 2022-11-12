@@ -53,7 +53,7 @@ project(":chat-formatter") {
 
     dependencies {
         // Spigot API
-        compileOnly("org.spigotmc:spigot-api:1.19.1-R0.1-SNAPSHOT")
+        compileOnly("org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT")
 
         // Kyori Adventure & MiniMessage
         implementation("net.kyori:adventure-platform-bukkit:4.1.2")
@@ -71,10 +71,10 @@ project(":chat-formatter") {
         compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
     }
 
-    tasks.withType <ShadowJar> {
+    tasks.withType<ShadowJar> {
         archiveFileName.set("ChatFormatter v${project.version}.jar")
 
-        exclude("org/intellij/lang/annotations/**","org/jetbrains/annotations/**","META-INF/**","javax/**")
+        exclude("org/intellij/lang/annotations/**", "org/jetbrains/annotations/**", "META-INF/**", "javax/**")
 
         mergeServiceFiles()
         minimize()
@@ -118,10 +118,10 @@ project(":paper-support") {
         compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
     }
 
-    tasks.withType <ShadowJar> {
+    tasks.withType<ShadowJar> {
         archiveFileName.set("ChatFormatter-PaperSupport v${project.version}.jar")
 
-        exclude("org/intellij/lang/annotations/**","org/jetbrains/annotations/**","META-INF/**","javax/**")
+        exclude("org/intellij/lang/annotations/**", "org/jetbrains/annotations/**", "META-INF/**", "javax/**")
 
         mergeServiceFiles()
         minimize()
