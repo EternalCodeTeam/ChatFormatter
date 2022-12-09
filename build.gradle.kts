@@ -56,7 +56,7 @@ project(":chat-formatter") {
         compileOnly("org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT")
 
         // Kyori Adventure & MiniMessage
-        implementation("net.kyori:adventure-platform-bukkit:4.1.2")
+        implementation("net.kyori:adventure-platform-bukkit:4.2.0")
         implementation("net.kyori:adventure-text-minimessage:4.12.0")
 
         // LiteCommands & CDN
@@ -141,7 +141,7 @@ project(":chat-formatter-test") {
     dependencies {
         testImplementation(project(":chat-formatter"))
 
-        testImplementation("net.kyori:adventure-platform-bukkit:4.1.2")
+        testImplementation("net.kyori:adventure-platform-bukkit:4.2.0")
         testImplementation("net.kyori:adventure-text-minimessage:4.12.0")
         testImplementation("net.dzikoysk:cdn:1.14.1")
         testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
