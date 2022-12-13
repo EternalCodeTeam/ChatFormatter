@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
 import java.util.concurrent.TimeUnit;
 
 @Section(route = "chatformatter")
-@Permission("eternalmc.chat.reload")
+@Permission("chatformatter.chat.reload")
 class ChatFormatterCommand {
 
     private final ConfigManager configManager;

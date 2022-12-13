@@ -24,6 +24,11 @@
 - [Web UI](https://webui.adventure.kyori.net)
 - [MiniMessages Format](https://docs.adventure.kyori.net/minimessage/format.html) 
 
+### Permissions:
+- chatformatter.chat.color - Chat colors for players
+- chatformatter.chat.reload - Reload
+
+
 
 ### config.yml
 ```yaml
