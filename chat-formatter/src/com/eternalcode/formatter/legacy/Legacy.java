@@ -19,7 +19,7 @@ public final class Legacy {
     private Legacy() {
     }
 
-    public static final LegacyComponentSerializer LEGACY_SERIALIZER = LegacyComponentSerializer.builder()
+    public static final LegacyComponentSerializer LEGACY_AMPERSAND_SERIALIZER = LegacyComponentSerializer.builder()
         .hexColors()
         .character('&')
         .hexCharacter('#')
@@ -42,7 +42,7 @@ public final class Legacy {
             .replace("%2$s", "<message>");
     }
 
-    public static String shadow(String text) {
+    public static String ampersandToPlaceholder(String text) {
         StringBuilder builder = new StringBuilder(text);
         Matcher colorMatcher = AMPERSAND_PATTERN.matcher(builder.toString());
 
@@ -51,19 +51,19 @@ public final class Legacy {
             String color = colorMatcher.group(0);
 
             builder.replace(colorMatcher.start() + matched, colorMatcher.end() + matched, SHADOW + color.charAt(1));
-            matched++;
+            matched += SHADOW.length() - 1;
         }
 
         return builder.toString();
     }
 
-    static Component deshadow(Component component) {
+    static Component placeholderToAmpersand(Component component) {
         return component.replaceText(shadowBuilder -> shadowBuilder
             .match(ALL_PATTERN)
-            .replacement((matchResult, builder) -> Component.text(Legacy.deshadow(matchResult.group()))));
+            .replacement((matchResult, builder) -> Component.text(Legacy.placeholderToAmpersand(matchResult.group()))));
     }
 
-    static String deshadow(String text) {
+    static String placeholderToAmpersand(String text) {
         Matcher matcher = SHADOW_PATTERN.matcher(text);
         StringBuilder builder = new StringBuilder(text);
 
@@ -71,7 +71,8 @@ public final class Legacy {
         while (matcher.find()) {
             int length = (matcher.end() - matcher.start()) - 1;
             builder.replace(matcher.start() + matched, matcher.end() + matched - 1, String.valueOf( AMPERSAND ));
-            matched += length;
+            matched -= length;
+            matched += 1;
         }
 
         return builder.toString();
