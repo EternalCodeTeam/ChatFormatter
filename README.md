@@ -25,10 +25,26 @@
 - [MiniMessages Format](https://docs.adventure.kyori.net/minimessage/format.html) 
 
 ### Permissions:
-- chatformatter.chat.color - Chat colors for players
-- chatformatter.chat.reload - Reload
-
-
+- chat.color - `<red>`, `<blue>`, etc. tags.
+- chat.legacycolor - Allows the use of legacy color codes, such as `&c`, `&4`, `&l`, etc.
+- chat.decorations.* - `<bold>`, `<italic>`, `<underlined>`, `<strikethrough>`, and `<obfuscated>` tags.
+- chat.decorations.bold - `<bold>`
+- chat.decorations.italic - `<italic>`
+- chat.decorations.underlined - `<underlined>`
+- chat.decorations.strikethrough - `<strikethrough>`
+- chat.decorations.obfuscated - `<obfuscated>`
+- chat.reset - `<reset>`
+- chat.gradient - `<gradient>`
+- chat.hover - `<hover>`
+- chat.click - `<click>`
+- chat.insert - `<insertion>`
+- chat.font - `<font>`
+- chat.transition - `<transition>`
+- chat.translatable - `<lang>`
+- chat.selector - `<selector>`
+- chat.keybind - `<key>`
+- chat.newline - `<newline>`
+- chatformatter.chat.reload - reload the plugin `/chatformatter reload`
 
 ### config.yml
 ```yaml

@@ -4,7 +4,7 @@ import com.eternalcode.formatter.config.ConfigManager;
 import com.google.common.base.Stopwatch;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.platform.AudienceProvider;
 import net.kyori.adventure.text.Component;
@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 
 import java.util.concurrent.TimeUnit;
 
-@Section(route = "chatformatter")
+@Route(name = "chatformatter")
 @Permission("chatformatter.chat.reload")
 class ChatFormatterCommand {
 

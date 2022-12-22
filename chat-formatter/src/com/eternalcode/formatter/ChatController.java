@@ -47,7 +47,7 @@ class ChatController implements Listener {
         .put("chat.gradient", StandardTags.gradient())
         .put("chat.hover", StandardTags.hoverEvent())
         .put("chat.click", StandardTags.clickEvent())
-        .put("chat.insert", StandardTags.insertion())
+        .put("chat.insertion", StandardTags.insertion())
         .put("chat.font", StandardTags.font())
         .put("chat.transition", StandardTags.transition())
         .put("chat.translatable", StandardTags.translatable())
@@ -55,9 +55,6 @@ class ChatController implements Listener {
         .put("chat.keybind", StandardTags.keybind())
         .put("chat.newline", StandardTags.newline())
         .build();
-    /**
-     chat.color - 
-     */
 
     private static final GsonComponentSerializer GSON = GsonComponentSerializer.gson();
     private static final MiniMessage MESSAGE_DESERIALIZER = MiniMessage.builder()
