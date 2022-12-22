@@ -4,8 +4,10 @@ import com.eternalcode.formatter.legacy.Legacy;
 import com.eternalcode.formatter.placeholder.PlaceholderRegistry;
 import com.eternalcode.formatter.preparatory.ChatPreparatoryService;
 import com.eternalcode.formatter.preparatory.ChatPrepareResult;
+import com.eternalcode.formatter.adventure.PlayerSignedMessage;
 import com.eternalcode.formatter.template.TemplateService;
 import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.chat.ChatType;
 import net.kyori.adventure.identity.Identity;
 import net.kyori.adventure.platform.AudienceProvider;
 import net.kyori.adventure.text.Component;
@@ -86,13 +88,16 @@ class ChatController implements Listener {
             recipients = result.getReceivers();
         }
 
+        PlayerSignedMessage signedMessage = new PlayerSignedMessage(messageComponent, identity);
+        ChatType.Bound chatType = ChatType.CHAT.bind(Component.text("chat"));
+
         for (Player recipient : recipients) {
             Audience recipientAudience = this.audienceProvider.player(recipient.getUniqueId());
 
-            recipientAudience.sendMessage(identity, messageComponent);
+            recipientAudience.sendMessage(signedMessage, chatType);
         }
 
-        this.audienceProvider.console().sendMessage(identity, messageComponent);
+        this.audienceProvider.console().sendMessage(signedMessage, chatType);
     }
 
     private TagResolver.Single messageTag(AsyncPlayerChatEvent event) {
