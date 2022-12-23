@@ -20,7 +20,7 @@ subprojects {
     }
 
     group = "com.eternalcode.formatter"
-    version = "1.0.3"
+    version = "1.0.4"
 
     apply(plugin = "java-library")
     apply(plugin = "com.github.johnrengelman.shadow")
