@@ -33,27 +33,27 @@ import java.util.Set;
 
 class ChatController implements Listener {
 
-    private static final String PERMISSION_ALL = "chat.*";
-    private static final String PERMISSION_LEGACY = "chat.legacycolor";
+    private static final String PERMISSION_ALL = "chatformatter.*";
+    private static final String PERMISSION_LEGACY = "chatformatter.legacycolor";
     private static final Map<String, TagResolver> TAG_RESOLVERS_BY_PERMISSION = new ImmutableMap.Builder<String, TagResolver>()
-        .put("chat.color", StandardTags.color())
-        .put("chat.decorations.*", StandardTags.decorations())
-        .put("chat.decorations.bold", StandardTags.decorations(TextDecoration.BOLD))
-        .put("chat.decorations.italic", StandardTags.decorations(TextDecoration.ITALIC))
-        .put("chat.decorations.underlined", StandardTags.decorations(TextDecoration.UNDERLINED))
-        .put("chat.decorations.strikethrough", StandardTags.decorations(TextDecoration.STRIKETHROUGH))
-        .put("chat.decorations.obfuscated", StandardTags.decorations(TextDecoration.OBFUSCATED))
-        .put("chat.reset", StandardTags.reset())
-        .put("chat.gradient", StandardTags.gradient())
-        .put("chat.hover", StandardTags.hoverEvent())
-        .put("chat.click", StandardTags.clickEvent())
-        .put("chat.insertion", StandardTags.insertion())
-        .put("chat.font", StandardTags.font())
-        .put("chat.transition", StandardTags.transition())
-        .put("chat.translatable", StandardTags.translatable())
-        .put("chat.selector", StandardTags.selector())
-        .put("chat.keybind", StandardTags.keybind())
-        .put("chat.newline", StandardTags.newline())
+        .put("chatformatter.color", StandardTags.color())
+        .put("chatformatter.decorations.*", StandardTags.decorations())
+        .put("chatformatter.decorations.bold", StandardTags.decorations(TextDecoration.BOLD))
+        .put("chatformatter.decorations.italic", StandardTags.decorations(TextDecoration.ITALIC))
+        .put("chatformatter.decorations.underlined", StandardTags.decorations(TextDecoration.UNDERLINED))
+        .put("chatformatter.decorations.strikethrough", StandardTags.decorations(TextDecoration.STRIKETHROUGH))
+        .put("chatformatter.decorations.obfuscated", StandardTags.decorations(TextDecoration.OBFUSCATED))
+        .put("chatformatter.reset", StandardTags.reset())
+        .put("chatformatter.gradient", StandardTags.gradient())
+        .put("chatformatter.hover", StandardTags.hoverEvent())
+        .put("chatformatter.click", StandardTags.clickEvent())
+        .put("chatformatter.insertion", StandardTags.insertion())
+        .put("chatformatter.font", StandardTags.font())
+        .put("chatformatter.transition", StandardTags.transition())
+        .put("chatformatter.translatable", StandardTags.translatable())
+        .put("chatformatter.selector", StandardTags.selector())
+        .put("chatformatter.keybind", StandardTags.keybind())
+        .put("chatformatter.newline", StandardTags.newline())
         .build();
 
     private static final GsonComponentSerializer GSON = GsonComponentSerializer.gson();
