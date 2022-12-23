@@ -19,16 +19,33 @@
 - [MiniMessages Support](https://docs.adventure.kyori.net/minimessage/format.html) with Legacy Colors Support!
 - Template System
 - Custom Placeholders System
+- Per permission miniMessages Tags (check permissions 👇)
 
 ### Useful links:
 - [Web UI](https://webui.adventure.kyori.net)
 - [MiniMessages Format](https://docs.adventure.kyori.net/minimessage/format.html) 
 
 ### Permissions:
-- chatformatter.chat.color - Chat colors for players
-- chatformatter.chat.reload - Reload
-
-
+- chatformatter.color - `<red>`, `<blue>`, etc. tags.
+- chatformatter.legacycolor - Allows the use of legacy color codes, such as `&c`, `&4`, `&l`, etc.
+- chatformatter.decorations.* - `<bold>`, `<italic>`, `<underlined>`, `<strikethrough>`, and `<obfuscated>` tags.
+- chatformatter.decorations.bold - `<bold>`
+- chatformatter.decorations.italic - `<italic>`
+- chatformatter.decorations.underlined - `<underlined>`
+- chatformatter.decorations.strikethrough - `<strikethrough>`
+- chatformatter.decorations.obfuscated - `<obfuscated>`
+- chatformatter.reset - `<reset>`
+- chatformatter.gradient - `<gradient>`
+- chatformatter.hover - `<hover>`
+- chatformatter.click - `<click>`
+- chatformatter.insertion - `<insertion>`
+- chatformatter.font - `<font>`
+- chatformatter.transition - `<transition>`
+- chatformatter.translatable - `<lang>`
+- chatformatter.selector - `<selector>`
+- chatformatter.keybind - `<key>`
+- chatformatter.newline - `<newline>`
+- chatformatter.chat.reload - reload the plugin `/chatformatter reload`
 
 ### config.yml
 ```yaml
@@ -38,7 +55,7 @@
 #  | |___| | | | (_| | |_|  _| (_) | |  | | | | | | (_| | |_| ||  __/ |   
 #   \____|_| |_|\__,_|\__|_|  \___/|_|  |_| |_| |_|\__,_|\__|\__\___|_|   
 
-# Do you want to use pre chat format? (Other plugins could join custom prefixes etc.)
+# Do you want to use pre-chat format? (Other plugins could join custom prefixes etc.)
 # INFO: This option requires to use custom badges like {displayname} and {message} in each message.
 preFormatting: false
 defaultFormat: "{displayname} {arrow_right} {message}"

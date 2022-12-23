@@ -22,7 +22,7 @@ public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRep
     @Description("#   \\____|_| |_|\\__,_|\\__|_|  \\___/|_|  |_| |_| |_|\\__,_|\\__|\\__\\___|_|   ")
     @Description({ " " })
 
-    @Description("# Do you want to use pre chat format? (Other plugins could join custom prefixes etc.)")
+    @Description("# Do you want to use pre-chat format? (Other plugins could join custom prefixes etc.)")
     @Description("# INFO: This option requires to use custom badges like {displayname} and {message} in each message.")
     public boolean preFormatting = false;
 

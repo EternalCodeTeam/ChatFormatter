@@ -10,7 +10,7 @@ import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
 import java.util.regex.MatchResult;
 
-public final class LegacyPostProcessor implements UnaryOperator<Component> {
+public final class LegacyPostMessageProcessor implements UnaryOperator<Component> {
 
     private static final Replacer REPLACER = new Replacer();
 
@@ -36,7 +36,7 @@ public final class LegacyPostProcessor implements UnaryOperator<Component> {
 
         @Override
         public ComponentLike apply(MatchResult matchResult, TextComponent.Builder builder) {
-            return Legacy.placeholderToAmpersand(Legacy.LEGACY_AMPERSAND_SERIALIZER.deserialize(matchResult.group()));
+            return Legacy.LEGACY_AMPERSAND_SERIALIZER.deserialize(matchResult.group());
         }
 
     }
