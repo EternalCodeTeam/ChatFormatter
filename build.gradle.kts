@@ -53,7 +53,7 @@ project(":chat-formatter") {
 
     dependencies {
         // Spigot API
-        compileOnly("org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT")
+        compileOnly("org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT")
 
         // Kyori Adventure & MiniMessage
         implementation("net.kyori:adventure-platform-bukkit:4.2.0")
@@ -115,7 +115,7 @@ project(":paper-support") {
 
     dependencies {
         compileOnly(project(":chat-formatter"))
-        compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
+        compileOnly("io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
     }
 
     tasks.withType<ShadowJar> {
