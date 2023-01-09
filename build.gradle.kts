@@ -1,7 +1,7 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
-    id("java-library")
+    `java-library`
     id("com.github.johnrengelman.shadow") version "7.1.2"
     id("net.minecrell.plugin-yml.bukkit") version "0.5.2"
     id("xyz.jpenilla.run-paper") version "2.0.1"
@@ -34,6 +34,15 @@ subprojects {
 
     tasks.withType<JavaCompile> {
         options.encoding = "UTF-8"
+    }
+
+    tasks.register("updateTextFile") {
+        doLast {
+            val version = project.version
+
+            val file = File("version.txt")
+            file.writeText(version.toString())
+        }
     }
 }
 

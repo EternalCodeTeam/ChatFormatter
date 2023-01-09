@@ -9,6 +9,8 @@ import com.eternalcode.formatter.legacy.LegacyPreProcessor;
 import com.eternalcode.formatter.placeholder.PlaceholderRegistry;
 import com.eternalcode.formatter.preparatory.ChatPreparatoryService;
 import com.eternalcode.formatter.template.TemplateService;
+import com.eternalcode.formatter.updater.UpdaterController;
+import com.eternalcode.formatter.updater.UpdaterService;
 import com.google.common.base.Stopwatch;
 import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
@@ -30,6 +32,7 @@ public class ChatFormatterPlugin extends JavaPlugin implements ChatFormatter {
     private TemplateService templateService;
     private ChatRankProvider rankProvider;
     private ChatPreparatoryService chatPreparatoryService;
+    private UpdaterService updaterService;
 
     private AudienceProvider audienceProvider;
     private MiniMessage miniMessage;
@@ -51,6 +54,7 @@ public class ChatFormatterPlugin extends JavaPlugin implements ChatFormatter {
         this.templateService = new TemplateService(pluginConfig);
         this.rankProvider = new VaultRankProvider(this.getServer());
         this.chatPreparatoryService = new ChatPreparatoryService();
+        this.updaterService = new UpdaterService(this.miniMessage);
 
         this.audienceProvider = BukkitAudiences.create(this);
         this.miniMessage = MiniMessage.builder()
@@ -66,7 +70,8 @@ public class ChatFormatterPlugin extends JavaPlugin implements ChatFormatter {
         new Metrics(this, 15199);
 
         Stream.of(
-            new ChatController(this.audienceProvider, this.miniMessage, pluginConfig, this.rankProvider, this.placeholderRegistry, templateService, chatPreparatoryService)
+            new ChatController(this.audienceProvider, this.miniMessage, pluginConfig, this.rankProvider, this.placeholderRegistry, templateService, chatPreparatoryService),
+            new UpdaterController(this, this.updaterService)
         ).forEach(listener -> this.getServer().getPluginManager().registerEvents(listener, this));
 
         ChatFormatterProvider.enable(this);

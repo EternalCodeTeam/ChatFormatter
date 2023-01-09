@@ -46,6 +46,7 @@
 - chatformatter.keybind - `<key>`
 - chatformatter.newline - `<newline>`
 - chatformatter.chat.reload - reload the plugin `/chatformatter reload`
+- chatformatte.receiveupdates - receive updates announce for this plugin
 
 ### config.yml
 ```yaml
