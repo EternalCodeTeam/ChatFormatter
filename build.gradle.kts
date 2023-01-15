@@ -35,15 +35,6 @@ subprojects {
     tasks.withType<JavaCompile> {
         options.encoding = "UTF-8"
     }
-
-    tasks.register("updateTextFile") {
-        doLast {
-            val version = project.version
-
-            val file = File("version.txt")
-            file.writeText(version.toString())
-        }
-    }
 }
 
 project(":chat-formatter") {
