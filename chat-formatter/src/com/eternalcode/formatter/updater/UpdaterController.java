@@ -20,7 +20,6 @@ public class UpdaterController implements Listener {
     void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-
         if (player.hasPermission("chatformatter.receiveupdates")) {
             this.updaterService.checkForUpdates(this.plugin, player);
         }

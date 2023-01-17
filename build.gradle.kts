@@ -17,6 +17,7 @@ subprojects {
         maven { url = uri("https://repo.papermc.io/repository/maven-public/") }
         maven { url = uri("https://repo.extendedclip.com/content/repositories/placeholderapi/") }
         maven { url = uri("https://jitpack.io") }
+        maven { url = uri("https://repo.eternalcode.pl/releases") }
     }
 
     group = "com.eternalcode.formatter"
@@ -69,6 +70,9 @@ project(":chat-formatter") {
         // PlaceholderAPI & Vault
         compileOnly("me.clip:placeholderapi:2.11.2")
         compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
+
+        // Updater
+        implementation("com.eternalcode:updater:1.0.1")
     }
 
     tasks.withType<ShadowJar> {

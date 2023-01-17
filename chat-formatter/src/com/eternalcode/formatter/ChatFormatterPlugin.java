@@ -70,7 +70,7 @@ public class ChatFormatterPlugin extends JavaPlugin implements ChatFormatter {
         new Metrics(this, 15199);
 
         Stream.of(
-            new ChatController(this.audienceProvider, this.miniMessage, pluginConfig, this.rankProvider, this.placeholderRegistry, templateService, chatPreparatoryService),
+            new ChatController(this.audienceProvider, this.miniMessage, pluginConfig, this.rankProvider, this.placeholderRegistry, this.templateService, this.chatPreparatoryService),
             new UpdaterController(this, this.updaterService)
         ).forEach(listener -> this.getServer().getPluginManager().registerEvents(listener, this));
 
