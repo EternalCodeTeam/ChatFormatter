@@ -71,7 +71,7 @@ public class ChatFormatterPlugin extends JavaPlugin implements ChatFormatter {
 
         Stream.of(
             new ChatController(this.audienceProvider, this.miniMessage, pluginConfig, this.rankProvider, this.placeholderRegistry, this.templateService, this.chatPreparatoryService),
-            new UpdaterController(this, this.updaterService, pluginConfig)
+            new UpdaterController(this, this.updaterService, pluginConfig, audienceProvider, miniMessage)
         ).forEach(listener -> this.getServer().getPluginManager().registerEvents(listener, this));
 
         ChatFormatterProvider.enable(this);

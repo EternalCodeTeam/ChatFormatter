@@ -25,7 +25,7 @@ public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRep
     @Description(" Do you want to receive updates about new versions of ChatFormatter?")
     private boolean receiveUpdates = true;
 
-    @Description("# Do you want to use pre-chat format? (Other plugins could join custom prefixes etc.)")
+    @Description({ " ", "# Do you want to use pre-chat format? (Other plugins could join custom prefixes etc.)" })
     @Description("# INFO: This option requires to use custom badges like {displayname} and {message} in each message.")
     public boolean preFormatting = false;
 
