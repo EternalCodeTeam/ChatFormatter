@@ -45,7 +45,9 @@ public class UpdaterController implements Listener {
                 return;
             }
 
-            audience.sendMessage(this.miniMessage.deserialize(NEW_VERSION_AVAILABLE));
+            if (!isUpToDate) {
+                audience.sendMessage(this.miniMessage.deserialize(NEW_VERSION_AVAILABLE));
+            }
         });
     }
 }

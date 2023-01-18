@@ -90,7 +90,8 @@ project(":chat-formatter") {
             "panda",
             "org.panda_lang",
             "net.kyori",
-            "org.bstats"
+            "org.bstats",
+            "org.json",
         ).forEach { pack ->
             relocate(pack, "$prefix.$pack")
         }
