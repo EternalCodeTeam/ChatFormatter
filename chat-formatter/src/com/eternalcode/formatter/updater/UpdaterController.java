@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.plugin.Plugin;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -16,14 +15,12 @@ public class UpdaterController implements Listener {
 
     private static final String NEW_VERSION_AVAILABLE = "<b><gradient:#29fbff:#38b3ff>ChatFormatter:</gradient></b> <green>New version of ChatFormatter is available, please update!";
 
-    private final Plugin plugin;
     private final UpdaterService updaterService;
     private final ChatSettings chatSettings;
     private final AudienceProvider audienceProvider;
     private final MiniMessage miniMessage;
 
-    public UpdaterController(Plugin plugin, UpdaterService updaterService, ChatSettings chatSettings, AudienceProvider audienceProvider, MiniMessage miniMessage) {
-        this.plugin = plugin;
+    public UpdaterController(UpdaterService updaterService, ChatSettings chatSettings, AudienceProvider audienceProvider, MiniMessage miniMessage) {
         this.updaterService = updaterService;
         this.chatSettings = chatSettings;
         this.audienceProvider = audienceProvider;
@@ -39,7 +36,7 @@ public class UpdaterController implements Listener {
             return;
         }
 
-        CompletableFuture<Boolean> upToDate = this.updaterService.isUpToDate(this.plugin);
+        CompletableFuture<Boolean> upToDate = this.updaterService.isUpToDate();
 
         upToDate.whenComplete((isUpToDate, throwable) -> {
             if (throwable != null) {

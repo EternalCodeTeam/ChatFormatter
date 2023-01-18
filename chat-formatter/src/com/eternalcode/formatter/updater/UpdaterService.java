@@ -4,18 +4,30 @@ import com.eternalcode.gitcheck.GitCheck;
 import com.eternalcode.gitcheck.GitCheckResult;
 import com.eternalcode.gitcheck.git.GitRepository;
 import com.eternalcode.gitcheck.git.GitTag;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginDescriptionFile;
+import panda.std.Lazy;
 
 import java.util.concurrent.CompletableFuture;
 
 public class UpdaterService {
 
-    public CompletableFuture<Boolean> isUpToDate(Plugin plugin) {
-        GitCheck gitCheck = new GitCheck();
-        GitRepository repository = GitRepository.of("EternalCodeTeam", "ChatFormatter");
+    private static final GitRepository GIT_REPOSITORY = GitRepository.of("EternalCodeTeam", "ChatFormatter");
 
+    private final GitCheck gitCheck = new GitCheck();
+    private final Lazy<GitCheckResult> gitCheckResult;
+
+    public UpdaterService(PluginDescriptionFile descriptionFile) {
+
+        this.gitCheckResult = new Lazy<>(() -> {
+            String version = descriptionFile.getVersion();
+
+            return this.gitCheck.checkRelease(GIT_REPOSITORY, GitTag.of("v" + version));
+        });
+    }
+
+    public CompletableFuture<Boolean> isUpToDate() {
         return CompletableFuture.supplyAsync(() -> {
-            GitCheckResult result = gitCheck.checkRelease(repository, GitTag.of(plugin.getDescription().getVersion()));
+            GitCheckResult result = this.gitCheckResult.get();
 
             return result.isUpToDate();
         });

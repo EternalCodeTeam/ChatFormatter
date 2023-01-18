@@ -54,7 +54,7 @@ public class ChatFormatterPlugin extends JavaPlugin implements ChatFormatter {
         this.templateService = new TemplateService(pluginConfig);
         this.rankProvider = new VaultRankProvider(this.getServer());
         this.chatPreparatoryService = new ChatPreparatoryService();
-        this.updaterService = new UpdaterService();
+        this.updaterService = new UpdaterService(this.getDescription());
 
         this.audienceProvider = BukkitAudiences.create(this);
         this.miniMessage = MiniMessage.builder()
@@ -71,7 +71,7 @@ public class ChatFormatterPlugin extends JavaPlugin implements ChatFormatter {
 
         Stream.of(
             new ChatController(this.audienceProvider, this.miniMessage, pluginConfig, this.rankProvider, this.placeholderRegistry, this.templateService, this.chatPreparatoryService),
-            new UpdaterController(this, this.updaterService, pluginConfig, this.audienceProvider, this.miniMessage)
+            new UpdaterController(this.updaterService, pluginConfig, this.audienceProvider, this.miniMessage)
         ).forEach(listener -> this.getServer().getPluginManager().registerEvents(listener, this));
 
         ChatFormatterProvider.enable(this);
