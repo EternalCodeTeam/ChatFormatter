@@ -2,7 +2,7 @@ package com.eternalcode.formatter;
 
 public interface ChatSettings {
 
-    boolean receiveUpdates();
+    boolean isReceiveUpdates();
 
     boolean isPreFormatting();
 

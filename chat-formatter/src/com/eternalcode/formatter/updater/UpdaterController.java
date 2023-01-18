@@ -32,7 +32,7 @@ public class UpdaterController implements Listener {
         Player player = event.getPlayer();
         Audience audience = this.audienceProvider.player(player.getUniqueId());
 
-        if (!player.hasPermission("chatformatter.receiveupdates") || !this.chatSettings.receiveUpdates()) {
+        if (!player.hasPermission("chatformatter.receiveupdates") || !this.chatSettings.isReceiveUpdates()) {
             return;
         }
 

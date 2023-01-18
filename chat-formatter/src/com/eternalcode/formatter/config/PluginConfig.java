@@ -5,7 +5,6 @@ import com.eternalcode.formatter.template.TemplateRepository;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import net.dzikoysk.cdn.entity.Description;
-import panda.utilities.StringUtils;
 import com.eternalcode.formatter.ChatSettings;
 import com.eternalcode.formatter.placeholder.PlaceholderStack;
 
@@ -22,12 +21,12 @@ public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRep
     @Description("#   \\____|_| |_|\\__,_|\\__|_|  \\___/|_|  |_| |_| |_|\\__,_|\\__|\\__\\___|_|   ")
     @Description({ " " })
 
-    @Description(" Do you want to receive updates about new versions of ChatFormatter?")
-    private boolean receiveUpdates = true;
-
-    @Description({ " ", "# Do you want to use pre-chat format? (Other plugins could join custom prefixes etc.)" })
+    @Description({ " ", "# Do you want to use pre-chat format? (Other plugins could add their custom prefixes etc.)" })
     @Description("# INFO: This option requires to use custom badges like {displayname} and {message} in each message.")
     public boolean preFormatting = false;
+
+    @Description({ " ", "# Do you want to receive updates about new versions of ChatFormatter?" })
+    public boolean receiveUpdates = true;
 
     public String defaultFormat = "{displayname} {arrow_right} {message}";
 
@@ -76,7 +75,7 @@ public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRep
 
 
     @Override
-    public boolean receiveUpdates() {
+    public boolean isReceiveUpdates() {
         return this.receiveUpdates;
     }
 
