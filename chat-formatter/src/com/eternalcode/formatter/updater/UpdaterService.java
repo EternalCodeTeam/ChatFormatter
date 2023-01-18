@@ -24,7 +24,7 @@ public class UpdaterService {
 
         GitCheckResult result = gitCheck.checkRelease(repository, GitTag.of(plugin.getDescription().getVersion()));
 
-        if (result.isUpToDate()) {
+        if (!result.isUpToDate()) {
             Component deserialize = this.miniMessage.deserialize(NEW_VERSION_AVAILABLE);
             player.sendMessage(Legacy.LEGACY_AMPERSAND_SERIALIZER.serialize(deserialize));
         }
