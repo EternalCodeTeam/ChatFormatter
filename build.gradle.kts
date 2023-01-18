@@ -71,8 +71,8 @@ project(":chat-formatter") {
         compileOnly("me.clip:placeholderapi:2.11.2")
         compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
 
-        // Updater
-        implementation("com.eternalcode:updater:1.0.1")
+        // GitCheck
+        implementation("com.eternalcode:gitcheck:1.0.0")
     }
 
     tasks.withType<ShadowJar> {

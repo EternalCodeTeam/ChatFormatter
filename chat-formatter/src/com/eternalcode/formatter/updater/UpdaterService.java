@@ -1,16 +1,17 @@
 package com.eternalcode.formatter.updater;
 
 import com.eternalcode.formatter.legacy.Legacy;
-import com.eternalcode.updater.Updater;
-import com.eternalcode.updater.http.RemoteInformation;
+import com.eternalcode.gitcheck.GitCheck;
+import com.eternalcode.gitcheck.GitCheckResult;
+import com.eternalcode.gitcheck.git.GitRepository;
+import com.eternalcode.gitcheck.git.GitTag;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 public class UpdaterService {
 
     private static final String NEW_VERSION_AVAILABLE = "<b><gradient:#29fbff:#38b3ff>ChatFormatter:</gradient></b> <green>New version of ChatFormatter is available, please update!";
-    private static final String NO_NEW_VERSION_AVAILABLE = "<b><gradient:#29fbff:#38b3ff>ChatFormatter:</gradient></b> <green>ChatFormatter is up to date!";
-
     private final MiniMessage miniMessage;
 
     public UpdaterService(MiniMessage miniMessage) {
@@ -18,13 +19,14 @@ public class UpdaterService {
     }
 
     public void checkForUpdates(Plugin plugin, Player player) {
-        Updater updater = new Updater(plugin.getDescription().getName(), plugin.getDescription().getVersion(), "EternalCodeTeam/Updater");
-        RemoteInformation remoteInformation = updater.checkUpdates();
+        GitCheck gitCheck = new GitCheck();
+        GitRepository repository = GitRepository.of("EternalCodeTeam", "ChatFormatter");
 
-        if (remoteInformation.isAvailableNewVersion()) {
-            player.sendMessage(Legacy.LEGACY_AMPERSAND_SERIALIZER.serialize(this.miniMessage.deserialize(NO_NEW_VERSION_AVAILABLE)));
-        } else {
-            player.sendMessage(Legacy.LEGACY_AMPERSAND_SERIALIZER.serialize(this.miniMessage.deserialize(NEW_VERSION_AVAILABLE)));
+        GitCheckResult result = gitCheck.checkRelease(repository, GitTag.of(plugin.getDescription().getVersion()));
+
+        if (result.isUpToDate()) {
+            Component deserialize = this.miniMessage.deserialize(NEW_VERSION_AVAILABLE);
+            player.sendMessage(Legacy.LEGACY_AMPERSAND_SERIALIZER.serialize(deserialize));
         }
     }
 }
