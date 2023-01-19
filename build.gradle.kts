@@ -62,7 +62,7 @@ project(":chat-formatter") {
 
         // LiteCommands & CDN
         implementation("dev.rollczi.litecommands:bukkit:2.7.0")
-        implementation("net.dzikoysk:cdn:1.14.2")
+        implementation("net.dzikoysk:cdn:1.14.3")
 
         // bStats
         implementation("org.bstats:bstats-bukkit:3.0.0")
@@ -78,7 +78,12 @@ project(":chat-formatter") {
     tasks.withType<ShadowJar> {
         archiveFileName.set("ChatFormatter v${project.version}.jar")
 
-        exclude("org/intellij/lang/annotations/**", "org/jetbrains/annotations/**", "META-INF/**", "javax/**")
+        exclude(
+            "org/intellij/lang/annotations/**",
+            "org/jetbrains/annotations/**",
+            "META-INF/**",
+            "javax/**"
+        )
 
         mergeServiceFiles()
         minimize()
@@ -126,7 +131,12 @@ project(":paper-support") {
     tasks.withType<ShadowJar> {
         archiveFileName.set("ChatFormatter-PaperSupport v${project.version}.jar")
 
-        exclude("org/intellij/lang/annotations/**", "org/jetbrains/annotations/**", "META-INF/**", "javax/**")
+        exclude(
+            "org/intellij/lang/annotations/**",
+            "org/jetbrains/annotations/**",
+            "META-INF/**",
+            "javax/**"
+        )
 
         mergeServiceFiles()
         minimize()
@@ -148,7 +158,7 @@ project(":chat-formatter-test") {
 
         testImplementation("net.kyori:adventure-platform-bukkit:4.2.0")
         testImplementation("net.kyori:adventure-text-minimessage:4.12.0")
-        testImplementation("net.dzikoysk:cdn:1.14.1")
+        testImplementation("net.dzikoysk:cdn:1.14.3")
         testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
         testImplementation("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
         testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.1")

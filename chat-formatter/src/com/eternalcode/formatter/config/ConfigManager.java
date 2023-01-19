@@ -16,7 +16,6 @@ public class ConfigManager {
     private final Cdn cdn = CdnFactory
         .createYamlLike()
         .getSettings()
-        .withDescriptionResolver(Comment.class, annotation -> Arrays.asList(annotation.value()))
         .withComposer(Template.class, new TemplateComposer())
         .build();
 
