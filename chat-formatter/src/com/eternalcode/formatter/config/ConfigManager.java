@@ -3,16 +3,20 @@ package com.eternalcode.formatter.config;
 import com.eternalcode.formatter.template.Template;
 import net.dzikoysk.cdn.Cdn;
 import net.dzikoysk.cdn.CdnFactory;
+import net.dzikoysk.cdn.entity.Descriptions;
 import net.dzikoysk.cdn.source.Resource;
 import net.dzikoysk.cdn.source.Source;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class ConfigManager {
 
     private final Cdn cdn = CdnFactory
         .createYamlLike()
         .getSettings()
+        .withDescriptionResolver(Comment.class, annotation -> Arrays.asList(annotation.value()))
         .withComposer(Template.class, new TemplateComposer())
         .build();
 
@@ -39,7 +43,7 @@ public class ConfigManager {
     }
 
     public PluginConfig getPluginConfig() {
-        return pluginConfig;
+        return this.pluginConfig;
     }
 
 }

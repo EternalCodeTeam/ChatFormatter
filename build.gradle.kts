@@ -1,7 +1,7 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
-    id("java-library")
+    `java-library`
     id("com.github.johnrengelman.shadow") version "7.1.2"
     id("net.minecrell.plugin-yml.bukkit") version "0.5.2"
     id("xyz.jpenilla.run-paper") version "2.0.1"
@@ -17,6 +17,7 @@ subprojects {
         maven { url = uri("https://repo.papermc.io/repository/maven-public/") }
         maven { url = uri("https://repo.extendedclip.com/content/repositories/placeholderapi/") }
         maven { url = uri("https://jitpack.io") }
+        maven { url = uri("https://repo.eternalcode.pl/releases") }
     }
 
     group = "com.eternalcode.formatter"
@@ -61,7 +62,7 @@ project(":chat-formatter") {
 
         // LiteCommands & CDN
         implementation("dev.rollczi.litecommands:bukkit:2.7.0")
-        implementation("net.dzikoysk:cdn:1.14.1")
+        implementation("net.dzikoysk:cdn:1.14.2")
 
         // bStats
         implementation("org.bstats:bstats-bukkit:3.0.0")
@@ -69,6 +70,9 @@ project(":chat-formatter") {
         // PlaceholderAPI & Vault
         compileOnly("me.clip:placeholderapi:2.11.2")
         compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
+
+        // GitCheck
+        implementation("com.eternalcode:gitcheck:1.0.0")
     }
 
     tasks.withType<ShadowJar> {
@@ -86,7 +90,8 @@ project(":chat-formatter") {
             "panda",
             "org.panda_lang",
             "net.kyori",
-            "org.bstats"
+            "org.bstats",
+            "org.json",
         ).forEach { pack ->
             relocate(pack, "$prefix.$pack")
         }

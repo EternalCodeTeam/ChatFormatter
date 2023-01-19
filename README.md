@@ -46,6 +46,7 @@
 - chatformatter.keybind - `<key>`
 - chatformatter.newline - `<newline>`
 - chatformatter.chat.reload - reload the plugin `/chatformatter reload`
+- chatformatter.receiveupdates - receive updates announce for this plugin
 
 ### config.yml
 ```yaml
@@ -55,10 +56,14 @@
 #  | |___| | | | (_| | |_|  _| (_) | |  | | | | | | (_| | |_| ||  __/ |   
 #   \____|_| |_|\__,_|\__|_|  \___/|_|  |_| |_| |_|\__,_|\__|\__\___|_|   
 
-# Do you want to use pre-chat format? (Other plugins could join custom prefixes etc.)
+
+# Do you want to use pre-chat format? (Other plugins could add their custom prefixes etc.)
 # INFO: This option requires to use custom badges like {displayname} and {message} in each message.
 preFormatting: false
 defaultFormat: "{displayname} {arrow_right} {message}"
+
+# Do you want to receive updates about new versions of ChatFormatter?
+receiveUpdates: true
 
 # Chat format for ranks (Vault) Support mini-messages and legacy colors
 

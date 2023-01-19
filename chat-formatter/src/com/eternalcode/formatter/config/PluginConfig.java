@@ -4,8 +4,6 @@ import com.eternalcode.formatter.template.Template;
 import com.eternalcode.formatter.template.TemplateRepository;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import net.dzikoysk.cdn.entity.Description;
-import panda.utilities.StringUtils;
 import com.eternalcode.formatter.ChatSettings;
 import com.eternalcode.formatter.placeholder.PlaceholderStack;
 
@@ -14,25 +12,29 @@ import java.util.Map;
 
 public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRepository {
 
-    @Description({ " " })
-    @Description("#    ____ _           _   _____      ChatFormatter       _   _            ")
-    @Description("#   / ___| |__   __ _| |_|  ___|__  _ __ _ __ ___   __ _| |_| |_ ___ _ __ ")
-    @Description("#  | |   | '_ \\ / _` | __| |_ / _ \\| '__| '_ ` _ \\ / _` | __| __/ _ \\ '__|")
-    @Description("#  | |___| | | | (_| | |_|  _| (_) | |  | | | | | | (_| | |_| ||  __/ |   ")
-    @Description("#   \\____|_| |_|\\__,_|\\__|_|  \\___/|_|  |_| |_| |_|\\__,_|\\__|\\__\\___|_|   ")
-    @Description({ " " })
+    @Comment({ " " })
+    @Comment("#    ____ _           _   _____      ChatFormatter       _   _            ")
+    @Comment("#   / ___| |__   __ _| |_|  ___|__  _ __ _ __ ___   __ _| |_| |_ ___ _ __ ")
+    @Comment("#  | |   | '_ \\ / _` | __| |_ / _ \\| '__| '_ ` _ \\ / _` | __| __/ _ \\ '__|")
+    @Comment("#  | |___| | | | (_| | |_|  _| (_) | |  | | | | | | (_| | |_| ||  __/ |   ")
+    @Comment("#   \\____|_| |_|\\__,_|\\__|_|  \\___/|_|  |_| |_| |_|\\__,_|\\__|\\__\\___|_|   ")
+    @Comment({ " " })
 
-    @Description("# Do you want to use pre-chat format? (Other plugins could join custom prefixes etc.)")
-    @Description("# INFO: This option requires to use custom badges like {displayname} and {message} in each message.")
+    @Comment({ " ", "# Do you want to use pre-chat format? (Other plugins could add their custom prefixes etc.)" })
+    @Comment("# INFO: This option requires to use custom badges like {displayname} and {message} in each message.")
     public boolean preFormatting = false;
 
     public String defaultFormat = "{displayname} {arrow_right} {message}";
 
-    @Description({ " ", "# Chat format for ranks (Vault) Support mini-messages and legacy colors" })
-    @Description({ " ", "# We're recommending to use webui for mini-messages: https://webui.adventure.kyori.net/" })
-    @Description({ " ", "# documentation is here: https://docs.adventure.kyori.net/minimessage/format.html" })
+    @Comment({ " ", "# Do you want to receive updates about new versions of ChatFormatter?" })
+    public boolean receiveUpdates = true;
 
-    @Description({
+
+    @Comment({ " ", "# Chat format for ranks (Vault) Support mini-messages and legacy colors" })
+    @Comment({ " ", "# We're recommending to use webui for mini-messages: https://webui.adventure.kyori.net/" })
+    @Comment({ " ", "# documentation is here: https://docs.adventure.kyori.net/minimessage/format.html" })
+
+    @Comment({
         "# Example usages:",
         "# ",
         "# Hover message:",
@@ -55,12 +57,12 @@ public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRep
         .build();
 
 
-    @Description({ " ", "# It is used to shorten the text even more and keep the clean file!" })
+    @Comment({ " ", "# It is used to shorten the text even more and keep the clean file!" })
     public List<Template> templates = new ImmutableList.Builder<Template>()
         .add(Template.of("template", List.of("rank", "color"), "$rank $color{displayname} &8{arrow_right} $color{message}"))
         .build();
 
-    @Description({ " ", "# Placeholders, it allows you to make a shorter text, you can use some prefixes, characters etc. " })
+    @Comment({ " ", "# Placeholders, it allows you to make a shorter text, you can use some prefixes, characters etc. " })
     public Map<String, String> placeholders = new ImmutableMap.Builder<String, String>()
         .put("{displayname}", "<displayname>")
         .put("{message}", "<message>")
@@ -73,20 +75,25 @@ public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRep
 
 
     @Override
+    public boolean isReceiveUpdates() {
+        return this.receiveUpdates;
+    }
+
+    @Override
     public boolean isPreFormatting() {
-        return preFormatting;
+        return this.preFormatting;
     }
 
     @Override
     public String getRawFormat(String rank) {
-        return format.getOrDefault(rank, defaultFormat);
+        return this.format.getOrDefault(rank, this.defaultFormat);
     }
 
     @Override
     public String apply(String text) {
         String value = text;
 
-        for (Map.Entry<String, String> entry : placeholders.entrySet()) {
+        for (Map.Entry<String, String> entry : this.placeholders.entrySet()) {
             value = value.replace(entry.getKey(), entry.getValue());
         }
 
@@ -95,6 +102,6 @@ public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRep
 
     @Override
     public List<Template> getTemplates() {
-        return templates;
+        return this.templates;
     }
 }
