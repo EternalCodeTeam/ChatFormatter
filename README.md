@@ -2,13 +2,15 @@
     
 ![Readme Banner](assets/img/chatformatter.png)
 
-[![Discord](https://img.shields.io/discord/889460117953720351?color=%237289DA&logo=discord&logoColor=white&style=for-the-badge)](https://discord.gg/FQ7jmGBd6c)
-[![Website](https://img.shields.io/badge/-website-orange?style=for-the-badge&logo=internet-explorer&logoColor=white)](https://eternalcode.pl/)
+[![Available on Spigot](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/supported/spigot_vector.svg)](https://www.spigotmc.org/resources/%EF%B8%8F-chatformatter-%E2%9C%94%EF%B8%8F-minimessages-%E2%9C%94%EF%B8%8F-template-system-%E2%9C%94%EF%B8%8F-placeholders-%E2%9C%94%EF%B8%8F-vault-support.102212/)
+[![Available on modrinth](https://raw.githubusercontent.com/intergrav/devins-badges/68af3da1d56294934ece854c43dac9ab1b0eb3e9/assets/cozy/available/modrinth_vector.svg)](https://modrinth.com/plugin/chatformatter)
 
-![Percentage of issues still open](https://img.shields.io/github/issues/EternalCodeTeam/ChatFormatter?style=for-the-badge)
-[![GitHub forks](https://img.shields.io/github/forks/EternalCodeTeam/ChatFormatter?style=for-the-badge)](https://github.com/EternalCodeTeam/ChatFormatter/network)
-[![GitHub stars](https://img.shields.io/github/stars/EternalCodeTeam/ChatFormatter?style=for-the-badge)](https://github.com/EternalCodeTeam/ChatFormatter/stargazers)
-[![GitHub license](https://img.shields.io/github/license/EternalCodeTeam/ChatFormatter?style=for-the-badge)](https://github.com/EternalCodeTeam/ChatFormatter/blob/master/LICENSE)    
+[![Patreon](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/donate/patreon-plural_vector.svg)](https://www.patreon.com/eternalcode)
+[![Website](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/documentation/website_vector.svg)](https://eternalcode.pl/)
+[![Discord](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/social/discord-plural_vector.svg)](https://discord.gg/FQ7jmGBd6c)
+
+[![Gradle](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/built-with/gradle_vector.svg)](https://gradle.org/)
+[![Java](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/built-with/java17_vector.svg)](https://www.java.com/)
     
 </div>
 
