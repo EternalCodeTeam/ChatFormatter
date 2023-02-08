@@ -1,14 +1,33 @@
 package com.eternalcode.formatter.paper.injector;
 
+import com.eternalcode.paper.multiversion.LegacyDependencyProvider;
+
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 public class DependencyInjector {
 
     private final Map<Class<?>, DependencyContainer<?>> dependencies = new HashMap<>();
+
+    public <T> DependencyInjector tryRegister(Supplier<LegacyDependencyProvider<T>> provider) {
+        try {
+            LegacyDependencyProvider<T> legacyDependencyProvider = provider.get();
+
+            this.registerUnSafe(legacyDependencyProvider.getType(), legacyDependencyProvider.getDependency());
+        }
+        catch (NoClassDefFoundError ignored) {}
+
+        return this;
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T> void registerUnSafe(Class<?> type, T dependency) {
+        this.register((Class<T>) type, dependency);
+    }
 
     @SuppressWarnings("unchecked")
     public <T> DependencyInjector register(Class<T> clazz, T instance) {
@@ -25,6 +44,10 @@ public class DependencyInjector {
 
     public <T> T newInstance(Class<T> clazz) {
         for (Constructor<?> constructor : clazz.getConstructors()) {
+            if (constructor.isAnnotationPresent(Deprecated.class)) {
+                continue;
+            }
+
             List<Object> parameters = new ArrayList<>();
             Map<Class<?>, Integer> parameterCount = new HashMap<>();
 

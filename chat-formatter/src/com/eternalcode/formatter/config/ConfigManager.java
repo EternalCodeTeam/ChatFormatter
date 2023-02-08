@@ -3,13 +3,10 @@ package com.eternalcode.formatter.config;
 import com.eternalcode.formatter.template.Template;
 import net.dzikoysk.cdn.Cdn;
 import net.dzikoysk.cdn.CdnFactory;
-import net.dzikoysk.cdn.entity.Descriptions;
 import net.dzikoysk.cdn.source.Resource;
 import net.dzikoysk.cdn.source.Source;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.Collections;
 
 public class ConfigManager {
 

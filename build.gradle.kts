@@ -125,6 +125,7 @@ project(":paper-support") {
 
     dependencies {
         compileOnly(project(":chat-formatter"))
+        implementation(project(":paper-multi-version-support"))
         compileOnly("io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
     }
 
@@ -146,6 +147,13 @@ project(":paper-support") {
         runServer {
             minecraftVersion("1.18.2")
         }
+    }
+}
+
+
+project(":paper-multi-version-support") {
+    dependencies {
+        compileOnly("com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT")
     }
 }
 

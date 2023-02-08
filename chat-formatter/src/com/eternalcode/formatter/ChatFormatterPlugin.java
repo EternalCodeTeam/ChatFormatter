@@ -2,13 +2,13 @@ package com.eternalcode.formatter;
 
 import com.eternalcode.formatter.config.ConfigManager;
 import com.eternalcode.formatter.config.PluginConfig;
-import com.eternalcode.formatter.hook.PlaceholderAPIStack;
-import com.eternalcode.formatter.hook.VaultRankProvider;
 import com.eternalcode.formatter.legacy.LegacyPostProcessor;
 import com.eternalcode.formatter.legacy.LegacyPreProcessor;
+import com.eternalcode.formatter.hook.PlaceholderAPIStack;
+import com.eternalcode.formatter.hook.VaultRankProvider;
+import com.eternalcode.formatter.template.TemplateService;
 import com.eternalcode.formatter.placeholder.PlaceholderRegistry;
 import com.eternalcode.formatter.preparatory.ChatPreparatoryService;
-import com.eternalcode.formatter.template.TemplateService;
 import com.eternalcode.formatter.updater.UpdaterController;
 import com.eternalcode.formatter.updater.UpdaterService;
 import com.google.common.base.Stopwatch;
