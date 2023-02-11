@@ -53,7 +53,7 @@
 
 ### Additional color permissions:
 
-- chatformatter.color - `<red>`, `<blue>`, etc. tags.
+- chatformatter.color.* - `<red>`, `<blue>`, etc. tags.
 - chatformatter.legacycolor - Allows the use of legacy color codes, such as `&c`, `&4`, `&l`, etc.
 - chatformatter.color.black - `<black>`
 - chatformatter.color.dark_blue - `<dark_blue>`
