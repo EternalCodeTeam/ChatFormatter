@@ -1,5 +1,5 @@
 <div align="center">
-    
+
 ![Readme Banner](assets/img/chatformatter.png)
 
 [![Available on Spigot](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/supported/spigot_vector.svg)](https://www.spigotmc.org/resources/%EF%B8%8F-chatformatter-%E2%9C%94%EF%B8%8F-minimessages-%E2%9C%94%EF%B8%8F-template-system-%E2%9C%94%EF%B8%8F-placeholders-%E2%9C%94%EF%B8%8F-vault-support.102212/)
@@ -11,12 +11,13 @@
 
 [![Gradle](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/built-with/gradle_vector.svg)](https://gradle.org/)
 [![Java](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/built-with/java17_vector.svg)](https://www.java.com/)
-    
+
 </div>
 
 ##### WARRNING! This plugin requires PlaceholderAPI and Vault to run!
 
 ### Features:
+
 - PlaceholderAPI Support
 - [MiniMessages Support](https://docs.adventure.kyori.net/minimessage/format.html) with Legacy Colors Support!
 - Template System
@@ -24,12 +25,12 @@
 - Per permission miniMessages Tags (check permissions 👇)
 
 ### Useful links:
+
 - [Web UI](https://webui.adventure.kyori.net)
 - [MiniMessages Format](https://docs.adventure.kyori.net/minimessage/format.html) 
 
 ### Permissions:
-- chatformatter.color - `<red>`, `<blue>`, etc. tags.
-- chatformatter.legacycolor - Allows the use of legacy color codes, such as `&c`, `&4`, `&l`, etc.
+
 - chatformatter.decorations.* - `<bold>`, `<italic>`, `<underlined>`, `<strikethrough>`, and `<obfuscated>` tags.
 - chatformatter.decorations.bold - `<bold>`
 - chatformatter.decorations.italic - `<italic>`
@@ -50,7 +51,29 @@
 - chatformatter.chat.reload - reload the plugin `/chatformatter reload`
 - chatformatter.receiveupdates - receive updates announce for this plugin
 
+### Additional color permissions:
+
+- chatformatter.color - `<red>`, `<blue>`, etc. tags.
+- chatformatter.legacycolor - Allows the use of legacy color codes, such as `&c`, `&4`, `&l`, etc.
+- chatformatter.color.black - `<black>`
+- chatformatter.color.dark_blue - `<dark_blue>`
+- chatformatter.color.dark_green - `<dark_green>`
+- chatformatter.color.dark_aqua - `<dark_aqua>`
+- chatformatter.color.dark_red - `<dark_red>`
+- chatformatter.color.dark_purple - `<dark_purple>`
+- chatformatter.color.gold - `<gold>`
+- chatformatter.color.gray - `<gray>`
+- chatformatter.color.dark_gray - `<dark_gray>`
+- chatformatter.color.blue - `<blue>`
+- chatformatter.color.green - `<green>`
+- chatformatter.color.aqua - `<aqua>`
+- chatformatter.color.red - `<red>`
+- chatformatter.color.light_purple - `<light_purple>`
+- chatformatter.color.yellow - `<yellow>`
+- chatformatter.color.white - `<white>`
+
 ### config.yml
+
 ```yaml
 #    ____ _           _   _____      ChatFormatter       _   _            
 #   / ___| |__   __ _| |_|  ___|__  _ __ _ __ ___   __ _| |_| |_ ___ _ __ 
