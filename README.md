@@ -31,8 +31,6 @@
 
 ### Permissions:
 
-- chatformatter.color - `<red>`, `<blue>`, etc. tags.
-- chatformatter.legacycolor - Allows the use of legacy color codes, such as `&c`, `&4`, `&l`, etc.
 - chatformatter.decorations.* - `<bold>`, `<italic>`, `<underlined>`, `<strikethrough>`, and `<obfuscated>` tags.
 - chatformatter.decorations.bold - `<bold>`
 - chatformatter.decorations.italic - `<italic>`
@@ -55,6 +53,8 @@
 
 ### Additional color permissions:
 
+- chatformatter.color - `<red>`, `<blue>`, etc. tags.
+- chatformatter.legacycolor - Allows the use of legacy color codes, such as `&c`, `&4`, `&l`, etc.
 - chatformatter.color.black - `<black>`
 - chatformatter.color.dark_blue - `<dark_blue>`
 - chatformatter.color.dark_green - `<dark_green>`
@@ -73,6 +73,7 @@
 - chatformatter.color.white - `<white>`
 
 ### config.yml
+
 ```yaml
 #    ____ _           _   _____      ChatFormatter       _   _            
 #   / ___| |__   __ _| |_|  ___|__  _ __ _ __ ___   __ _| |_| |_ ___ _ __ 
