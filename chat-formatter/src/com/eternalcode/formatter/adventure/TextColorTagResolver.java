@@ -84,9 +84,17 @@ public class TextColorTagResolver implements TagResolver, SerializableResolver.S
 
     @Override
     public boolean has(final @NotNull String name) {
-        return isColorOrAbbreviation(name)
-            || NamedTextColor.NAMES.value(name) != null
-            || COLOR_ALIASES.containsKey(name);
+        if (isColorOrAbbreviation(name)) {
+            return true;
+        }
+
+        NamedTextColor textColor = NamedTextColor.NAMES.value(name);
+
+        if (textColor != null && allowedColors.contains(textColor)) {
+            return true;
+        }
+
+        return COLOR_ALIASES.containsKey(name);
     }
 
     @Override
