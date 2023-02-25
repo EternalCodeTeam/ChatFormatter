@@ -2,8 +2,8 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     `java-library`
-    id("com.github.johnrengelman.shadow") version "7.1.2"
-    id("net.minecrell.plugin-yml.bukkit") version "0.5.2"
+    id("com.github.johnrengelman.shadow") version "8.0.0"
+    id("net.minecrell.plugin-yml.bukkit") version "0.5.3"
     id("xyz.jpenilla.run-paper") version "2.0.1"
 }
 
@@ -61,11 +61,11 @@ project(":chat-formatter") {
         implementation("net.kyori:adventure-text-minimessage:4.12.0")
 
         // LiteCommands & CDN
-        implementation("dev.rollczi.litecommands:bukkit:2.8.3")
+        implementation("dev.rollczi.litecommands:bukkit:2.8.4")
         implementation("net.dzikoysk:cdn:1.14.3")
 
         // bStats
-        implementation("org.bstats:bstats-bukkit:3.0.0")
+        implementation("org.bstats:bstats-bukkit:3.0.1")
 
         // PlaceholderAPI & Vault
         compileOnly("me.clip:placeholderapi:2.11.2")
