@@ -2,7 +2,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     `java-library`
-    id("com.github.johnrengelman.shadow") version "8.0.0"
+    id("com.github.johnrengelman.shadow") version "8.1.0"
     id("net.minecrell.plugin-yml.bukkit") version "0.5.3"
     id("xyz.jpenilla.run-paper") version "2.0.1"
 }
@@ -61,8 +61,8 @@ project(":chat-formatter") {
         implementation("net.kyori:adventure-text-minimessage:4.12.0")
 
         // LiteCommands & CDN
-        implementation("dev.rollczi.litecommands:bukkit:2.8.4")
-        implementation("net.dzikoysk:cdn:1.14.3")
+        implementation("dev.rollczi.litecommands:bukkit:2.8.6")
+        implementation("net.dzikoysk:cdn:1.14.4")
 
         // bStats
         implementation("org.bstats:bstats-bukkit:3.0.1")
@@ -166,7 +166,7 @@ project(":chat-formatter-test") {
 
         testImplementation("net.kyori:adventure-platform-bukkit:4.2.0")
         testImplementation("net.kyori:adventure-text-minimessage:4.12.0")
-        testImplementation("net.dzikoysk:cdn:1.14.3")
+        testImplementation("net.dzikoysk:cdn:1.14.4")
         testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
         testImplementation("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
         testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
