@@ -4,7 +4,7 @@ plugins {
     `java-library`
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("net.minecrell.plugin-yml.bukkit") version "0.5.3"
-    id("xyz.jpenilla.run-paper") version "2.0.1"
+    id("xyz.jpenilla.run-paper") version "2.1.0"
 }
 
 subprojects {
@@ -167,9 +167,9 @@ project(":chat-formatter-test") {
         testImplementation("net.kyori:adventure-platform-bukkit:4.3.0")
         testImplementation("net.kyori:adventure-text-minimessage:4.13.1")
         testImplementation("net.dzikoysk:cdn:1.14.4")
-        testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
+        testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.3")
         testImplementation("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
-        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
+        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.3")
     }
 
     tasks.getByName<Test>("test") {
