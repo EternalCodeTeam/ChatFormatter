@@ -61,7 +61,7 @@ project(":chat-formatter") {
         implementation("net.kyori:adventure-text-minimessage:4.14.0")
 
         // LiteCommands & CDN
-        implementation("dev.rollczi.litecommands:bukkit:2.8.8")
+        implementation("dev.rollczi.litecommands:bukkit:2.8.9")
         implementation("net.dzikoysk:cdn:1.14.4")
 
         // bStats
@@ -167,9 +167,9 @@ project(":chat-formatter-test") {
         testImplementation("net.kyori:adventure-platform-bukkit:4.3.0")
         testImplementation("net.kyori:adventure-text-minimessage:4.14.0")
         testImplementation("net.dzikoysk:cdn:1.14.4")
-        testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.3")
+        testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
         testImplementation("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
-        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.3")
+        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
     }
 
     tasks.getByName<Test>("test") {
