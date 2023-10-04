@@ -29,15 +29,15 @@ public class Template {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public List<String> getArguments() {
-        return Collections.unmodifiableList(arguments);
+        return Collections.unmodifiableList(this.arguments);
     }
 
     public String getContent() {
-        return content;
+        return this.content;
     }
 
     public String apply(String text) {
@@ -128,7 +128,7 @@ public class Template {
 
     @Override
     public String toString() {
-        return String.format(TEMPLATE_FORMAT, name, Joiner.on(SEPARATOR_FORMAT).join(this.arguments, arg -> String.format(ARGUMENT_FORMAT, arg)), this.content);
+        return String.format(TEMPLATE_FORMAT, this.name, Joiner.on(SEPARATOR_FORMAT).join(this.arguments, arg -> String.format(ARGUMENT_FORMAT, arg)), this.content);
     }
 
 }

@@ -87,22 +87,22 @@ public class ChatFormatterPlugin extends JavaPlugin implements ChatFormatter {
 
     @Override
     public PlaceholderRegistry getPlaceholderRegistry() {
-        return placeholderRegistry;
+        return this.placeholderRegistry;
     }
 
     @Override
     public TemplateService getTemplateService() {
-        return templateService;
+        return this.templateService;
     }
 
     @Override
     public ChatRankProvider getRankProvider() {
-        return rankProvider;
+        return this.rankProvider;
     }
 
     @Override
     public ChatPreparatoryService getChatPreparatoryService() {
-        return chatPreparatoryService;
+        return this.chatPreparatoryService;
     }
 
 }

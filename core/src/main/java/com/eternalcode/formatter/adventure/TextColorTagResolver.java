@@ -13,7 +13,13 @@ import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 
 public class TextColorTagResolver implements TagResolver, SerializableResolver.Single {
 
@@ -53,13 +59,14 @@ public class TextColorTagResolver implements TagResolver, SerializableResolver.S
         String colorName;
         if (isColorOrAbbreviation(name)) {
             colorName = args.popOr("Expected to find a color parameter: <name>|#RRGGBB").lowerValue();
-        } else {
+        }
+        else {
             colorName = name;
         }
 
         TextColor color = resolveColor(colorName, ctx);
 
-        if (!allowedColors.contains(color)) {
+        if (!this.allowedColors.contains(color)) {
             throw ctx.newException(String.format("Color '%s' is not allowed.", colorName));
         }
 
@@ -84,13 +91,13 @@ public class TextColorTagResolver implements TagResolver, SerializableResolver.S
 
     @Override
     public boolean has(final @NotNull String name) {
-        if (isColorOrAbbreviation(name)) {
+        if (this.isColorOrAbbreviation(name)) {
             return true;
         }
 
         NamedTextColor textColor = NamedTextColor.NAMES.value(name);
 
-        if (textColor != null && allowedColors.contains(textColor)) {
+        if (textColor != null && this.allowedColors.contains(textColor)) {
             return true;
         }
 

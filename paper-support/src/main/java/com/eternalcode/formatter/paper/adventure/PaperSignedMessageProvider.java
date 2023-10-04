@@ -23,7 +23,7 @@ public class PaperSignedMessageProvider implements LegacyDependencyProvider<Sign
 
     @Override
     public SignedMessage getDependency() {
-        return new PaperSignedMessage(messageComponent, Identity.identity(player.getUniqueId()));
+        return new PaperSignedMessage(this.messageComponent, Identity.identity(this.player.getUniqueId()));
     }
 
 }

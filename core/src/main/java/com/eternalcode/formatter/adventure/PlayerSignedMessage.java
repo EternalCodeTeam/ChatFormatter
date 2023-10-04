@@ -54,7 +54,7 @@ public class PlayerSignedMessage implements SignedMessage {
 
     @Override
     public @NotNull Identity identity() {
-        return identity;
+        return this.identity;
     }
 
 }

@@ -19,7 +19,7 @@ public class DependencyInjector {
 
             this.registerUnSafe(legacyDependencyProvider.getType(), legacyDependencyProvider.getDependency());
         }
-        catch (NoClassDefFoundError ignored) {}
+        catch (NoClassDefFoundError ignored) { }
 
         return this;
     }
@@ -58,7 +58,8 @@ public class DependencyInjector {
 
             try {
                 return clazz.cast(constructor.newInstance(parameters.toArray(new Object[0])));
-            } catch (ReflectiveOperationException e) {
+            }
+            catch (ReflectiveOperationException e) {
                 throw new IllegalStateException("Failed to instantiate " + clazz, e);
             }
         }

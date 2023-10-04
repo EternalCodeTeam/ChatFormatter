@@ -9,7 +9,7 @@ public class TemplateService {
     }
 
     public String applyTemplates(String text) {
-        for (Template template : repository.getTemplates()) {
+        for (Template template : this.repository.getTemplates()) {
             text = template.apply(text);
         }
 

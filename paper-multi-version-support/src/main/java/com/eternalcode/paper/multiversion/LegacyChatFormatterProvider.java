@@ -18,7 +18,7 @@ public final class LegacyChatFormatterProvider implements LegacyDependencyProvid
 
     @Override
     public Object getDependency() {
-        return (ChatFormatter) (displayName, message) -> component;
+        return (ChatFormatter) (displayName, message) -> this.component;
     }
 
 }

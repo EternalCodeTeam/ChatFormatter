@@ -20,7 +20,7 @@ public class ChatPreparatoryService {
     public ChatPrepareResult prepare(Player player, Set<Player> receivers, String jsonFormat, String message) {
         ChatPrepareResult result = new ChatPrepareResult(jsonFormat, receivers, false);
 
-        for (ChatPreparatory preparation : preparations) {
+        for (ChatPreparatory preparation : this.preparations) {
             result = preparation.prepare(player, result.getReceivers(), result.getRawMessage(), message, result.isCancelled());
         }
 
