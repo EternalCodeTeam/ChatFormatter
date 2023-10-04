@@ -7,7 +7,6 @@ version = "1.0.7"
 
 repositories {
     mavenCentral()
-    mavenLocal()
     maven { url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") }
     maven { url = uri("https://repo.panda-lang.org/releases") }
     maven { url = uri("https://repo.papermc.io/repository/maven-public/") }
