@@ -1,5 +1,5 @@
 dependencies {
-    testImplementation(project(":chat-formatter"))
+    testImplementation(project(":core"))
 
     testImplementation("net.kyori:adventure-platform-bukkit:4.3.0")
     testImplementation("net.kyori:adventure-text-minimessage:4.14.0")
