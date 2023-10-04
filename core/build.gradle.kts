@@ -60,7 +60,7 @@ tasks {
         minecraftVersion("1.19.3")
     }
 
-    getByName<Test>("test") {
+    withType<Test> {
         useJUnitPlatform()
     }
 
