@@ -2,6 +2,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     id("net.minecrell.plugin-yml.bukkit")
+    id("com.github.johnrengelman.shadow")
     id("xyz.jpenilla.run-paper")
 }
 
@@ -38,35 +39,35 @@ dependencies {
     implementation("com.eternalcode:gitcheck:1.0.0")
 }
 
-tasks.withType<ShadowJar> {
-    archiveFileName.set("ChatFormatter v${project.version}.jar")
-
-    exclude(
-            "org/intellij/lang/annotations/**",
-            "org/jetbrains/annotations/**",
-            "META-INF/**",
-            "javax/**"
-    )
-
-    mergeServiceFiles()
-    minimize()
-
-    val prefix = "com.eternalcode.formatter.libs"
-    listOf(
-            "net.dzikoysk",
-            "dev.rollczi",
-            "panda",
-            "org.panda_lang",
-            "net.kyori",
-            "org.bstats",
-            "org.json",
-    ).forEach { pack ->
-        relocate(pack, "$prefix.$pack")
-    }
-}
-
 tasks {
     runServer {
         minecraftVersion("1.18.2")
+    }
+
+    withType<ShadowJar> {
+        archiveFileName.set("ChatFormatter v${project.version}.jar")
+
+        exclude(
+                "org/intellij/lang/annotations/**",
+                "org/jetbrains/annotations/**",
+                "META-INF/**",
+                "javax/**"
+        )
+
+        mergeServiceFiles()
+        minimize()
+
+        val prefix = "com.eternalcode.formatter.libs"
+        listOf(
+                "net.dzikoysk",
+                "dev.rollczi",
+                "panda",
+                "org.panda_lang",
+                "net.kyori",
+                "org.bstats",
+                "org.json",
+        ).forEach { pack ->
+            relocate(pack, "$prefix.$pack")
+        }
     }
 }

@@ -16,7 +16,7 @@ bukkit {
 }
 
 dependencies {
-    compileOnly(project(":chat-formatter"))
+    compileOnly(project(":core"))
     implementation(project(":paper-multi-version-support"))
     compileOnly("io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
 }
