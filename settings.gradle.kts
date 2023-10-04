@@ -1,6 +1,3 @@
-rootProject.name = "ChatFormatter"
-
-include(":chat-formatter")
-include(":chat-formatter-test")
-include(":paper-support")
+include(":core")
 include(":paper-multi-version-support")
+include(":paper-support")
