@@ -127,12 +127,12 @@ class ChatController implements Listener {
         message = this.templateService.applyTemplates(message);
         message = this.placeholderRegistry.format(message, player);
 
-        Component messageComponent = miniMessage.deserialize(message, this.createTagResolvers(event));
+        Component messageComponent = this.miniMessage.deserialize(message, this.createTagResolvers(event));
 
         Set<Player> recipients = event.getRecipients();
 
-        if (!preparatoryService.isEmpty()) {
-            ChatPrepareResult result = preparatoryService.prepare(player, recipients, GSON.serialize(messageComponent), event.getMessage());
+        if (!this.preparatoryService.isEmpty()) {
+            ChatPrepareResult result = this.preparatoryService.prepare(player, recipients, GSON.serialize(messageComponent), event.getMessage());
 
             if (result.isCancelled()) {
                 return;

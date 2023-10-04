@@ -18,15 +18,15 @@ public final class ChatPrepareResult {
     }
 
     public boolean isCancelled() {
-        return cancelled;
+        return this.cancelled;
     }
 
     public String getRawMessage() {
-        return rawMessage;
+        return this.rawMessage;
     }
 
     public Set<Player> getReceivers() {
-        return receivers;
+        return this.receivers;
     }
 
 }

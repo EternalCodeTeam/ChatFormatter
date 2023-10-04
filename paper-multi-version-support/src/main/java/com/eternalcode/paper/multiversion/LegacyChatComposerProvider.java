@@ -18,7 +18,7 @@ public final class LegacyChatComposerProvider implements LegacyDependencyProvide
 
     @Override
     public Object getDependency() {
-        return (ChatComposer) (source, sourceDisplayName, ignoredMessage) -> component;
+        return (ChatComposer) (source, sourceDisplayName, ignoredMessage) -> this.component;
     }
 
 }

@@ -18,7 +18,7 @@ public class ModernChatRendererProvider implements LegacyDependencyProvider<Obje
 
     @Override
     public Object getDependency() {
-        return (ChatRenderer) (source, sourceDisplayName, ignoredMessage, viewer) -> component;
+        return (ChatRenderer) (source, sourceDisplayName, ignoredMessage, viewer) -> this.component;
     }
 
 }

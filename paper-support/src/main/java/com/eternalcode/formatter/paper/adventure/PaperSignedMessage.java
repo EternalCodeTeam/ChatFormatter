@@ -54,7 +54,7 @@ public class PaperSignedMessage implements SignedMessage {
 
     @Override
     public @NotNull Identity identity() {
-        return identity;
+        return this.identity;
     }
 
 }

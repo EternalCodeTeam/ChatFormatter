@@ -13,8 +13,8 @@ public final class Legacy {
     public static final String SHADOW = "<ampersand>";
 
     public static final Pattern ALL_PATTERN = Pattern.compile(".*");
-    public static final Pattern AMPERSAND_PATTERN = Pattern.compile( "(?i)" + AMPERSAND + "[0-9A-FK-ORX#]" );
-    public static final Pattern SHADOW_PATTERN = Pattern.compile( "(?i)" + SHADOW + "[0-9A-FK-ORX#]" );
+    public static final Pattern AMPERSAND_PATTERN = Pattern.compile("(?i)" + AMPERSAND + "[0-9A-FK-ORX#]");
+    public static final Pattern SHADOW_PATTERN = Pattern.compile("(?i)" + SHADOW + "[0-9A-FK-ORX#]");
 
     private Legacy() {
     }
@@ -70,7 +70,7 @@ public final class Legacy {
         int matched = 0;
         while (matcher.find()) {
             int length = (matcher.end() - matcher.start()) - 1;
-            builder.replace(matcher.start() + matched, matcher.end() + matched - 1, String.valueOf( AMPERSAND ));
+            builder.replace(matcher.start() + matched, matcher.end() + matched - 1, String.valueOf(AMPERSAND));
             matched -= length;
             matched += 1;
         }
