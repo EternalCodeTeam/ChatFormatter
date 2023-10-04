@@ -25,7 +25,7 @@ dependencies {
     testImplementation("org.spigotmc:spigot-api:$spigotApiVersion")
 
     // Kyori Adventure & MiniMessage
-    val adventureVersion = "4.3.0"
+    val adventureVersion = "4.3.1"
     val miniMessageVersion = "4.14.0"
     implementation("net.kyori:adventure-platform-bukkit:$adventureVersion")
     implementation("net.kyori:adventure-text-minimessage:$miniMessageVersion")
@@ -44,7 +44,7 @@ dependencies {
     implementation("org.bstats:bstats-bukkit:3.0.2")
 
     // PlaceholderAPI & Vault
-    compileOnly("me.clip:placeholderapi:2.11.3")
+    compileOnly("me.clip:placeholderapi:2.11.4")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
 
     // GitCheck
