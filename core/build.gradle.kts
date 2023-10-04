@@ -20,7 +20,6 @@ bukkit {
 
 dependencies {
     // Spigot API
-
     val spigotApiVersion = "1.19.3-R0.1-SNAPSHOT"
     compileOnly("org.spigotmc:spigot-api:$spigotApiVersion")
     testImplementation("org.spigotmc:spigot-api:$spigotApiVersion")
