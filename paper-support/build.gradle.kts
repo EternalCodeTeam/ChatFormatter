@@ -1,8 +1,9 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins{
+    id("eternalcode.java")
     id("net.minecrell.plugin-yml.bukkit")
-    id("xyz.jpenilla.run-paper")
+    id("com.github.johnrengelman.shadow")
 }
 
 bukkit {
@@ -25,18 +26,11 @@ tasks.withType<ShadowJar> {
     archiveFileName.set("ChatFormatter-PaperSupport v${project.version}.jar")
 
     exclude(
-            "org/intellij/lang/annotations/**",
-            "org/jetbrains/annotations/**",
-            "META-INF/**",
-            "javax/**"
+        "org/intellij/lang/annotations/**",
+        "org/jetbrains/annotations/**",
+        "META-INF/**",
+        "javax/**"
     )
 
     mergeServiceFiles()
-    minimize()
-}
-
-tasks {
-    runServer {
-        minecraftVersion("1.18.2")
-    }
 }

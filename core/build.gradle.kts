@@ -1,14 +1,16 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
-    id("net.minecrell.plugin-yml.bukkit")
+    id("eternalcode.java")
+
     id("com.github.johnrengelman.shadow")
-    id("xyz.jpenilla.run-paper")
+    id("net.minecrell.plugin-yml.bukkit")
+    id("xyz.jpenilla.run-paper") version "2.2.0"
 }
 
 bukkit {
     main = "com.eternalcode.formatter.ChatFormatterPlugin"
-    apiVersion = "1.13"
+    apiVersion = "1.19"
     prefix = "ChatFormatter"
     author = "EternalCodeTeam"
     name = "ChatFormatter"
@@ -18,15 +20,26 @@ bukkit {
 
 dependencies {
     // Spigot API
-    compileOnly("org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT")
+
+    val spigotApiVersion = "1.19.3-R0.1-SNAPSHOT"
+    compileOnly("org.spigotmc:spigot-api:$spigotApiVersion")
+    testImplementation("org.spigotmc:spigot-api:$spigotApiVersion")
 
     // Kyori Adventure & MiniMessage
-    implementation("net.kyori:adventure-platform-bukkit:4.3.0")
-    implementation("net.kyori:adventure-text-minimessage:4.14.0")
+    val adventureVersion = "4.3.0"
+    val miniMessageVersion = "4.14.0"
+    implementation("net.kyori:adventure-platform-bukkit:$adventureVersion")
+    implementation("net.kyori:adventure-text-minimessage:$miniMessageVersion")
+    testImplementation("net.kyori:adventure-platform-bukkit:$adventureVersion")
+    testImplementation("net.kyori:adventure-text-minimessage:$miniMessageVersion")
 
-    // LiteCommands & CDN
+    // LiteCommands
     implementation("dev.rollczi.litecommands:bukkit:2.8.9")
-    implementation("net.dzikoysk:cdn:1.14.4")
+
+    // CDN Configs
+    val cdnVersion = "1.14.4"
+    implementation("net.dzikoysk:cdn:$cdnVersion")
+    testImplementation("net.dzikoysk:cdn:$cdnVersion")
 
     // bStats
     implementation("org.bstats:bstats-bukkit:3.0.2")
@@ -37,35 +50,43 @@ dependencies {
 
     // GitCheck
     implementation("com.eternalcode:gitcheck:1.0.0")
+
+
+    // JUnit 5
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
 }
 
 tasks {
     runServer {
-        minecraftVersion("1.18.2")
+        minecraftVersion("1.19.3")
+    }
+
+    getByName<Test>("test") {
+        useJUnitPlatform()
     }
 
     withType<ShadowJar> {
         archiveFileName.set("ChatFormatter v${project.version}.jar")
 
         exclude(
-                "org/intellij/lang/annotations/**",
-                "org/jetbrains/annotations/**",
-                "META-INF/**",
-                "javax/**"
+            "org/intellij/lang/annotations/**",
+            "org/jetbrains/annotations/**",
+            "META-INF/**",
+            "javax/**"
         )
 
         mergeServiceFiles()
-        minimize()
 
         val prefix = "com.eternalcode.formatter.libs"
         listOf(
-                "net.dzikoysk",
-                "dev.rollczi",
-                "panda",
-                "org.panda_lang",
-                "net.kyori",
-                "org.bstats",
-                "org.json",
+            "net.dzikoysk",
+            "dev.rollczi",
+            "panda",
+            "org.panda_lang",
+            "net.kyori",
+            "org.bstats",
+            "org.json",
         ).forEach { pack ->
             relocate(pack, "$prefix.$pack")
         }
