@@ -4,7 +4,7 @@ plugins {
     `java-library`
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("net.minecrell.plugin-yml.bukkit") version "0.6.0"
-    id("xyz.jpenilla.run-paper") version "2.1.0"
+    id("xyz.jpenilla.run-paper") version "2.2.0"
 }
 
 subprojects {
@@ -57,7 +57,7 @@ project(":chat-formatter") {
         compileOnly("org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT")
 
         // Kyori Adventure & MiniMessage
-        implementation("net.kyori:adventure-platform-bukkit:4.3.0")
+        implementation("net.kyori:adventure-platform-bukkit:4.3.1")
         implementation("net.kyori:adventure-text-minimessage:4.14.0")
 
         // LiteCommands & CDN
@@ -68,7 +68,7 @@ project(":chat-formatter") {
         implementation("org.bstats:bstats-bukkit:3.0.2")
 
         // PlaceholderAPI & Vault
-        compileOnly("me.clip:placeholderapi:2.11.3")
+        compileOnly("me.clip:placeholderapi:2.11.4")
         compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
 
         // GitCheck
@@ -164,7 +164,7 @@ project(":chat-formatter-test") {
     dependencies {
         testImplementation(project(":chat-formatter"))
 
-        testImplementation("net.kyori:adventure-platform-bukkit:4.3.0")
+        testImplementation("net.kyori:adventure-platform-bukkit:4.3.1")
         testImplementation("net.kyori:adventure-text-minimessage:4.14.0")
         testImplementation("net.dzikoysk:cdn:1.14.4")
         testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
