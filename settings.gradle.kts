@@ -1,3 +1,2 @@
-include(":core")
-include(":paper-multi-version-support")
-include(":paper-support")
+include(":chatformatter-core")
+include(":chatformatter-paper-plugin")
