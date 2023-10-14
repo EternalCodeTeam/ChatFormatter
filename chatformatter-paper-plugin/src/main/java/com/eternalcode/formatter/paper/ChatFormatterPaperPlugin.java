@@ -1,8 +1,5 @@
 package com.eternalcode.formatter.paper;
 
-import com.eternalcode.combat.EternalCombatApi;
-import com.eternalcode.combat.EternalCombatProvider;
-import com.eternalcode.combat.fight.FightManager;
 import com.eternalcode.formatter.ChatFormatterPlugin;
 import com.eternalcode.formatter.ChatHandler;
 import io.papermc.paper.event.player.AsyncChatEvent;

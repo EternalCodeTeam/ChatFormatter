@@ -13,18 +13,16 @@ plugins{
 }
 
 bukkit {
-    main = "com.eternalcode.formatter.paper.ChatFormatterPaperSupportPlugin"
+    main = "com.eternalcode.formatter.paper.ChatFormatterPaperPlugin"
     apiVersion = "1.13"
-    prefix = "ChatFormatter-PaperSupport"
+    prefix = "ChatFormatter"
     author = "EternalCodeTeam"
-    name = "ChatFormatter-PaperSupport"
+    name = "ChatFormatter"
     version = "${project.version}"
-    depend = listOf("ChatFormatter")
 }
 
 dependencies {
     compileOnly(project(":chatformatter-core"))
-    compileOnly("com.eternalcode:eternalcombat-api:1.1.1")
     compileOnly("io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
 }
 
