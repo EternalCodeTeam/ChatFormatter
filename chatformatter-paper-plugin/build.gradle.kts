@@ -18,6 +18,7 @@ bukkit {
     prefix = "ChatFormatter"
     author = "EternalCodeTeam"
     name = "ChatFormatter"
+    depend = listOf("PlaceholderAPI", "Vault")
     version = "${project.version}"
 }
 
@@ -26,7 +27,7 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
 }
 
-tasks.withType<ShadowJar> {
+tasks.shadowJar {
     archiveFileName.set("chatformatter-paper-plugin-${version}.jar")
 
     exclude(
@@ -39,7 +40,9 @@ tasks.withType<ShadowJar> {
     mergeServiceFiles()
 }
 
-tasks.create("shadowAll") {
+tasks.create("shadowAll", ShadowJar::class) {
+    group = "shadow"
+
     val projects = listOf(
             project(":chatformatter-core"),
             project(":chatformatter-paper-plugin")
@@ -107,11 +110,11 @@ fun merge(archiveFileName: String, projects: List<Project>) {
 
 }
 
+runPaper {
+    disablePluginJarDetection()
+}
+
 tasks.runServer {
     minecraftVersion("1.19.3")
-    downloadPlugins {
-        val outputFile = File(project.layout.buildDirectory.asFile.get(), "libs/ChatFormatter v${project.version}.jar")
-
-        downloadPlugins.url(outputFile.toURL()!!.toString())
-    }
+    pluginJars = files("/build/libs/ChatFormatter v${project.version}.jar")
 }

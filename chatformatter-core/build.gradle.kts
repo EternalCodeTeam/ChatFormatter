@@ -1,5 +1,3 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-
 plugins {
     id("eternalcode.java")
     id("com.github.johnrengelman.shadow")
@@ -47,7 +45,7 @@ tasks {
         useJUnitPlatform()
     }
 
-    withType<ShadowJar> {
+    shadowJar {
         archiveFileName.set("chatformatter-core-${version}.jar")
 
         exclude(

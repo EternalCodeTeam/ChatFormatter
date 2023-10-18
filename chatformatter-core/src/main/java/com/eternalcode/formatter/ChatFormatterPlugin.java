@@ -77,7 +77,10 @@ public class ChatFormatterPlugin implements ChatFormatterApi {
 
     public void close() {
         ChatFormatterApiProvider.disable();
-        this.liteCommands.getPlatform().unregisterAll();
+
+        if (this.liteCommands != null) {
+            this.liteCommands.getPlatform().unregisterAll();
+        }
     }
 
     @Override
