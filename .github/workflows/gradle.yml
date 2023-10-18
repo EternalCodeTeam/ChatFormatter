@@ -39,4 +39,4 @@ jobs:
         uses: actions/upload-artifact@v3.1.3
         with:
           name: 'Successfully build ChatFormatter'
-          path: chatformatter-paper-plugin/build/libs/*.jar
+          path: chatformatter-paper-plugin/build/libs/ChatFormatter*.jar
