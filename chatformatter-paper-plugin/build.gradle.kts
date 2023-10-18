@@ -40,7 +40,7 @@ tasks.shadowJar {
     mergeServiceFiles()
 }
 
-tasks.create("shadowAll", ShadowJar::class) {
+tasks.create("shadowAll") {
     group = "shadow"
 
     val projects = listOf(
