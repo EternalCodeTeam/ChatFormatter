@@ -48,7 +48,7 @@ public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRep
     })
     public String defaultFormat = "{displayname} {arrow_right} {message}";
     public Map<String, String> format = new ImmutableMap.Builder<String, String>()
-        .put("member", "{member} &f{displayname} &8{arrow_right} {message} ")
+        .put("default", "{member} &f{displayname} &8{arrow_right} {message} ")
         .put("admin", "$template({admin}, &c)")
         .build();
 
