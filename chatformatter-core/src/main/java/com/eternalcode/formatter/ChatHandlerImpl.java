@@ -1,5 +1,6 @@
 package com.eternalcode.formatter;
 
+import com.eternalcode.formatter.adventure.ComponentUtil;
 import com.eternalcode.formatter.adventure.TextColorTagResolver;
 import com.eternalcode.formatter.legacy.Legacy;
 import com.eternalcode.formatter.legacy.LegacyPostMessageProcessor;
@@ -64,7 +65,7 @@ class ChatHandlerImpl implements ChatHandler {
         .build();
 
     private static final GsonComponentSerializer GSON = GsonComponentSerializer.gson();
-    private static final MiniMessage MESSAGE_DESERIALIZER = MiniMessage.builder()
+    private static final MiniMessage EMPTY_MESSAGE_DESERIALIZER = MiniMessage.builder()
         .tags(TagResolver.empty())
         .preProcessor(new LegacyPreProcessor())
         .postProcessor(new LegacyPostMessageProcessor())
@@ -103,10 +104,10 @@ class ChatHandlerImpl implements ChatHandler {
         Player sender = chatMessage.sender();
 
         Component message = GSON.deserialize(chatMessage.jsonMessage());
-        String messageString = MESSAGE_DESERIALIZER.serialize(message);
+        String rawMessage = ComponentUtil.toRawContent(message);
 
         TagResolver.Single displayNamePlaceholder = displayNamePlaceholder(sender);
-        TagResolver.Single messagePlaceholder = messagePlaceholder(sender, messageString);
+        TagResolver.Single messagePlaceholder = messagePlaceholder(sender, rawMessage);
 
         return TagResolver.resolver(displayNamePlaceholder, messagePlaceholder);
     }
@@ -115,12 +116,12 @@ class ChatHandlerImpl implements ChatHandler {
         return Placeholder.parsed("displayname", Legacy.clearSection(sender.getDisplayName()));
     }
 
-    private TagResolver.Single messagePlaceholder(Player sender, String messageString) {
+    private TagResolver.Single messagePlaceholder(Player sender, String rawMessage) {
         String safeMessage = sender.hasPermission(PERMISSION_LEGACY)
-                ? messageString
-                : Legacy.ampersandToPlaceholder(messageString);
+                ? rawMessage
+                : Legacy.ampersandToPlaceholder(rawMessage);
 
-        Component componentMessage = MESSAGE_DESERIALIZER.deserialize(safeMessage, this.providePermittedTags(sender));
+        Component componentMessage = EMPTY_MESSAGE_DESERIALIZER.deserialize(safeMessage, this.providePermittedTags(sender));
 
         return Placeholder.component("message", componentMessage);
     }
