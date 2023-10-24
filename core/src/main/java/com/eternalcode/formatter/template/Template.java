@@ -1,7 +1,7 @@
 package com.eternalcode.formatter.template;
 
+import com.google.common.base.Joiner;
 import panda.std.Result;
-import panda.utilities.text.Joiner;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -128,7 +128,12 @@ public class Template {
 
     @Override
     public String toString() {
-        return String.format(TEMPLATE_FORMAT, this.name, Joiner.on(SEPARATOR_FORMAT).join(this.arguments, arg -> String.format(ARGUMENT_FORMAT, arg)), this.content);
+        String formattedArguments = Joiner.on(SEPARATOR_FORMAT)
+                .join(arguments.stream()
+                .map(arg -> String.format(ARGUMENT_FORMAT, arg))
+                .toArray());
+
+        return String.format(TEMPLATE_FORMAT, this.name, formattedArguments, this.content);
     }
 
 }

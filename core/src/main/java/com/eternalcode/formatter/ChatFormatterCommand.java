@@ -1,6 +1,6 @@
 package com.eternalcode.formatter;
 
-import com.eternalcode.formatter.config.ConfigManager;
+import com.eternalcode.formatter.config.PluginConfig;
 import com.google.common.base.Stopwatch;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
@@ -18,12 +18,12 @@ import java.util.concurrent.TimeUnit;
 @Permission("chatformatter.chat.reload")
 class ChatFormatterCommand {
 
-    private final ConfigManager configManager;
+    private final PluginConfig pluginConfig;
     private final AudienceProvider provider;
     private final MiniMessage miniMessage;
 
-    ChatFormatterCommand(ConfigManager configManager, AudienceProvider provider, MiniMessage miniMessage) {
-        this.configManager = configManager;
+    ChatFormatterCommand(PluginConfig pluginConfig, AudienceProvider provider, MiniMessage miniMessage) {
+        this.pluginConfig = pluginConfig;
         this.provider = provider;
         this.miniMessage = miniMessage;
     }
@@ -32,7 +32,7 @@ class ChatFormatterCommand {
     void reload(CommandSender commandSender) {
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        this.configManager.loadAndRenderConfigs();
+        this.pluginConfig.load();
         long millis = stopwatch.elapsed(TimeUnit.MILLISECONDS);
 
         Component deserialized = this.miniMessage.deserialize("<b><gradient:#29fbff:#38b3ff>ChatFormatter:</gradient></b> <green>Successfully reloaded configs in " + millis + "ms!");

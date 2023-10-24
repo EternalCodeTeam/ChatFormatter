@@ -1,7 +1,8 @@
 package com.eternalcode.formatter;
 
-import com.eternalcode.formatter.config.ConfigManager;
+import com.eternalcode.formatter.config.ConfigFactory;
 import com.eternalcode.formatter.config.PluginConfig;
+import com.eternalcode.formatter.config.TemplateSerializer;
 import com.eternalcode.formatter.legacy.LegacyPostProcessor;
 import com.eternalcode.formatter.legacy.LegacyPreProcessor;
 import com.eternalcode.formatter.hook.PlaceholderAPIStack;
@@ -21,12 +22,11 @@ import org.bstats.bukkit.Metrics;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.nio.file.Path;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 public class ChatFormatterPlugin extends JavaPlugin implements ChatFormatter {
-
-    private ConfigManager configManager;
 
     private PlaceholderRegistry placeholderRegistry;
     private TemplateService templateService;
@@ -43,10 +43,7 @@ public class ChatFormatterPlugin extends JavaPlugin implements ChatFormatter {
     public void onEnable() {
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        this.configManager = new ConfigManager(this.getDataFolder());
-        this.configManager.loadAndRenderConfigs();
-
-        PluginConfig pluginConfig = this.configManager.getPluginConfig();
+        PluginConfig pluginConfig = ConfigFactory.create(PluginConfig.class, this.pluginPath("config.yml"), (pack) -> pack.register(new TemplateSerializer()));
 
         this.placeholderRegistry = new PlaceholderRegistry();
         this.placeholderRegistry.stack(pluginConfig);
@@ -63,7 +60,7 @@ public class ChatFormatterPlugin extends JavaPlugin implements ChatFormatter {
             .build();
 
         this.liteCommands = LiteBukkitFactory.builder(this.getServer(), "chat-formatter")
-            .commandInstance(new ChatFormatterCommand(this.configManager, this.audienceProvider, this.miniMessage))
+            .commandInstance(new ChatFormatterCommand(pluginConfig, this.audienceProvider, this.miniMessage))
             .register();
 
         // bStats metrics
@@ -83,6 +80,10 @@ public class ChatFormatterPlugin extends JavaPlugin implements ChatFormatter {
     public void onDisable() {
         ChatFormatterProvider.disable();
         this.liteCommands.getPlatform().unregisterAll();
+    }
+
+    private Path pluginPath(String path) {
+        return this.getDataFolder().toPath().resolve(path);
     }
 
     @Override

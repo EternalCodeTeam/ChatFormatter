@@ -35,10 +35,12 @@ dependencies {
     // LiteCommands
     implementation("dev.rollczi.litecommands:bukkit:2.8.9")
 
-    // CDN Configs
-    val cdnVersion = "1.14.4"
-    implementation("net.dzikoysk:cdn:$cdnVersion")
-    testImplementation("net.dzikoysk:cdn:$cdnVersion")
+    // Okaeri Config
+    val okaeriVersion = "5.0.0-beta.5"
+    implementation("eu.okaeri:okaeri-configs-yaml-snakeyaml:$okaeriVersion")
+    implementation("eu.okaeri:okaeri-configs-yaml-bukkit:$okaeriVersion")
+    testImplementation("eu.okaeri:okaeri-configs-yaml-snakeyaml:$okaeriVersion")
+    testImplementation("eu.okaeri:okaeri-configs-yaml-bukkit:$okaeriVersion")
 
     // bStats
     implementation("org.bstats:bstats-bukkit:3.0.2")
