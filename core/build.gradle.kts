@@ -80,13 +80,13 @@ tasks {
 
         val prefix = "com.eternalcode.formatter.libs"
         listOf(
-            "net.dzikoysk",
             "dev.rollczi",
             "panda",
-            "org.panda_lang",
             "net.kyori",
             "org.bstats",
             "org.json",
+            "eu.okaeri",
+            "org.yaml",
         ).forEach { pack ->
             relocate(pack, "$prefix.$pack")
         }
