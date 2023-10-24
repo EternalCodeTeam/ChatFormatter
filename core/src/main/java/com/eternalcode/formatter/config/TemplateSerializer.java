@@ -6,6 +6,8 @@ import eu.okaeri.configs.serdes.DeserializationData;
 import eu.okaeri.configs.serdes.ObjectSerializer;
 import eu.okaeri.configs.serdes.SerializationData;
 import org.jetbrains.annotations.NotNull;
+import panda.std.Result;
+import panda.std.function.ThrowingFunction;
 
 public class TemplateSerializer implements ObjectSerializer<Template> {
 
@@ -22,6 +24,13 @@ public class TemplateSerializer implements ObjectSerializer<Template> {
     @Override
     public Template deserialize(@NotNull DeserializationData data, @NotNull GenericsDeclaration generics) {
         String value = data.getValue(String.class);
-        return Template.parse(value).orNull();
+
+        Result<Template, String> templateResult = Template.parse(value);
+
+        try {
+            return templateResult.orThrow((ThrowingFunction<String, Exception, Exception>) IllegalArgumentException::new);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

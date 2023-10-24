@@ -129,7 +129,7 @@ public class Template {
     @Override
     public String toString() {
         String formattedArguments = Joiner.on(SEPARATOR_FORMAT)
-                .join(arguments.stream()
+                .join(this.arguments.stream()
                 .map(arg -> String.format(ARGUMENT_FORMAT, arg))
                 .toArray());
 

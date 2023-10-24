@@ -10,15 +10,13 @@ import java.nio.file.Path;
 public class ConfigFactory {
 
     public static <T extends OkaeriConfig> T create(Class<T> configClass, Path path, OkaeriSerdesPack serdesPack) {
-        T config = ConfigManager.create(configClass);
-
-        config.withBindFile(path);
-        config.withConfigurer(new YamlBukkitConfigurer());
-        config.withSerdesPack(serdesPack);
-        config.withRemoveOrphans(true);
-        config.saveDefaults();
-        config.load(true);
-
-        return config;
+        return ConfigManager.create(configClass, (config -> {
+            config.withBindFile(path);
+            config.withConfigurer(new YamlBukkitConfigurer());
+            config.withSerdesPack(serdesPack);
+            config.withRemoveOrphans(true);
+            config.saveDefaults();
+            config.load(true);
+        }));
     }
 }
