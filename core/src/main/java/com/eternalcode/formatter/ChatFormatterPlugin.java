@@ -2,7 +2,6 @@ package com.eternalcode.formatter;
 
 import com.eternalcode.formatter.config.ConfigFactory;
 import com.eternalcode.formatter.config.PluginConfig;
-import com.eternalcode.formatter.config.TemplateSerializer;
 import com.eternalcode.formatter.legacy.LegacyPostProcessor;
 import com.eternalcode.formatter.legacy.LegacyPreProcessor;
 import com.eternalcode.formatter.hook.PlaceholderAPIStack;
@@ -28,6 +27,8 @@ import java.util.stream.Stream;
 
 public class ChatFormatterPlugin extends JavaPlugin implements ChatFormatter {
 
+    private PluginConfig pluginConfig;
+
     private PlaceholderRegistry placeholderRegistry;
     private TemplateService templateService;
     private ChatRankProvider rankProvider;
@@ -43,7 +44,7 @@ public class ChatFormatterPlugin extends JavaPlugin implements ChatFormatter {
     public void onEnable() {
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        PluginConfig pluginConfig = ConfigFactory.create(PluginConfig.class, this.pluginPath("config.yml"), (pack) -> pack.register(new TemplateSerializer()));
+        this.pluginConfig = ConfigFactory.create(PluginConfig.class, this.pluginPath("config.yml"));
 
         this.placeholderRegistry = new PlaceholderRegistry();
         this.placeholderRegistry.stack(pluginConfig);
