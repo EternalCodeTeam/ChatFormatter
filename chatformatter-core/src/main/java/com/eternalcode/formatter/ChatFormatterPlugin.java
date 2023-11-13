@@ -5,25 +5,21 @@ import com.eternalcode.formatter.config.PluginConfig;
 import com.eternalcode.formatter.legacy.LegacyPostProcessor;
 import com.eternalcode.formatter.legacy.LegacyPreProcessor;
 import com.eternalcode.formatter.placeholder.PlaceholderAPIStack;
-import com.eternalcode.formatter.rank.VaultRankProvider;
-import com.eternalcode.formatter.rank.ChatRankProvider;
-import com.eternalcode.formatter.template.TemplateService;
 import com.eternalcode.formatter.placeholder.PlaceholderRegistry;
+import com.eternalcode.formatter.rank.ChatRankProvider;
+import com.eternalcode.formatter.rank.VaultRankProvider;
+import com.eternalcode.formatter.template.TemplateService;
 import com.eternalcode.formatter.updater.UpdaterController;
 import com.eternalcode.formatter.updater.UpdaterService;
 import com.google.common.base.Stopwatch;
-import dev.rollczi.litecommands.LiteCommands;
-import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
 import net.kyori.adventure.platform.AudienceProvider;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class ChatFormatterPlugin implements ChatFormatterApi {
@@ -32,8 +28,6 @@ public class ChatFormatterPlugin implements ChatFormatterApi {
     private final TemplateService templateService;
     private final ChatRankProvider rankProvider;
     private final ChatHandler chatHandler;
-
-    private final LiteCommands<CommandSender> liteCommands;
 
     public ChatFormatterPlugin(Plugin plugin) {
         Server server = plugin.getServer();
@@ -53,22 +47,17 @@ public class ChatFormatterPlugin implements ChatFormatterApi {
 
         AudienceProvider audienceProvider = BukkitAudiences.create(plugin);
         MiniMessage miniMessage = MiniMessage.builder()
-                .preProcessor(new LegacyPreProcessor())
-                .postProcessor(new LegacyPostProcessor())
-                .build();
-
-        this.liteCommands = LiteBukkitFactory.builder(server, "chat-formatter")
-            .commandInstance(new ChatFormatterCommand(configManager, audienceProvider, miniMessage))
-            .register();
+            .preProcessor(new LegacyPreProcessor())
+            .postProcessor(new LegacyPostProcessor())
+            .build();
 
         // bStats metrics
         new Metrics((JavaPlugin) plugin, 15199);
 
         this.chatHandler = new ChatHandlerImpl(miniMessage, pluginConfig, this.rankProvider, this.placeholderRegistry, this.templateService);
 
-        List.of(
-            new UpdaterController(updaterService, pluginConfig, audienceProvider, miniMessage)
-        ).forEach(listener -> server.getPluginManager().registerEvents(listener, plugin));
+        server.getPluginCommand("chatformatter").setExecutor(new ChatFormatterCommand(configManager, audienceProvider, miniMessage));
+        server.getPluginManager().registerEvents(new UpdaterController(updaterService, pluginConfig, audienceProvider, miniMessage), plugin);
 
         ChatFormatterApiProvider.enable(this);
 
@@ -77,10 +66,6 @@ public class ChatFormatterPlugin implements ChatFormatterApi {
 
     public void close() {
         ChatFormatterApiProvider.disable();
-
-        if (this.liteCommands != null) {
-            this.liteCommands.getPlatform().unregisterAll();
-        }
     }
 
     @Override
