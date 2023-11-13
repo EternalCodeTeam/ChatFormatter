@@ -2,7 +2,7 @@
 
 ![Readme Banner](assets/img/chatformatter.png)
 
-[![Available on Spigot](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/supported/spigot_vector.svg)](https://www.spigotmc.org/resources/%EF%B8%8F-chatformatter-%E2%9C%94%EF%B8%8F-minimessages-%E2%9C%94%EF%B8%8F-template-system-%E2%9C%94%EF%B8%8F-placeholders-%E2%9C%94%EF%B8%8F-vault-support.102212/)
+[![Available on Paper](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/supported/spigot_vector.svg)](https://raw.githubusercontent.com/intergrav/devins-badges/1aec26abb75544baec37249f42008b2fcc0e731f/assets/cozy/supported/paper_vector.svg)
 [![Available on modrinth](https://raw.githubusercontent.com/intergrav/devins-badges/68af3da1d56294934ece854c43dac9ab1b0eb3e9/assets/cozy/available/modrinth_vector.svg)](https://modrinth.com/plugin/chatformatter)
 
 [![Patreon](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/donate/patreon-plural_vector.svg)](https://www.patreon.com/eternalcode)
@@ -14,64 +14,63 @@
 
 </div>
 
-##### WARRNING! This plugin requires PlaceholderAPI and Vault to run!
+> ⚠ **This plugin requires PlaceholderAPI and Vault to run!**
 
-### Features:
+## Features:
 
 - PlaceholderAPI Support
 - [MiniMessages Support](https://docs.adventure.kyori.net/minimessage/format.html) with Legacy Colors Support!
 - Template System
 - Custom Placeholders System
-- Per permission miniMessages Tags (check permissions 👇)
+- Per permission miniMessages Tags (see permissions below)
 
-### Useful links:
+## Useful links:
 
 - [Web UI](https://webui.adventure.kyori.net)
-- [MiniMessages Format](https://docs.adventure.kyori.net/minimessage/format.html) 
+- [MiniMessages Format](https://docs.adventure.kyori.net/minimessage/format.html)
 
-### Permissions:
+## Permissions:
 
-- chatformatter.decorations.* - `<bold>`, `<italic>`, `<underlined>`, `<strikethrough>`, and `<obfuscated>` tags.
-- chatformatter.decorations.bold - `<bold>`
-- chatformatter.decorations.italic - `<italic>`
-- chatformatter.decorations.underlined - `<underlined>`
-- chatformatter.decorations.strikethrough - `<strikethrough>`
-- chatformatter.decorations.obfuscated - `<obfuscated>`
-- chatformatter.reset - `<reset>`
-- chatformatter.gradient - `<gradient>`
-- chatformatter.hover - `<hover>`
-- chatformatter.click - `<click>`
-- chatformatter.insertion - `<insertion>`
-- chatformatter.font - `<font>`
-- chatformatter.transition - `<transition>`
-- chatformatter.translatable - `<lang>`
-- chatformatter.selector - `<selector>`
-- chatformatter.keybind - `<key>`
-- chatformatter.newline - `<newline>`
-- chatformatter.chat.reload - reload the plugin `/chatformatter reload`
-- chatformatter.receiveupdates - receive updates announce for this plugin
+- `chatformatter.decorations.*` gives access to `<bold>`, `<italic>`, `<underlined>`, `<strikethrough>`, and `<obfuscated>` tags.
+- `chatformatter.decorations.bold` - `<bold>`
+- `chatformatter.decorations.italic` - `<italic>`
+- `chatformatter.decorations.underlined` - `<underlined>`
+- `chatformatter.decorations.strikethrough` - `<strikethrough>`
+- `chatformatter.decorations.obfuscated` - `<obfuscated>`
+- `chatformatter.reset` - `<reset>`
+- `chatformatter.gradient` - `<gradient>`
+- `chatformatter.hover` - `<hover>`
+- `chatformatter.click` - `<click>`
+- `chatformatter.insertion` - `<insertion>`
+- `chatformatter.font` - `<font>`
+- `chatformatter.transition` - `<transition>`
+- `chatformatter.translatable` - `<lang>`
+- `chatformatter.selector` - `<selector>`
+- `chatformatter.keybind` - `<key>`
+- `chatformatter.newline` - `<newline>`
+- `chatformatter.chat.reload` - reloads the plugin with `/chatformatter reload`
+- `chatformatter.receiveupdates` - receive update announcements for this plugin
 
 ### Additional color permissions:
 
-- chatformatter.color.* - `<red>`, `<blue>`, etc. tags.
-- chatformatter.legacycolor - Allows the use of legacy color codes, such as `&c`, `&4`, `&l`, etc.
-- chatformatter.color.black - `<black>`
-- chatformatter.color.dark_blue - `<dark_blue>`
-- chatformatter.color.dark_green - `<dark_green>`
-- chatformatter.color.dark_aqua - `<dark_aqua>`
-- chatformatter.color.dark_red - `<dark_red>`
-- chatformatter.color.dark_purple - `<dark_purple>`
-- chatformatter.color.gold - `<gold>`
-- chatformatter.color.gray - `<gray>`
-- chatformatter.color.dark_gray - `<dark_gray>`
-- chatformatter.color.blue - `<blue>`
-- chatformatter.color.green - `<green>`
-- chatformatter.color.aqua - `<aqua>`
-- chatformatter.color.red - `<red>`
-- chatformatter.color.light_purple - `<light_purple>`
-- chatformatter.color.yellow - `<yellow>`
-- chatformatter.color.white - `<white>`
-
+- `chatformatter.color.*` gives access to `<red>`, `<blue>`, etc. tags.
+- `chatformatter.legacycolor` - Allows the use of legacy color codes, such as `&c`, `&4`, `&l`, etc.
+- `chatformatter.color.black` - `<black>`
+- `chatformatter.color.dark_blue` - `<dark_blue>`
+- `chatformatter.color.dark_green` - `<dark_green>`
+- `chatformatter.color.dark_aqua` - `<dark_aqua>`
+- `chatformatter.color.dark_red` - `<dark_red>`
+- `chatformatter.color.dark_purple` - `<dark_purple>`
+- `chatformatter.color.gold` - `<gold>`
+- `chatformatter.color.gray` - `<gray>`
+- `chatformatter.color.dark_gray` - `<dark_gray>`
+- `chatformatter.color.blue` - `<blue>`
+- `chatformatter.color.green` - `<green>`
+- `chatformatter.color.aqua` - `<aqua>`
+- `chatformatter.color.red` - `<red>`
+- `chatformatter.color.light_purple` - `<light_purple>`
+- `chatformatter.color.yellow` - `<yellow>`
+- `chatformatter.color.white` - `<white>`
 ### config.yml
 
 ```yaml
