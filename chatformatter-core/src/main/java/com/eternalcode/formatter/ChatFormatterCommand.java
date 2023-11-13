@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 class ChatFormatterCommand implements CommandExecutor, TabCompleter {
 
     private static final String RELOAD_MESSAGE = "<b><gradient:#29fbff:#38b3ff>ChatFormatter:</gradient></b> <green>Successfully reloaded configs in %sms!";
-    public static final String RELOAD_PERMISSION = "chatformatter.chat.reload";
+    public static final String RELOAD_PERMISSION = "chatformatter.reload";
 
     private final ConfigManager configManager;
     private final AudienceProvider provider;
@@ -63,7 +63,7 @@ class ChatFormatterCommand implements CommandExecutor, TabCompleter {
     @Nullable
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (sender.hasPermission(RELOAD_PERMISSION)) {
+        if (args.length == 1 && sender.hasPermission(RELOAD_PERMISSION)) {
             return List.of("reload");
         }
 

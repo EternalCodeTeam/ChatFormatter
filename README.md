@@ -48,7 +48,7 @@
 - chatformatter.selector - `<selector>`
 - chatformatter.keybind - `<key>`
 - chatformatter.newline - `<newline>`
-- chatformatter.chat.reload - reload the plugin `/chatformatter reload`
+- chatformatter.reload - reload the plugin `/chatformatter reload`
 - chatformatter.receiveupdates - receive updates announce for this plugin
 
 ### Additional color permissions:
