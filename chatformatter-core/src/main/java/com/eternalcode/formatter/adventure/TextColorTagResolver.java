@@ -91,7 +91,7 @@ public class TextColorTagResolver implements TagResolver, SerializableResolver.S
 
     @Override
     public boolean has(final @NotNull String name) {
-        if (this.isColorOrAbbreviation(name)) {
+        if (isColorOrAbbreviation(name)) {
             return true;
         }
 
