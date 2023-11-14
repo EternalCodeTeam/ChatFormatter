@@ -16,13 +16,17 @@
 
 > ⚠ **This plugin requires PlaceholderAPI and Vault to run!**
 
+## Preview:
+![1](assets/gif/ChatFormatterHoverPlayerInfo.gif)
+![2](assets/gif/ChatFormatterClickableMessage2.gif)
+
 ## Features:
 
 - PlaceholderAPI Support
 - [MiniMessages Support](https://docs.adventure.kyori.net/minimessage/format.html) with Legacy Colors Support!
 - Template System
 - Custom Placeholders System
-- Per permission miniMessages Tags (see permissions below)
+- Per-permission miniMessages Tags (see permissions below)
 
 ## Useful links:
 
