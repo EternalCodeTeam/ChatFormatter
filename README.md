@@ -86,11 +86,6 @@
 #   \____|_| |_|\__,_|\__|_|  \___/|_|  |_| |_| |_|\__,_|\__|\__\___|_|   
 
 
-# Do you want to use pre-chat format? (Other plugins could add their custom prefixes etc.)
-# INFO: This option requires to use custom badges like {displayname} and {message} in each message.
-preFormatting: false
-defaultFormat: "{displayname} {arrow_right} {message}"
-
 # Do you want to receive updates about new versions of ChatFormatter?
 receiveUpdates: true
 
@@ -114,6 +109,7 @@ receiveUpdates: true
 # <color:#ff00ee>Example message</color>
 # <gradient:#ff00ee:#f79459>Example message</gradient>
 
+defaultFormat: "{displayname} {arrow_right} {message}"
 format:
   default: "{member} &f{displayname} &8{arrow_right} {message} "
   admin: "$template({admin}, &c)"
