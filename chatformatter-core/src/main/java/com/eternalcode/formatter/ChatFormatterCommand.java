@@ -35,12 +35,12 @@ class ChatFormatterCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length == 0) {
+        if (args.length == 0 || !args[0].equalsIgnoreCase("reload")) {
             sender.sendMessage(command.getUsage());
             return true;
         }
 
-        if (args[0].equalsIgnoreCase("reload") && sender.hasPermission(RELOAD_PERMISSION)) {
+        if (sender.hasPermission(RELOAD_PERMISSION)) {
             Stopwatch stopwatch = Stopwatch.createStarted();
 
             this.configManager.loadAndRenderConfigs();
