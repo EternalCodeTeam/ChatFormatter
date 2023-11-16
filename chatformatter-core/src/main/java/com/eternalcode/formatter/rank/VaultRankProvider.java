@@ -1,6 +1,5 @@
 package com.eternalcode.formatter.rank;
 
-import com.eternalcode.formatter.rank.ChatRankProvider;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;

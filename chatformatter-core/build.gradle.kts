@@ -17,9 +17,6 @@ dependencies {
     testImplementation("net.kyori:adventure-platform-bukkit:$adventureVersion")
     testImplementation("net.kyori:adventure-text-minimessage:$miniMessageVersion")
 
-    // LiteCommands
-    implementation("dev.rollczi.litecommands:bukkit:2.8.9")
-
     // CDN Configs
     val cdnVersion = "1.14.4"
     implementation("net.dzikoysk:cdn:$cdnVersion")
@@ -61,7 +58,6 @@ tasks {
         listOf(
             "com.eternalcode.gitcheck",
             "net.dzikoysk",
-            "dev.rollczi",
             "panda",
             "org.panda_lang",
             "net.kyori",

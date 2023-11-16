@@ -52,7 +52,7 @@
 - `chatformatter.selector` - `<selector>`
 - `chatformatter.keybind` - `<key>`
 - `chatformatter.newline` - `<newline>`
-- `chatformatter.chat.reload` - reloads the plugin with `/chatformatter reload`
+- `chatformatter.reload` - reloads the plugin with `/chatformatter reload`
 - `chatformatter.receiveupdates` - receive update announcements for this plugin
 
 ### Additional color permissions:
@@ -75,6 +75,7 @@
 - `chatformatter.color.light_purple` - `<light_purple>`
 - `chatformatter.color.yellow` - `<yellow>`
 - `chatformatter.color.white` - `<white>`
+
 ### config.yml
 
 ```yaml
