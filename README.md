@@ -54,8 +54,6 @@
 | `chatformatter.selector`                  | `<selector>`                                                            |
 | `chatformatter.keybind`                   | `<key>`                                                                 |
 | `chatformatter.newline`                   | `<newline>`                                                             |
-| `chatformatter.reload`                    | `/chatformatter reload`                                                 |
-| `chatformatter.receiveupdates`            | receive update announcements for this plugin                            |
 | `chatformatter.color.*`                   | `<red>`, `<blue>`, etc.                                                 |
 | `chatformatter.legacycolor`               | `&c`, `&4`, `&l`, etc.                                                  |
 | `chatformatter.color.black`               | `<black>`                                                               |
@@ -74,6 +72,8 @@
 | `chatformatter.color.light_purple`        | `<light_purple>`                                                        |
 | `chatformatter.color.yellow`              | `<yellow>`                                                              |
 | `chatformatter.color.white`               | `<white>`                                                               |
+| `chatformatter.reload`                    | `/chatformatter reload`                                                 |
+| `chatformatter.receiveupdates`            | receive update announcements for this plugin                            |
 
 ### config.yml
 
