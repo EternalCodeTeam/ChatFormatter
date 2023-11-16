@@ -18,12 +18,33 @@ bukkit {
     commands {
         register("chatformatter") {
             description = "Reloads the configs for ChatFormatter"
-            permission = "chatformatter.chat.reload"
+            permission = "chatformatter.reload"
             usage = "/chatformatter reload"
         }
     }
 
     permissions {
+        register("chatformatter.*") {
+            children = listOf(
+                "chatformatter.decorations.*",
+                "chatformatter.color.*",
+                "chatformatter.receiveupdates",
+                "chatformatter.reset",
+                "chatformatter.gradient",
+                "chatformatter.hover",
+                "chatformatter.click",
+                "chatformatter.insertion",
+                "chatformatter.font",
+                "chatformatter.transition",
+                "chatformatter.translatable",
+                "chatformatter.selector",
+                "chatformatter.keybind",
+                "chatformatter.newline"
+            )
+            default = Default.OP
+        }
+
+
         register("chatformatter.decorations.*") {
             children = listOf(
                 "chatformatter.decorations.bold",
