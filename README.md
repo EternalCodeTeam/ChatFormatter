@@ -35,46 +35,45 @@
 
 ## Permissions:
 
-- `chatformatter.decorations.*` gives access to `<bold>`, `<italic>`, `<underlined>`, `<strikethrough>`, and `<obfuscated>` tags.
-- `chatformatter.decorations.bold` - `<bold>`
-- `chatformatter.decorations.italic` - `<italic>`
-- `chatformatter.decorations.underlined` - `<underlined>`
-- `chatformatter.decorations.strikethrough` - `<strikethrough>`
-- `chatformatter.decorations.obfuscated` - `<obfuscated>`
-- `chatformatter.reset` - `<reset>`
-- `chatformatter.gradient` - `<gradient>`
-- `chatformatter.hover` - `<hover>`
-- `chatformatter.click` - `<click>`
-- `chatformatter.insertion` - `<insertion>`
-- `chatformatter.font` - `<font>`
-- `chatformatter.transition` - `<transition>`
-- `chatformatter.translatable` - `<lang>`
-- `chatformatter.selector` - `<selector>`
-- `chatformatter.keybind` - `<key>`
-- `chatformatter.newline` - `<newline>`
-- `chatformatter.reload` - reloads the plugin with `/chatformatter reload`
-- `chatformatter.receiveupdates` - receive update announcements for this plugin
-
-### Additional color permissions:
-
-- `chatformatter.color.*` gives access to `<red>`, `<blue>`, etc. tags.
-- `chatformatter.legacycolor` - Allows the use of legacy color codes, such as `&c`, `&4`, `&l`, etc.
-- `chatformatter.color.black` - `<black>`
-- `chatformatter.color.dark_blue` - `<dark_blue>`
-- `chatformatter.color.dark_green` - `<dark_green>`
-- `chatformatter.color.dark_aqua` - `<dark_aqua>`
-- `chatformatter.color.dark_red` - `<dark_red>`
-- `chatformatter.color.dark_purple` - `<dark_purple>`
-- `chatformatter.color.gold` - `<gold>`
-- `chatformatter.color.gray` - `<gray>`
-- `chatformatter.color.dark_gray` - `<dark_gray>`
-- `chatformatter.color.blue` - `<blue>`
-- `chatformatter.color.green` - `<green>`
-- `chatformatter.color.aqua` - `<aqua>`
-- `chatformatter.color.red` - `<red>`
-- `chatformatter.color.light_purple` - `<light_purple>`
-- `chatformatter.color.yellow` - `<yellow>`
-- `chatformatter.color.white` - `<white>`
+| **Permission**                            | **Access**                                                              |
+|:------------------------------------------|:------------------------------------------------------------------------|
+| `chatformatter.decorations.*`             | `<bold>`, `<italic>`, `<underlined>`, `<strikethrough>`, `<obfuscated>` |
+| `chatformatter.decorations.bold`          | `<bold>`                                                                |
+| `chatformatter.decorations.italic`        | `<italic>`                                                              |
+| `chatformatter.decorations.underlined`    | `<underlined>`                                                          |
+| `chatformatter.decorations.strikethrough` | `<strikethrough>`                                                       |
+| `chatformatter.decorations.obfuscated`    | `<obfuscated>`                                                          |
+| `chatformatter.reset`                     | `<reset>`                                                               |
+| `chatformatter.gradient`                  | `<gradient>`                                                            |
+| `chatformatter.hover`                     | `<hover>`                                                               |
+| `chatformatter.click`                     | `<click>`                                                               |
+| `chatformatter.insertion`                 | `<insertion>`                                                           |
+| `chatformatter.font`                      | `<font>`                                                                |
+| `chatformatter.transition`                | `<transition>`                                                          |
+| `chatformatter.translatable`              | `<lang>`                                                                |
+| `chatformatter.selector`                  | `<selector>`                                                            |
+| `chatformatter.keybind`                   | `<key>`                                                                 |
+| `chatformatter.newline`                   | `<newline>`                                                             |
+| `chatformatter.reload`                    | `/chatformatter reload`                                                 |
+| `chatformatter.receiveupdates`            | receive update announcements for this plugin                            |
+| `chatformatter.color.*`                   | `<red>`, `<blue>`, etc.                                                 |
+| `chatformatter.legacycolor`               | `&c`, `&4`, `&l`, etc.                                                  |
+| `chatformatter.color.black`               | `<black>`                                                               |
+| `chatformatter.color.dark_blue`           | `<dark_blue>`                                                           |
+| `chatformatter.color.dark_green`          | `<dark_green>`                                                          |
+| `chatformatter.color.dark_aqua`           | `<dark_aqua>`                                                           |
+| `chatformatter.color.dark_red`            | `<dark_red>`                                                            |
+| `chatformatter.color.dark_purple`         | `<dark_purple>`                                                         |
+| `chatformatter.color.gold`                | `<gold>`                                                                |
+| `chatformatter.color.gray`                | `<gray>`                                                                |
+| `chatformatter.color.dark_gray`           | `<dark_gray>`                                                           |
+| `chatformatter.color.blue`                | `<blue>`                                                                |
+| `chatformatter.color.green`               | `<green>`                                                               |
+| `chatformatter.color.aqua`                | `<aqua>`                                                                |
+| `chatformatter.color.red`                 | `<red>`                                                                 |
+| `chatformatter.color.light_purple`        | `<light_purple>`                                                        |
+| `chatformatter.color.yellow`              | `<yellow>`                                                              |
+| `chatformatter.color.white`               | `<white>`                                                               |
 
 ### config.yml
 
