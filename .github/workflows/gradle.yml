@@ -32,7 +32,7 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x gradlew
       - name: Build with Gradle
-        uses: gradle/gradle-build-action@62cce3c597efd445cd71ee868887b8b1117703a7
+        uses: gradle/gradle-build-action@9bca466e2722baf9e77b4f929bbe0af18848791f
         with:
           arguments: shadowAll
       - name: Upload a ChatFormatter Artifact
