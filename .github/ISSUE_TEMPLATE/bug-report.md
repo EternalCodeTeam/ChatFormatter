@@ -4,7 +4,7 @@ about: Create a detailed report to help us fix a bug
 labels: '🐛 bug'
 ---
 
-# LobbyHeads Bug Report
+# ChatFormatter Bug Report
 
 ## Describe the Bug
 
