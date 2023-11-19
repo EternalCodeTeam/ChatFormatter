@@ -1,7 +1,7 @@
 # Contributing to ChatFormatter
 
 :Wave: Hello there!
-We wholeheartedly welcome all contributions to Chatformatter and are excited to know you are considering making one.
+We wholeheartedly welcome all contributions to ChatFormatter and are excited to know you are considering making one.
 
 To ensure a robust and ideal solution, we recommend going through this guide.
 Following this guide saves both your time,
