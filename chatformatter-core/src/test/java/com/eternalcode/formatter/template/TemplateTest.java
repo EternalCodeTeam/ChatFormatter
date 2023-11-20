@@ -1,11 +1,13 @@
 package com.eternalcode.formatter.template;
 
 import org.junit.jupiter.api.Test;
-import panda.std.Result;
 
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TemplateTest {
 
@@ -16,11 +18,10 @@ class TemplateTest {
 
     @Test
     void parseTest() {
-        Result<Template, String> result = Template.parse("$test($arg1, $arg2, $arg3) -> 'SIEMA'");
+        Template template = Template.parse("$test($arg1, $arg2, $arg3) -> 'SIEMA'");
 
-        assertTrue(result.isOk());
+        assertNotNull(template);
 
-        Template template = result.get();
         List<String> arguments = template.getArguments();
 
         assertEquals("test", template.getName());
@@ -33,11 +34,10 @@ class TemplateTest {
 
     @Test
     void parseTestWithIncorrectQuote() {
-        Result<Template, String> result = Template.parse("$test($arg1, $arg2, $arg3) -> 'SIEMA''");
+        Template template = Template.parse("$test($arg1, $arg2, $arg3) -> 'SIEMA''");
 
-        assertTrue(result.isOk());
+        assertNotNull(template);
 
-        Template template = result.get();
         List<String> arguments = template.getArguments();
 
         assertEquals("test", template.getName());
@@ -51,11 +51,10 @@ class TemplateTest {
     @Test
     void parseAndToStringCompareTest() {
         String original = "$test($arg1, $arg2, $arg3, $arg4) -> 'SIEMA'";
-        Result<Template, String> result = Template.parse(original);
+        Template template = Template.parse(original);
 
-        assertTrue(result.isOk());
+        assertNotNull(template);
 
-        Template template = result.get();
         String deserialized = template.toString();
 
         assertEquals(original, deserialized);

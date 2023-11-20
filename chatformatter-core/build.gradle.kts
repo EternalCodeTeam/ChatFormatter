@@ -1,3 +1,5 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     id("eternalcode.java")
     id("com.github.johnrengelman.shadow")
@@ -17,10 +19,9 @@ dependencies {
     testImplementation("net.kyori:adventure-platform-bukkit:$adventureVersion")
     testImplementation("net.kyori:adventure-text-minimessage:$miniMessageVersion")
 
-    // CDN Configs
-    val cdnVersion = "1.14.4"
-    implementation("net.dzikoysk:cdn:$cdnVersion")
-    testImplementation("net.dzikoysk:cdn:$cdnVersion")
+    // Okaeri Config
+    val okaeriVersion = "5.0.0-beta.5"
+    implementation("eu.okaeri:okaeri-configs-yaml-snakeyaml:${okaeriVersion}")
 
     // bStats
     implementation("org.bstats:bstats-bukkit:3.0.2")
@@ -57,12 +58,12 @@ tasks {
         val prefix = "com.eternalcode.formatter.libs"
         listOf(
             "com.eternalcode.gitcheck",
-            "net.dzikoysk",
             "panda",
-            "org.panda_lang",
             "net.kyori",
             "org.bstats",
             "org.json",
+            "eu.okaeri",
+            "org.yaml",
         ).forEach { pack ->
             relocate(pack, "$prefix.$pack")
         }

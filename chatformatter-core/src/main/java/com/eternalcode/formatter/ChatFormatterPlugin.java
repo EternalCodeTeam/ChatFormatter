@@ -1,6 +1,6 @@
 package com.eternalcode.formatter;
 
-import com.eternalcode.formatter.config.ConfigManager;
+import com.eternalcode.formatter.config.ConfigService;
 import com.eternalcode.formatter.config.PluginConfig;
 import com.eternalcode.formatter.legacy.LegacyPostProcessor;
 import com.eternalcode.formatter.legacy.LegacyPreProcessor;
@@ -20,6 +20,8 @@ import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.nio.file.Path;
 import java.util.concurrent.TimeUnit;
 
 public class ChatFormatterPlugin implements ChatFormatterApi {
@@ -33,10 +35,10 @@ public class ChatFormatterPlugin implements ChatFormatterApi {
         Server server = plugin.getServer();
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        ConfigManager configManager = new ConfigManager(plugin.getDataFolder());
-        configManager.loadAndRenderConfigs();
+        File dataFolder = plugin.getDataFolder();
 
-        PluginConfig pluginConfig = configManager.getPluginConfig();
+        ConfigService configService = new ConfigService();
+        PluginConfig pluginConfig = configService.create(PluginConfig.class, new File(dataFolder, "config.yml"));
 
         this.placeholderRegistry = new PlaceholderRegistry();
         this.placeholderRegistry.stack(pluginConfig);
@@ -56,7 +58,7 @@ public class ChatFormatterPlugin implements ChatFormatterApi {
 
         this.chatHandler = new ChatHandlerImpl(miniMessage, pluginConfig, this.rankProvider, this.placeholderRegistry, this.templateService);
 
-        server.getPluginCommand("chatformatter").setExecutor(new ChatFormatterCommand(configManager, audienceProvider, miniMessage));
+        server.getPluginCommand("chatformatter").setExecutor(new ChatFormatterCommand(pluginConfig, audienceProvider, miniMessage));
         server.getPluginManager().registerEvents(new UpdaterController(updaterService, pluginConfig, audienceProvider, miniMessage), plugin);
 
         ChatFormatterApiProvider.enable(this);

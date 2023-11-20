@@ -1,35 +1,36 @@
 package com.eternalcode.formatter.config;
 
+import com.eternalcode.formatter.ChatSettings;
+import com.eternalcode.formatter.placeholder.PlaceholderStack;
 import com.eternalcode.formatter.template.Template;
 import com.eternalcode.formatter.template.TemplateRepository;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.eternalcode.formatter.ChatSettings;
-import com.eternalcode.formatter.placeholder.PlaceholderStack;
-import net.dzikoysk.cdn.entity.Description;
+import eu.okaeri.configs.OkaeriConfig;
+import eu.okaeri.configs.annotation.Comment;
+import eu.okaeri.configs.annotation.Header;
+import eu.okaeri.configs.annotation.NameModifier;
+import eu.okaeri.configs.annotation.NameStrategy;
+import eu.okaeri.configs.annotation.Names;
 
 import java.util.List;
 import java.util.Map;
 
-public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRepository {
 
-    @Description(" ")
-    @Description("#    ____ _           _   _____      ChatFormatter       _   _            ")
-    @Description("#   / ___| |__   __ _| |_|  ___|__  _ __ _ __ ___   __ _| |_| |_ ___ _ __ ")
-    @Description("#  | |   | '_ \\ / _` | __| |_ / _ \\| '__| '_ ` _ \\ / _` | __| __/ _ \\ '__|")
-    @Description("#  | |___| | | | (_| | |_|  _| (_) | |  | | | | | | (_| | |_| ||  __/ |   ")
-    @Description("#   \\____|_| |_|\\__,_|\\__|_|  \\___/|_|  |_| |_| |_|\\__,_|\\__|\\__\\___|_|   ")
-    @Description(" ")
+@Header(" ")
+@Header("#    ____ _           _   _____      ChatFormatter       _   _            ")
+@Header("#   / ___| |__   __ _| |_|  ___|__  _ __ _ __ ___   __ _| |_| |_ ___ _ __ ")
+@Header("#  | |   | '_ \\ / _` | __| |_ / _ \\| '__| '_ ` _ \\ / _` | __| __/ _ \\ '__|")
+@Header("#  | |___| | | | (_| | |_|  _| (_) | |  | | | | | | (_| | |_| ||  __/ |   ")
+@Header("#   \\____|_| |_|\\__,_|\\__|_|  \\___/|_|  |_| |_| |_|\\__,_|\\__|\\__\\___|_|   ")
+@Header(" ")
+@Names(strategy = NameStrategy.HYPHEN_CASE, modifier = NameModifier.TO_LOWER_CASE)
+public class PluginConfig extends OkaeriConfig implements ChatSettings, PlaceholderStack, TemplateRepository {
 
-    @Description({ " ", "# Do you want to receive updates about new versions of ChatFormatter?" })
+    @Comment({ " ", "# Do you want to receive updates about new versions of ChatFormatter?" })
     public boolean receiveUpdates = true;
 
-
-    @Description({ " ", "# Chat format for ranks (Vault) Support mini-messages and legacy colors" })
-    @Description({ " ", "# We're recommending to use webui for mini-messages: https://webui.adventure.kyori.net/" })
-    @Description({ " ", "# documentation is here: https://docs.adventure.kyori.net/minimessage/format.html" })
-
-    @Description({
+    @Comment({
         "# Example usages:",
         "# ",
         "# Hover message:",
@@ -46,19 +47,23 @@ public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRep
         "# <gradient:#ff00ee:#f79459>Example message</gradient>",
         " "
     })
+    @Comment({ " ", "# Chat format for ranks (Vault) Support mini-messages and legacy colors" })
+    @Comment("# We're recommending to use webui for mini-messages: https://webui.adventure.kyori.net/")
+    @Comment("# documentation is here: https://docs.adventure.kyori.net/minimessage/format.html")
     public String defaultFormat = "{displayname} {arrow_right} {message}";
+
     public Map<String, String> format = new ImmutableMap.Builder<String, String>()
         .put("default", "{member} &f{displayname} &8{arrow_right} {message} ")
         .put("admin", "$template({admin}, &c)")
         .build();
 
 
-    @Description({ " ", "# It is used to shorten the text even more and keep the clean file!" })
+    @Comment({ " ", "# It is used to shorten the text even more and keep the clean file!" })
     public List<Template> templates = new ImmutableList.Builder<Template>()
         .add(Template.of("template", List.of("rank", "color"), "$rank $color{displayname} &8{arrow_right} $color{message}"))
         .build();
 
-    @Description({ " ", "# Placeholders, it allows you to make a shorter text, you can use some prefixes, characters etc. " })
+    @Comment({ " ", "# Placeholders, it allows you to make a shorter text, you can use some prefixes, characters etc. " })
     public Map<String, String> placeholders = new ImmutableMap.Builder<String, String>()
         .put("{displayname}", "<displayname>")
         .put("{message}", "<message>")

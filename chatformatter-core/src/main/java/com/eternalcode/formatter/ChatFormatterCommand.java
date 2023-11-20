@@ -1,6 +1,6 @@
 package com.eternalcode.formatter;
 
-import com.eternalcode.formatter.config.ConfigManager;
+import com.eternalcode.formatter.config.PluginConfig;
 import com.google.common.base.Stopwatch;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.platform.AudienceProvider;
@@ -23,12 +23,12 @@ class ChatFormatterCommand implements CommandExecutor, TabCompleter {
     private static final String RELOAD_MESSAGE = "<b><gradient:#29fbff:#38b3ff>ChatFormatter:</gradient></b> <green>Successfully reloaded configs in %sms!";
     public static final String RELOAD_PERMISSION = "chatformatter.reload";
 
-    private final ConfigManager configManager;
+    private final PluginConfig pluginConfig;
     private final AudienceProvider provider;
     private final MiniMessage miniMessage;
 
-    ChatFormatterCommand(ConfigManager configManager, AudienceProvider provider, MiniMessage miniMessage) {
-        this.configManager = configManager;
+    ChatFormatterCommand(PluginConfig pluginConfig, AudienceProvider provider, MiniMessage miniMessage) {
+        this.pluginConfig = pluginConfig;
         this.provider = provider;
         this.miniMessage = miniMessage;
     }
@@ -43,7 +43,7 @@ class ChatFormatterCommand implements CommandExecutor, TabCompleter {
         if (sender.hasPermission(RELOAD_PERMISSION)) {
             Stopwatch stopwatch = Stopwatch.createStarted();
 
-            this.configManager.loadAndRenderConfigs();
+            this.pluginConfig.load();
             long millis = stopwatch.elapsed(TimeUnit.MILLISECONDS);
 
             Component deserialized = this.miniMessage.deserialize(String.format(RELOAD_MESSAGE, millis));
