@@ -21,7 +21,7 @@ public class ConfigService {
         YamlSnakeYamlConfigurer yamlConfigurer = new YamlSnakeYamlConfigurer(this.createYaml());
 
         configFile
-            .withConfigurer(yamlConfigurer, new SerdesCommons())
+            .withConfigurer(yamlConfigurer)
             .withSerdesPack(registry -> registry.register(new TemplateSerializer()))
             .withBindFile(file)
             .withRemoveOrphans(true)
