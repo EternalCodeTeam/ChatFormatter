@@ -58,7 +58,7 @@ tasks {
 
         val prefix = "com.eternalcode.formatter.libs"
         listOf(
-            "dev.rollczi",
+            "com.eternalcode.gitcheck",
             "panda",
             "net.kyori",
             "org.bstats",
