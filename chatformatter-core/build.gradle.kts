@@ -2,19 +2,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     id("eternalcode.java")
-
     id("com.github.johnrengelman.shadow")
-    id("net.minecrell.plugin-yml.bukkit")
-}
-
-bukkit {
-    main = "com.eternalcode.formatter.ChatFormatterPlugin"
-    apiVersion = "1.19"
-    prefix = "ChatFormatter"
-    author = "EternalCodeTeam"
-    name = "ChatFormatter"
-    version = "${project.version}"
-    depend = listOf("PlaceholderAPI", "Vault")
 }
 
 dependencies {

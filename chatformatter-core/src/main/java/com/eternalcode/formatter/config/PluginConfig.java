@@ -1,11 +1,11 @@
 package com.eternalcode.formatter.config;
 
+import com.eternalcode.formatter.ChatSettings;
+import com.eternalcode.formatter.placeholder.PlaceholderStack;
 import com.eternalcode.formatter.template.Template;
 import com.eternalcode.formatter.template.TemplateRepository;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.eternalcode.formatter.ChatSettings;
-import com.eternalcode.formatter.placeholder.PlaceholderStack;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 
@@ -22,19 +22,14 @@ public class PluginConfig extends OkaeriConfig implements ChatSettings, Placehol
     @Comment("#   \\____|_| |_|\\__,_|\\__|_|  \\___/|_|  |_| |_| |_|\\__,_|\\__|\\__\\___|_|   ")
     @Comment(" ")
 
-    @Comment({ " ", "# Do you want to use pre-chat format? (Other plugins could add their custom prefixes etc.)" })
-    @Comment("# INFO: This option requires to use custom badges like {displayname} and {message} in each message.")
-    public boolean preFormatting = false;
-
-    public String defaultFormat = "{displayname} {arrow_right} {message}";
-
     @Comment({ " ", "# Do you want to receive updates about new versions of ChatFormatter?" })
     public boolean receiveUpdates = true;
 
 
     @Comment({ " ", "# Chat format for ranks (Vault) Support mini-messages and legacy colors" })
-    @Comment({ " ", "# We're recommending to use webui for mini-messages: https://webui.adventure.kyori.net/" })
-    @Comment({ " ", "# documentation is here: https://docs.adventure.kyori.net/minimessage/format.html" })
+    @Comment("# We're recommending to use webui for mini-messages: https://webui.adventure.kyori.net/")
+    @Comment("# documentation is here: https://docs.adventure.kyori.net/minimessage/format.html")
+    public String defaultFormat = "{displayname} {arrow_right} {message}";
 
     @Comment({
         "# Example usages:",
