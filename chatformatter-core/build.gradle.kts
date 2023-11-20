@@ -4,8 +4,6 @@ plugins {
     id("eternalcode.java")
 
     id("com.github.johnrengelman.shadow")
-    id("net.minecrell.plugin-yml.bukkit")
-    id("xyz.jpenilla.run-paper") version "2.2.0"
 }
 
 bukkit {
@@ -31,9 +29,6 @@ dependencies {
     implementation("net.kyori:adventure-text-minimessage:$miniMessageVersion")
     testImplementation("net.kyori:adventure-platform-bukkit:$adventureVersion")
     testImplementation("net.kyori:adventure-text-minimessage:$miniMessageVersion")
-
-    // LiteCommands
-    implementation("dev.rollczi.litecommands:bukkit:2.8.9")
 
     // Okaeri Config
     val okaeriVersion = "5.0.0-beta.5"
@@ -66,8 +61,8 @@ tasks {
         useJUnitPlatform()
     }
 
-    withType<ShadowJar> {
-        archiveFileName.set("ChatFormatter v${project.version}.jar")
+    shadowJar {
+        archiveFileName.set("chatformatter-core-${version}.jar")
 
         exclude(
             "org/intellij/lang/annotations/**",
