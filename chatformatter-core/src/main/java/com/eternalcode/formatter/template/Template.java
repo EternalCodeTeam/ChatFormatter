@@ -76,7 +76,7 @@ public class Template {
         return template;
     }
 
-    public static Optional<Template> parse(String text) throws IllegalArgumentException {
+    public static Template parse(String text) {
         Matcher matcher = TEMPLATE_PARSE_PATTERN.matcher(text);
 
         if (!matcher.matches()) {
@@ -87,7 +87,7 @@ public class Template {
         List<String> arguments = Template.parseArguments(matcher.group(2), "$");
         String content = matcher.group(3);
 
-        return Optional.of(new Template(name, arguments, content));
+        return new Template(name, arguments, content);
     }
 
     public static Template of(String name, List<String> arguments, String content) {
@@ -101,7 +101,7 @@ public class Template {
 
         int last = text.indexOf(before);
 
-        if (last == -1) {
+        if (last == - 1) {
             return Collections.emptyList();
         }
 
@@ -111,7 +111,7 @@ public class Template {
         int lastSeparatorMin = Math.min(normalSeparator, spaceSeparator);
         int lastSeparatorMax = Math.max(normalSeparator, spaceSeparator);
 
-        String argument = lastSeparatorMin == -1
+        String argument = lastSeparatorMin == - 1
             ? text.substring(last + before.length())
             : text.substring(last + before.length(), lastSeparatorMin);
 
@@ -119,7 +119,7 @@ public class Template {
 
         arguments.add(argument);
 
-        if (lastSeparatorMax != -1) {
+        if (lastSeparatorMax != - 1) {
             arguments.addAll(parseArguments(text.substring(lastSeparatorMax + 1), before));
         }
 

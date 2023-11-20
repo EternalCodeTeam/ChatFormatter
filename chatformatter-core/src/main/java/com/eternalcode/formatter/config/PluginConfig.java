@@ -8,28 +8,27 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
+import eu.okaeri.configs.annotation.Header;
+import eu.okaeri.configs.annotation.NameModifier;
+import eu.okaeri.configs.annotation.NameStrategy;
+import eu.okaeri.configs.annotation.Names;
 
 import java.util.List;
 import java.util.Map;
 
-public class PluginConfig extends OkaeriConfig implements ChatSettings, PlaceholderStack, TemplateRepository {
 
-    @Comment(" ")
-    @Comment("#    ____ _           _   _____      ChatFormatter       _   _            ")
-    @Comment("#   / ___| |__   __ _| |_|  ___|__  _ __ _ __ ___   __ _| |_| |_ ___ _ __ ")
-    @Comment("#  | |   | '_ \\ / _` | __| |_ / _ \\| '__| '_ ` _ \\ / _` | __| __/ _ \\ '__|")
-    @Comment("#  | |___| | | | (_| | |_|  _| (_) | |  | | | | | | (_| | |_| ||  __/ |   ")
-    @Comment("#   \\____|_| |_|\\__,_|\\__|_|  \\___/|_|  |_| |_| |_|\\__,_|\\__|\\__\\___|_|   ")
-    @Comment(" ")
+@Header(" ")
+@Header("#    ____ _           _   _____      ChatFormatter       _   _            ")
+@Header("#   / ___| |__   __ _| |_|  ___|__  _ __ _ __ ___   __ _| |_| |_ ___ _ __ ")
+@Header("#  | |   | '_ \\ / _` | __| |_ / _ \\| '__| '_ ` _ \\ / _` | __| __/ _ \\ '__|")
+@Header("#  | |___| | | | (_| | |_|  _| (_) | |  | | | | | | (_| | |_| ||  __/ |   ")
+@Header("#   \\____|_| |_|\\__,_|\\__|_|  \\___/|_|  |_| |_| |_|\\__,_|\\__|\\__\\___|_|   ")
+@Header(" ")
+@Names(strategy = NameStrategy.HYPHEN_CASE, modifier = NameModifier.TO_LOWER_CASE)
+public class PluginConfig extends OkaeriConfig implements ChatSettings, PlaceholderStack, TemplateRepository {
 
     @Comment({ " ", "# Do you want to receive updates about new versions of ChatFormatter?" })
     public boolean receiveUpdates = true;
-
-
-    @Comment({ " ", "# Chat format for ranks (Vault) Support mini-messages and legacy colors" })
-    @Comment("# We're recommending to use webui for mini-messages: https://webui.adventure.kyori.net/")
-    @Comment("# documentation is here: https://docs.adventure.kyori.net/minimessage/format.html")
-    public String defaultFormat = "{displayname} {arrow_right} {message}";
 
     @Comment({
         "# Example usages:",
@@ -48,6 +47,11 @@ public class PluginConfig extends OkaeriConfig implements ChatSettings, Placehol
         "# <gradient:#ff00ee:#f79459>Example message</gradient>",
         " "
     })
+    @Comment({ " ", "# Chat format for ranks (Vault) Support mini-messages and legacy colors" })
+    @Comment("# We're recommending to use webui for mini-messages: https://webui.adventure.kyori.net/")
+    @Comment("# documentation is here: https://docs.adventure.kyori.net/minimessage/format.html")
+    public String defaultFormat = "{displayname} {arrow_right} {message}";
+
     public Map<String, String> format = new ImmutableMap.Builder<String, String>()
         .put("default", "{member} &f{displayname} &8{arrow_right} {message} ")
         .put("admin", "$template({admin}, &c)")

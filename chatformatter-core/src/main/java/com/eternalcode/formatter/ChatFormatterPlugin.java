@@ -1,6 +1,6 @@
 package com.eternalcode.formatter;
 
-import com.eternalcode.formatter.config.ConfigFactory;
+import com.eternalcode.formatter.config.ConfigService;
 import com.eternalcode.formatter.config.PluginConfig;
 import com.eternalcode.formatter.legacy.LegacyPostProcessor;
 import com.eternalcode.formatter.legacy.LegacyPreProcessor;
@@ -20,12 +20,11 @@ import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.util.concurrent.TimeUnit;
 
 public class ChatFormatterPlugin implements ChatFormatterApi {
-
-    private final PluginConfig pluginConfig;
 
     private final PlaceholderRegistry placeholderRegistry;
     private final TemplateService templateService;
@@ -36,8 +35,10 @@ public class ChatFormatterPlugin implements ChatFormatterApi {
         Server server = plugin.getServer();
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        Path path = plugin.getDataFolder().toPath();
-        this.pluginConfig = ConfigFactory.create(PluginConfig.class, path.resolve("config.yml"));
+        File dataFolder = plugin.getDataFolder();
+
+        ConfigService configService = new ConfigService();
+        PluginConfig pluginConfig = configService.create(PluginConfig.class, new File(dataFolder, "config.yml"));
 
         this.placeholderRegistry = new PlaceholderRegistry();
         this.placeholderRegistry.stack(pluginConfig);

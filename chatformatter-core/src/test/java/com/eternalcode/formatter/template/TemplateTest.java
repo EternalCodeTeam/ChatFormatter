@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TemplateTest {
@@ -17,11 +18,10 @@ class TemplateTest {
 
     @Test
     void parseTest() {
-        Optional<Template> result = Template.parse("$test($arg1, $arg2, $arg3) -> 'SIEMA'");
+        Template template = Template.parse("$test($arg1, $arg2, $arg3) -> 'SIEMA'");
 
-        assertTrue(result.isPresent());
+        assertNotNull(template);
 
-        Template template = result.get();
         List<String> arguments = template.getArguments();
 
         assertEquals("test", template.getName());
@@ -34,11 +34,10 @@ class TemplateTest {
 
     @Test
     void parseTestWithIncorrectQuote() {
-        Optional<Template> result = Template.parse("$test($arg1, $arg2, $arg3) -> 'SIEMA''");
+        Template template = Template.parse("$test($arg1, $arg2, $arg3) -> 'SIEMA''");
 
-        assertTrue(result.isPresent());
+        assertNotNull(template);
 
-        Template template = result.get();
         List<String> arguments = template.getArguments();
 
         assertEquals("test", template.getName());
@@ -52,11 +51,10 @@ class TemplateTest {
     @Test
     void parseAndToStringCompareTest() {
         String original = "$test($arg1, $arg2, $arg3, $arg4) -> 'SIEMA'";
-        Optional<Template> result = Template.parse(original);
+        Template template = Template.parse(original);
 
-        assertTrue(result.isPresent());
+        assertNotNull(template);
 
-        Template template = result.get();
         String deserialized = template.toString();
 
         assertEquals(original, deserialized);

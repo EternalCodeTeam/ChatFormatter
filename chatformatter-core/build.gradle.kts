@@ -21,10 +21,8 @@ dependencies {
 
     // Okaeri Config
     val okaeriVersion = "5.0.0-beta.5"
-    implementation("eu.okaeri:okaeri-configs-yaml-snakeyaml:$okaeriVersion")
-    implementation("eu.okaeri:okaeri-configs-yaml-bukkit:$okaeriVersion")
-    testImplementation("eu.okaeri:okaeri-configs-yaml-snakeyaml:$okaeriVersion")
-    testImplementation("eu.okaeri:okaeri-configs-yaml-bukkit:$okaeriVersion")
+    implementation("eu.okaeri:okaeri-configs-yaml-snakeyaml:${okaeriVersion}")
+    implementation("eu.okaeri:okaeri-configs-serdes-commons:${okaeriVersion}")
 
     // bStats
     implementation("org.bstats:bstats-bukkit:3.0.2")
