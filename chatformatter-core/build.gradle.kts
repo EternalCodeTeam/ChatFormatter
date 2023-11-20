@@ -4,6 +4,7 @@ plugins {
     id("eternalcode.java")
 
     id("com.github.johnrengelman.shadow")
+    id("net.minecrell.plugin-yml.bukkit")
 }
 
 bukkit {
@@ -53,10 +54,6 @@ dependencies {
 }
 
 tasks {
-    runServer {
-        minecraftVersion("1.19.3")
-    }
-
     withType<Test> {
         useJUnitPlatform()
     }

@@ -6,8 +6,8 @@ import eu.okaeri.configs.serdes.DeserializationData;
 import eu.okaeri.configs.serdes.ObjectSerializer;
 import eu.okaeri.configs.serdes.SerializationData;
 import org.jetbrains.annotations.NotNull;
-import panda.std.Result;
-import panda.std.function.ThrowingFunction;
+
+import java.util.Optional;
 
 public class TemplateSerializer implements ObjectSerializer<Template> {
 
@@ -22,16 +22,11 @@ public class TemplateSerializer implements ObjectSerializer<Template> {
     }
 
     @Override
-    public Template deserialize(@NotNull DeserializationData data, @NotNull GenericsDeclaration generics) {
+    public Template deserialize(@NotNull DeserializationData data, @NotNull GenericsDeclaration generics){
         String value = data.getValue(String.class);
 
-        Result<Template, String> templateResult = Template.parse(value);
+        Optional<Template> templateResult = Template.parse(value);
 
-        try {
-            return templateResult.orThrow((ThrowingFunction<String, Exception, Exception>) IllegalArgumentException::new);
-        }
-        catch (Exception exception) {
-            throw new RuntimeException(exception);
-        }
+        return templateResult.orElseThrow(() -> new IllegalArgumentException("Unable to parse template"));
     }
 }

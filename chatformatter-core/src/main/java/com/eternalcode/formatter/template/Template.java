@@ -1,11 +1,11 @@
 package com.eternalcode.formatter.template;
 
 import com.google.common.base.Joiner;
-import panda.std.Result;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,7 +21,7 @@ public class Template {
     private final String name;
     private final List<String> arguments;
     private final String content;
-    
+
     private Template(String name, List<String> arguments, String content) {
         this.name = name;
         this.arguments = arguments;
@@ -76,18 +76,18 @@ public class Template {
         return template;
     }
 
-    public static Result<Template, String> parse(String text) {
+    public static Optional<Template> parse(String text) throws IllegalArgumentException {
         Matcher matcher = TEMPLATE_PARSE_PATTERN.matcher(text);
 
         if (!matcher.matches()) {
-            return Result.error("Invalid syntax: " + text);
+            throw new IllegalArgumentException("Invalid syntax: " + text);
         }
 
         String name = matcher.group(1);
         List<String> arguments = Template.parseArguments(matcher.group(2), "$");
         String content = matcher.group(3);
 
-        return Result.ok(new Template(name, arguments, content));
+        return Optional.of(new Template(name, arguments, content));
     }
 
     public static Template of(String name, List<String> arguments, String content) {
@@ -101,7 +101,7 @@ public class Template {
 
         int last = text.indexOf(before);
 
-        if (last == - 1) {
+        if (last == -1) {
             return Collections.emptyList();
         }
 
@@ -111,7 +111,7 @@ public class Template {
         int lastSeparatorMin = Math.min(normalSeparator, spaceSeparator);
         int lastSeparatorMax = Math.max(normalSeparator, spaceSeparator);
 
-        String argument = lastSeparatorMin == - 1
+        String argument = lastSeparatorMin == -1
             ? text.substring(last + before.length())
             : text.substring(last + before.length(), lastSeparatorMin);
 
@@ -119,7 +119,7 @@ public class Template {
 
         arguments.add(argument);
 
-        if (lastSeparatorMax != - 1) {
+        if (lastSeparatorMax != -1) {
             arguments.addAll(parseArguments(text.substring(lastSeparatorMax + 1), before));
         }
 
@@ -129,7 +129,7 @@ public class Template {
     @Override
     public String toString() {
         String formattedArguments = Joiner.on(SEPARATOR_FORMAT)
-                .join(this.arguments.stream()
+            .join(this.arguments.stream()
                 .map(arg -> String.format(ARGUMENT_FORMAT, arg))
                 .toArray());
 
