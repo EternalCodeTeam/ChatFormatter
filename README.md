@@ -88,12 +88,7 @@
 #  
 #  
 # Do you want to receive updates about new versions of ChatFormatter?
-receiveUpdates: true
-#  
-# Chat format for ranks (Vault) Support mini-messages and legacy colors
-# We're recommending to use webui for mini-messages: https://webui.adventure.kyori.net/
-# documentation is here: https://docs.adventure.kyori.net/minimessage/format.html
-defaultFormat: '{displayname} {arrow_right} {message}'
+receive-updates: true
 # Example usages:
 # 
 # Hover message:
@@ -109,13 +104,18 @@ defaultFormat: '{displayname} {arrow_right} {message}'
 # <color:#ff00ee>Example message</color>
 # <gradient:#ff00ee:#f79459>Example message</gradient>
 #  
+#  
+# Chat format for ranks (Vault) Support mini-messages and legacy colors
+# We're recommending to use webui for mini-messages: https://webui.adventure.kyori.net/
+# documentation is here: https://docs.adventure.kyori.net/minimessage/format.html
+default-format: "{displayname} {arrow_right} {message}"
 format:
-  default: '{member} &f{displayname} &8{arrow_right} {message} '
-  admin: $template({admin}, &c)
+  default: "{member} &f{displayname} &8{arrow_right} {message} "
+  admin: "$template({admin}, &c)"
 #  
 # It is used to shorten the text even more and keep the clean file!
 templates:
-  - $template($rank, $color) -> '$rank $color{displayname} &8{arrow_right} $color{message}'
+  - "$template($rank, $color) -> '$rank $color{displayname} &8{arrow_right} $color{message}'"
 #  
 # Placeholders, it allows you to make a shorter text, you can use some prefixes, characters etc. 
 placeholders:

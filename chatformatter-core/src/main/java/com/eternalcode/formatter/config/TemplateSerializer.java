@@ -7,7 +7,7 @@ import eu.okaeri.configs.serdes.ObjectSerializer;
 import eu.okaeri.configs.serdes.SerializationData;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Optional;
+import java.util.NoSuchElementException;
 
 public class TemplateSerializer implements ObjectSerializer<Template> {
 
@@ -22,11 +22,13 @@ public class TemplateSerializer implements ObjectSerializer<Template> {
     }
 
     @Override
-    public Template deserialize(@NotNull DeserializationData data, @NotNull GenericsDeclaration generics){
+    public Template deserialize(@NotNull DeserializationData data, @NotNull GenericsDeclaration generics) {
         String value = data.getValue(String.class);
-
-        Optional<Template> templateResult = Template.parse(value);
-
-        return templateResult.orElseThrow(() -> new IllegalArgumentException("Unable to parse template"));
+        try {
+            return Template.parse(value);
+        }
+        catch (NoSuchElementException exception) {
+            throw new IllegalArgumentException("Unable to parse template", exception);
+        }
     }
 }
