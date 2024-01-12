@@ -107,13 +107,18 @@ class ChatHandlerImpl implements ChatHandler {
         String rawMessage = ComponentUtil.toRawContent(message);
 
         TagResolver.Single displayNamePlaceholder = displayNamePlaceholder(sender);
+        TagResolver.Single namePlaceholder = namePlaceholder(sender);
         TagResolver.Single messagePlaceholder = messagePlaceholder(sender, rawMessage);
 
-        return TagResolver.resolver(displayNamePlaceholder, messagePlaceholder);
+        return TagResolver.resolver(displayNamePlaceholder, namePlaceholder, messagePlaceholder);
     }
 
     private TagResolver.Single displayNamePlaceholder(Player sender) {
         return Placeholder.parsed("displayname", Legacy.clearSection(sender.getDisplayName()));
+    }
+
+    private TagResolver.Single namePlaceholder(Player sender) {
+        return Placeholder.parsed("name", Legacy.clearSection(sender.getName()));
     }
 
     private TagResolver.Single messagePlaceholder(Player sender, String rawMessage) {
