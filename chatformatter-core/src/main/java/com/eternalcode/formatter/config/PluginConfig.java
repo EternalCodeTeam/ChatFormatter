@@ -61,6 +61,7 @@ public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRep
     @Description({ " ", "# Placeholders, it allows you to make a shorter text, you can use some prefixes, characters etc. " })
     public Map<String, String> placeholders = new ImmutableMap.Builder<String, String>()
         .put("{displayname}", "<displayname>")
+        .put("{name}", "<name>")
         .put("{message}", "<message>")
         .put("{prefix}", "<b><gradient:#29fbff:#38b3ff>ChatFormatter</gradient></b>")
         .put("{member}", "<b><color:#6e6764>Member</color></b>")
