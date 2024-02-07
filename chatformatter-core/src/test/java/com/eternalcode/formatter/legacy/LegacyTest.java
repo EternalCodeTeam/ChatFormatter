@@ -1,5 +1,6 @@
 package com.eternalcode.formatter.legacy;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -37,6 +38,16 @@ class LegacyTest {
 
         assertEquals(expectedShadowed, shadowed);
         assertEquals(input, deshadowed);
+    }
+
+    @Test
+    @DisplayName("Should convert legacy color codes to adventure")
+    void testLegacyToAdventure() {
+        String input = "&c SIEMA &#8376d3 &rtest&a!";
+
+        String result = Legacy.legacyToAdventure(input);
+
+        assertEquals("<red> SIEMA <#8376d3> <reset>test<green>!", result);
     }
 
 }

@@ -95,6 +95,9 @@ class ChatHandlerImpl implements ChatHandler {
         format = this.templateService.applyTemplates(format);
         format = this.placeholderRegistry.format(format, sender);
 
+        format = Legacy.clearSection(format);
+        format = Legacy.legacyToAdventure(format);
+
         Component renderedMessage = this.miniMessage.deserialize(format, this.createTags(chatMessage));
 
         return new ChatRenderedMessage(sender, GSON.serialize(renderedMessage));
