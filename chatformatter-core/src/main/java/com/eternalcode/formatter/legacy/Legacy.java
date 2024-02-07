@@ -1,7 +1,10 @@
 package com.eternalcode.formatter.legacy;
 
+import com.google.common.collect.ImmutableMap;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,8 +16,34 @@ public final class Legacy {
     public static final String SHADOW = "<ampersand>";
 
     public static final Pattern ALL_PATTERN = Pattern.compile(".*");
-    public static final Pattern AMPERSAND_PATTERN = Pattern.compile("(?i)" + AMPERSAND + "[0-9A-FK-ORX#]");
+    public static final Pattern AMPERSAND_PATTERN = Pattern.compile("(?i)" + AMPERSAND + "([0-9A-FK-ORX#])");
     public static final Pattern SHADOW_PATTERN = Pattern.compile("(?i)" + SHADOW + "[0-9A-FK-ORX#]");
+    public static final Pattern HEX_PATTERN = Pattern.compile("(?i)" + AMPERSAND + "#([0-9A-F]{6})");
+
+    public static final Map<String, String> codeTranslations = new ImmutableMap.Builder<String, String>()
+            .put("0", "<black>")
+            .put("1", "<dark_blue>")
+            .put("2", "<dark_green>")
+            .put("3", "<dark_aqua>")
+            .put("4", "<dark_red>")
+            .put("5", "<dark_purple>")
+            .put("6", "<gold>")
+            .put("7", "<gray>")
+            .put("8", "<dark_gray>")
+            .put("9", "<blue>")
+            .put("a", "<green>")
+            .put("b", "<aqua>")
+            .put("c", "<red>")
+            .put("d", "<light_purple>")
+            .put("e", "<yellow>")
+            .put("f", "<white>")
+            .put("k", "<obfuscated>")
+            .put("l", "<bold>")
+            .put("m", "<strikethrough>")
+            .put("n", "<underlined>")
+            .put("o", "<italic>")
+            .put("r", "<reset>")
+            .build();
 
     private Legacy() {
     }
@@ -66,4 +95,23 @@ public final class Legacy {
         return builder.toString();
     }
 
+    public static String legacyToAdventure(String input) {
+        String result = HEX_PATTERN.matcher(input).replaceAll(matchResult -> {
+            String hex = matchResult.group(1);
+            return "<#" + hex + ">";
+        });
+
+        result = AMPERSAND_PATTERN.matcher(result).replaceAll(matchResult -> {
+            String color = matchResult.group(1);
+            String adventure = codeTranslations.get(color.toLowerCase());
+
+            if (adventure == null) {
+                return matchResult.group();
+            }
+
+            return adventure;
+        });
+
+        return result;
+    }
 }
