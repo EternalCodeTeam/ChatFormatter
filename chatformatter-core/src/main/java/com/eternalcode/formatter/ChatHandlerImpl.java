@@ -1,8 +1,7 @@
 package com.eternalcode.formatter;
 
-import static net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.*;
+import static net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacySection;
 
-import com.eternalcode.formatter.adventure.ComponentUtil;
 import com.eternalcode.formatter.adventure.TextColorTagResolver;
 import com.eternalcode.formatter.legacy.Legacy;
 import com.eternalcode.formatter.legacy.LegacyPostMessageProcessor;
@@ -19,7 +18,6 @@ import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.text.minimessage.tag.standard.StandardTags;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
