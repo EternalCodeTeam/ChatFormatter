@@ -1,5 +1,7 @@
 package com.eternalcode.formatter;
 
+import static net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.*;
+
 import com.eternalcode.formatter.adventure.ComponentUtil;
 import com.eternalcode.formatter.adventure.TextColorTagResolver;
 import com.eternalcode.formatter.legacy.Legacy;
@@ -17,6 +19,7 @@ import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.text.minimessage.tag.standard.StandardTags;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -107,11 +110,11 @@ class ChatHandlerImpl implements ChatHandler {
         Player sender = chatMessage.sender();
 
         Component message = GSON.deserialize(chatMessage.jsonMessage());
-        String rawMessage = ComponentUtil.toRawContent(message);
+        String serialize = legacySection().serialize(message);
 
         TagResolver.Single displayNamePlaceholder = displayNamePlaceholder(sender);
         TagResolver.Single namePlaceholder = namePlaceholder(sender);
-        TagResolver.Single messagePlaceholder = messagePlaceholder(sender, rawMessage);
+        TagResolver.Single messagePlaceholder = messagePlaceholder(sender, serialize);
 
         return TagResolver.resolver(displayNamePlaceholder, namePlaceholder, messagePlaceholder);
     }
