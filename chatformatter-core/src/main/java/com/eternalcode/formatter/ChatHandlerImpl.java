@@ -1,6 +1,7 @@
 package com.eternalcode.formatter;
 
-import com.eternalcode.formatter.adventure.ComponentUtil;
+import static net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacySection;
+
 import com.eternalcode.formatter.adventure.TextColorTagResolver;
 import com.eternalcode.formatter.legacy.Legacy;
 import com.eternalcode.formatter.legacy.LegacyPostMessageProcessor;
@@ -107,11 +108,11 @@ class ChatHandlerImpl implements ChatHandler {
         Player sender = chatMessage.sender();
 
         Component message = GSON.deserialize(chatMessage.jsonMessage());
-        String rawMessage = ComponentUtil.toRawContent(message);
+        String serialize = legacySection().serialize(message);
 
         TagResolver.Single displayNamePlaceholder = displayNamePlaceholder(sender);
         TagResolver.Single namePlaceholder = namePlaceholder(sender);
-        TagResolver.Single messagePlaceholder = messagePlaceholder(sender, rawMessage);
+        TagResolver.Single messagePlaceholder = messagePlaceholder(sender, serialize);
 
         return TagResolver.resolver(displayNamePlaceholder, namePlaceholder, messagePlaceholder);
     }
