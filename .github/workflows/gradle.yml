@@ -22,7 +22,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - name: Cache Gradle
-        uses: actions/cache@v4.0.0
+        uses: actions/cache@v4.0.1
         with:
           path: ~/.gradle/caches
           key: >-
@@ -32,7 +32,7 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x gradlew
       - name: Build with Gradle
-        uses: gradle/gradle-build-action@0706ab3a3c20483a3f37c3d9de1b0d95297e3743
+        uses: gradle/gradle-build-action@585b565652cefbba63202a7f927df0ff99f34001
         with:
           arguments: shadowAll
       - name: Upload a ChatFormatter Artifact
