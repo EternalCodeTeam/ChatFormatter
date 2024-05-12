@@ -12,7 +12,8 @@ bukkit {
     prefix = "ChatFormatter"
     author = "EternalCodeTeam"
     name = "ChatFormatter"
-    depend = listOf("PlaceholderAPI", "Vault")
+    depend = listOf("Vault")
+    softDepend = listOf("PlaceholderAPI")
     version = "${project.version}"
 
     commands {
