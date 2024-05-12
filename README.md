@@ -14,7 +14,7 @@
 
 </div>
 
-> ⚠ **This plugin requires PlaceholderAPI and Vault to run!**
+> ⚠ **This plugin requires Vault to run!** 
 
 ## Preview:
 ![1](assets/gif/ChatFormatterHoverPlayerInfo.gif)
@@ -22,7 +22,7 @@
 
 ## Features:
 
-- PlaceholderAPI Support
+- [PlaceholderAPI](https://github.com/PlaceholderAPI/PlaceholderAPI) Support
 - [MiniMessages Support](https://docs.adventure.kyori.net/minimessage/format.html) with Legacy Colors Support!
 - Template System
 - Custom Placeholders System
