@@ -90,11 +90,16 @@ class ChatHandlerImpl implements ChatHandler {
     @Override
     public ChatRenderedMessage process(ChatMessage chatMessage) {
         Player sender = chatMessage.sender();
+        Player player = chatMessage.player();
 
         String format = this.settings.getRawFormat(this.rankProvider.getRank(sender));
 
         format = this.templateService.applyTemplates(format);
-        format = this.placeholderRegistry.format(format, sender);
+        try {
+            format = this.placeholderRegistry.format(format, sender, player);
+        } catch (Exception ignored) {
+            format = this.placeholderRegistry.format(format, sender);
+        }
 
         format = Legacy.clearSection(format);
         format = Legacy.legacyToAdventure(format);
