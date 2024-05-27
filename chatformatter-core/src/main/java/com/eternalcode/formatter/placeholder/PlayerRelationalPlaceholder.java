@@ -3,8 +3,8 @@ package com.eternalcode.formatter.placeholder;
 import org.bukkit.entity.Player;
 
 @FunctionalInterface
-public interface BiPlayerPlaceholder {
+public interface PlayerRelationalPlaceholder {
 
-    String extract(Player target, Player otherTarget);
+    String extract(Player target, Player viewer);
 
 }

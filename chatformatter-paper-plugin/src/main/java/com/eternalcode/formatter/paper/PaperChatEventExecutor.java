@@ -14,11 +14,10 @@ import org.bukkit.plugin.EventExecutor;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
-import java.util.UUID;
 
 class PaperChatEventExecutor implements EventExecutor {
 
-    private final static GsonComponentSerializer GSON = GsonComponentSerializer.gson();
+    private static final GsonComponentSerializer GSON = GsonComponentSerializer.gson();
 
     @Override
     public void execute(@NotNull Listener listener, @NotNull Event event) throws EventException {
@@ -32,14 +31,10 @@ class PaperChatEventExecutor implements EventExecutor {
 
         paperEvent.renderer((source, sourceDisplayName, message, viewer) -> {
             String jsonMessage = GSON.serialize(message);
+            Optional<Player> optionalViewer = viewer.get(Identity.UUID)
+                .map(uuid -> source.getServer().getPlayer(uuid));
 
-            Player player = null;
-            Optional<UUID> viewerUUID = viewer.get(Identity.UUID);
-            if (viewerUUID.isPresent()) {
-                player = source.getServer().getPlayer(viewerUUID.get());
-            }
-
-            ChatMessage chatMessage = new ChatMessage(source, player, jsonMessage);
+            ChatMessage chatMessage = new ChatMessage(source, optionalViewer, jsonMessage);
             ChatRenderedMessage result = handler.process(chatMessage);
 
             return GSON.deserialize(result.jsonMessage());
