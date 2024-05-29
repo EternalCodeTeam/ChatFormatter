@@ -6,11 +6,8 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.eternalcode.formatter.ChatSettings;
 import com.eternalcode.formatter.placeholder.PlaceholderStack;
-import me.clip.placeholderapi.PlaceholderAPI;
 import net.dzikoysk.cdn.entity.Description;
-import org.bukkit.entity.Player;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -99,10 +96,8 @@ public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRep
     }
 
     @Override
-    public String apply(String text, Player target) {
+    public String apply(String text) {
         String value = text;
-
-        value = PlaceholderAPI.setPlaceholders(target, value);
 
         for (Map.Entry<String, String> entry : this.placeholders.entrySet()) {
             value = value.replace(entry.getKey(), entry.getValue());

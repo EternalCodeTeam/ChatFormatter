@@ -31,15 +31,19 @@ public class PlaceholderRegistry {
         this.playerStacks.add(stack);
     }
 
-    public String format(String text, Player target) {
+    public String format(String text) {
         for (PlaceholderStack stack : this.stacks) {
-            text = stack.apply(text, target);
+            text = stack.apply(text);
         }
 
         for (Map.Entry<String, Placeholder> entry : this.placeholders.entrySet()) {
             text = text.replace(entry.getKey(), entry.getValue().extract());
         }
 
+        return text;
+    }
+
+    public String format(String text, Player target) {
         for (PlayerPlaceholderStack stack : this.playerStacks) {
             text = stack.apply(text, target);
         }
@@ -48,7 +52,7 @@ public class PlaceholderRegistry {
             text = text.replace(entry.getKey(), entry.getValue().extract(target));
         }
 
-        return text;
+        return this.format(text);
     }
 
 }
