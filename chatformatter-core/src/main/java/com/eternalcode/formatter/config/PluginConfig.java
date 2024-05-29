@@ -55,7 +55,7 @@ public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRep
     })
     public String defaultFormat = "{displayname} » {message}";
     @Description({ " ", "# Here you can set different formats for each rank.",
-            "# Remember! Rank name must be exact same like in you permission plugin configuration.",
+            "# Remember! Rank name must be exactly the same as in you permission plugin configuration.",
             "# If player have more than one rank remember to correctly setup rank weight configuration" })
     public Map<String, String> format = new ImmutableMap.Builder<String, String>()
             .put("default", "{member} &7$hoverName({displayname}) &8» <gradient:#d4d4d4:white>{message} ")
