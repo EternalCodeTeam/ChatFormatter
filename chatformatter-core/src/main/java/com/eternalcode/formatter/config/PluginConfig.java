@@ -28,11 +28,13 @@ public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRep
     public boolean receiveUpdates = true;
 
 
-    @Description({ " ", "# Chat rankFormat for ranks (Vault) Support mini-messages and legacy colors" })
+    @Description({ " ", "# Chat format for ranks (Vault) Support mini-messages and legacy colors" })
     @Description({ " ", "# We're recommending to use webui for mini-messages: https://webui.adventure.kyori.net/" })
     @Description({ " ", "# documentation is here: https://docs.adventure.kyori.net/minimessage/format.html" })
+    @Description({ " ", "# You can check LuckyPerms setup and placeholders here: https://luckperms.net/wiki/Placeholders" })
 
     @Description({
+        "# ",
         "# Example usages:",
         "# ",
         "# Hover message:",
@@ -48,11 +50,14 @@ public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRep
         "# <color:#ff00ee>Example message</color>",
         "# <gradient:#ff00ee:#f79459>Example message</gradient>",
         "# ",
-        "# You can use three more placeholders: <displayname> <name> <message>",
+        "# You can use three more internal placeholders: <displayname> <name> <message>",
         "# "
     })
     public String defaultFormat = "{displayname} » {message}";
-    public Map<String, String> rankFormat = new ImmutableMap.Builder<String, String>()
+    @Description({ " ", "# Here you can set different formats for each rank.",
+            "# Remember! Rank name must be exact same like in you permission plugin configuration.",
+            "# If player have more than one rank remember to correctly setup rank weight configuration" })
+    public Map<String, String> format = new ImmutableMap.Builder<String, String>()
             .put("default", "{member} &7$hoverName({displayname}) &8» <gradient:#d4d4d4:white>{message} ")
             .put("vip", "{vip} &f$hoverName({displayname}) <dark_gray>» <gradient:#ffd270:white>{message}")
             .put("mod", "{mod} &f$hoverName({displayname}) <dark_gray>» <gradient:#a3ff9e:white>{message}")
@@ -60,7 +65,7 @@ public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRep
             .put("owner", "{owner} &f$hoverName({displayname}) <dark_gray>» <gradient:#ff9195:white><b>{message}")
             .build();
 
-    @Description({ " ", "# Placeholders, it allows you to make a shorter text, you can use some prefixes, characters etc. " })
+    @Description({ " ", "# Placeholders, it allows you to make a shorter text, you can use some prefixes, characters etc. ", "# You can use here PAPI placeholders." })
     public Map<String, String> placeholders = new ImmutableMap.Builder<String, String>()
             .put("{displayname}", "<displayname>")
             .put("{name}", "<name>")
@@ -90,7 +95,7 @@ public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRep
 
     @Override
     public String getRawFormat(String rank) {
-        return this.rankFormat.getOrDefault(rank, this.defaultFormat);
+        return this.format.getOrDefault(rank, this.defaultFormat);
     }
 
     @Override
