@@ -17,11 +17,11 @@ public class ConfiguredPlaceholderAPIStack implements PlayerPlaceholderStack {
     public String apply(String text, Player target) {
         String value = text;
 
-        value = PlaceholderAPI.setPlaceholders(target, value);
-
         for (Map.Entry<String, String> entry : this.pluginConfig.placeholders.entrySet()) {
             value = value.replace(entry.getKey(), entry.getValue());
         }
+
+        value = PlaceholderAPI.setPlaceholders(target, value);
 
         return value;
     }
