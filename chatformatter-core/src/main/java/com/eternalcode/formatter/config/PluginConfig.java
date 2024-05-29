@@ -5,13 +5,12 @@ import com.eternalcode.formatter.template.TemplateRepository;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.eternalcode.formatter.ChatSettings;
-import com.eternalcode.formatter.placeholder.PlaceholderStack;
 import net.dzikoysk.cdn.entity.Description;
 
 import java.util.List;
 import java.util.Map;
 
-public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRepository {
+public class PluginConfig implements ChatSettings, TemplateRepository {
 
     @Description(" ")
     @Description("#    ____ _           _   _____      ChatFormatter       _   _            ")
@@ -93,17 +92,6 @@ public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRep
     @Override
     public String getRawFormat(String rank) {
         return this.format.getOrDefault(rank, this.defaultFormat);
-    }
-
-    @Override
-    public String apply(String text) {
-        String value = text;
-
-        for (Map.Entry<String, String> entry : this.placeholders.entrySet()) {
-            value = value.replace(entry.getKey(), entry.getValue());
-        }
-
-        return value;
     }
 
     @Override
