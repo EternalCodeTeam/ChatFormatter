@@ -31,7 +31,7 @@ public class PluginConfig implements ChatSettings, PlaceholderStack, TemplateRep
     @Description({ " ", "# Chat format for ranks (Vault) Support mini-messages and legacy colors" })
     @Description({ " ", "# We're recommending to use webui for mini-messages: https://webui.adventure.kyori.net/" })
     @Description({ " ", "# documentation is here: https://docs.adventure.kyori.net/minimessage/format.html" })
-    @Description({ " ", "# You can check LuckyPerms setup and placeholders here: https://luckperms.net/wiki/Placeholders" })
+    @Description({ " ", "# You can check LuckPerms setup and placeholders here: https://luckperms.net/wiki/Placeholders" })
 
     @Description({
         "# ",
