@@ -41,11 +41,11 @@ public class ChatFormatterPlugin implements ChatFormatterApi {
 
         this.placeholderRegistry = new PlaceholderRegistry();
 
-        this.placeholderRegistry.stack(pluginConfig);
+        PlaceholderAPIStack placeholderAPIStack = new PlaceholderAPIStack();
+        this.placeholderRegistry.playerStack(new ConfiguredPlaceholderAPIStack(pluginConfig));
         this.placeholderRegistry.playerStack(placeholderAPIStack);
         this.placeholderRegistry.playerRelationalStack(placeholderAPIStack);
-        this.placeholderRegistry.playerStack(new ConfiguredPlaceholderAPIStack(pluginConfig));
-        this.placeholderRegistry.playerStack(new PlaceholderAPIStack());
+
 
         this.templateService = new TemplateService(pluginConfig);
         this.rankProvider = new VaultRankProvider(server);
