@@ -4,6 +4,7 @@ import com.eternalcode.formatter.config.ConfigManager;
 import com.eternalcode.formatter.config.PluginConfig;
 import com.eternalcode.formatter.legacy.LegacyPostProcessor;
 import com.eternalcode.formatter.legacy.LegacyPreProcessor;
+import com.eternalcode.formatter.placeholder.ConfiguredPlaceholderAPIStack;
 import com.eternalcode.formatter.placeholder.PlaceholderAPIStack;
 import com.eternalcode.formatter.placeholder.PlaceholderRegistry;
 import com.eternalcode.formatter.rank.ChatRankProvider;
@@ -39,10 +40,12 @@ public class ChatFormatterPlugin implements ChatFormatterApi {
         PluginConfig pluginConfig = configManager.getPluginConfig();
 
         this.placeholderRegistry = new PlaceholderRegistry();
+
         this.placeholderRegistry.stack(pluginConfig);
-        PlaceholderAPIStack placeholderAPIStack = new PlaceholderAPIStack();
         this.placeholderRegistry.playerStack(placeholderAPIStack);
         this.placeholderRegistry.playerRelationalStack(placeholderAPIStack);
+        this.placeholderRegistry.playerStack(new ConfiguredPlaceholderAPIStack(pluginConfig));
+        this.placeholderRegistry.playerStack(new PlaceholderAPIStack());
 
         this.templateService = new TemplateService(pluginConfig);
         this.rankProvider = new VaultRankProvider(server);
