@@ -2,25 +2,24 @@
 
 ![Readme Banner](assets/img/chatformatter.png)
 
-[![Available on Paper](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/supported/spigot_vector.svg)](https://raw.githubusercontent.com/intergrav/devins-badges/1aec26abb75544baec37249f42008b2fcc0e731f/assets/cozy/supported/paper_vector.svg)
-[![Available on modrinth](https://raw.githubusercontent.com/intergrav/devins-badges/68af3da1d56294934ece854c43dac9ab1b0eb3e9/assets/cozy/available/modrinth_vector.svg)](https://modrinth.com/plugin/chatformatter)
+[![Available on SpigotMC](https://raw.githubusercontent.com/vLuckyyy/badges/main/available-on-spigotmc.svg)](https://raw.githubusercontent.com/intergrav/devins-badges/1aec26abb75544baec37249f42008b2fcc0e731f/assets/cozy/supported/paper_vector.svg)
+[![Available on Modrinth](https://github.com/vLuckyyy/badges/raw/main/avaiable-on-modrinth.svg)](https://modrinth.com/plugin/chatformatter)
+[![Available on Hangar](https://raw.githubusercontent.com/vLuckyyy/badges/main/avaiable-on-hangar.svg)](https://hangar.papermc.io/EternalCodeTeam/EternalChatFormatter)
 
-[![Patreon](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/donate/patreon-plural_vector.svg)](https://www.patreon.com/eternalcode)
-[![Website](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/documentation/website_vector.svg)](https://eternalcode.pl/)
 [![Discord](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/social/discord-plural_vector.svg)](https://discord.gg/FQ7jmGBd6c)
-
-[![Gradle](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/built-with/gradle_vector.svg)](https://gradle.org/)
-[![Java](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/built-with/java17_vector.svg)](https://www.java.com/)
+[![Docs](https://raw.githubusercontent.com/vLuckyyy/badges/main/read-the-documentation.svg)](https://raw.githubusercontent.com/vLuckyyy/badges/main/read-the-documentation.svg)
+[![bStats](https://raw.githubusercontent.com/vLuckyyy/badges/main/available-on-bstats.svg)](https://docs.eternalcode.pl/eternalcore/introduction)
 
 </div>
 
 > ⚠ **This plugin requires PlaceholderAPI and Vault to run!**
 
-## Preview:
+## 🌌 Preview:
+
 ![1](assets/gif/ChatFormatterHoverPlayerInfo.gif)
 ![2](assets/gif/ChatFormatterClickableMessage2.gif)
 
-## Features:
+## ✨ Features:
 
 - PlaceholderAPI Support
 - [MiniMessages Support](https://docs.adventure.kyori.net/minimessage/format.html) with Legacy Colors Support!
@@ -28,12 +27,12 @@
 - Custom Placeholders System
 - Per-permission miniMessages Tags (see permissions below)
 
-## Useful links:
+## 🔗 Useful links:
 
 - [Web UI](https://webui.adventure.kyori.net)
 - [MiniMessages Format](https://docs.adventure.kyori.net/minimessage/format.html)
 
-## Permissions:
+## 🔑 Permissions:
 
 | **Permission**                            | **Access**                                                              |
 |:------------------------------------------|:------------------------------------------------------------------------|
@@ -119,14 +118,14 @@ templates:
 
 # Placeholders, it allows you to make a shorter text, you can use some prefixes, characters etc. 
 placeholders:
-  {displayname}: "<displayname>"
-  {name}: "<name>"
-  {message}: "<message>"
-  {prefix}: "<b><gradient:#29fbff:#38b3ff>ChatFormatter</gradient></b>"
-  {member}: "<b><color:#6e6764>Member</color></b>"
-  {admin}: "<b><color:#ff4400>Admin</color></b>"
-  {arrow_right}: "»"
-  {arrow_left}: "«"
+  { displayname }: "<displayname>"
+    { name }: "<name>"
+    { message }: "<message>"
+    { prefix }: "<b><gradient:#29fbff:#38b3ff>ChatFormatter</gradient></b>"
+    { member }: "<b><color:#6e6764>Member</color></b>"
+    { admin }: "<b><color:#ff4400>Admin</color></b>"
+    { arrow_right }: "»"
+    { arrow_left }: "«"
 ```
 
 
