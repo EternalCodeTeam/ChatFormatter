@@ -1,5 +1,6 @@
 package com.eternalcode.formatter;
 
+import java.util.Optional;
 import static net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacySection;
 
 import com.eternalcode.formatter.adventure.TextColorTagResolver;
@@ -90,11 +91,14 @@ class ChatHandlerImpl implements ChatHandler {
     @Override
     public ChatRenderedMessage process(ChatMessage chatMessage) {
         Player sender = chatMessage.sender();
+        Optional<Player> viewer = chatMessage.viewer();
 
         String format = this.settings.getRawFormat(this.rankProvider.getRank(sender));
 
         format = this.templateService.applyTemplates(format);
-        format = this.placeholderRegistry.format(format, sender);
+        format = viewer.isEmpty()
+            ? this.placeholderRegistry.format(format, sender)
+            : this.placeholderRegistry.format(format, sender, viewer.get());
 
         format = Legacy.clearSection(format);
         format = Legacy.legacyToAdventure(format);
