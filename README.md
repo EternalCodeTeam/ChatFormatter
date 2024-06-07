@@ -92,6 +92,9 @@ receiveUpdates: true
 # We're recommending to use webui for mini-messages: https://webui.adventure.kyori.net/
 
 # documentation is here: https://docs.adventure.kyori.net/minimessage/format.html
+
+# You can check LuckPerms setup and placeholders here: https://luckperms.net/wiki/Placeholders
+# 
 # Example usages:
 # 
 # Hover message:
@@ -106,26 +109,42 @@ receiveUpdates: true
 # RGB and gradient message usage: 
 # <color:#ff00ee>Example message</color>
 # <gradient:#ff00ee:#f79459>Example message</gradient>
+# 
+# You can use three more internal placeholders: <displayname> <name> <message>
+# 
+defaultFormat: "{displayname} » {message}"
 
-defaultFormat: "{displayname} {arrow_right} {message}"
+# Here you can set different formats for each rank.
+# Remember! Rank name must be exactly the same as in you permission plugin configuration.
+# If player have more than one rank remember to correctly setup rank weight configuration
 format:
-  default: "{member} &f{displayname} &8{arrow_right} {message} "
-  admin: "$template({admin}, &c)"
-
-# It is used to shorten the text even more and keep the clean file!
-templates:
-  - "$template($rank, $color) -> '$rank $color{displayname} &8{arrow_right} $color{message}'"
+  default: "{member} &7$hoverName({displayname}) &8» <gradient:#d4d4d4:white>{message} "
+  vip: "{vip} &f$hoverName({displayname}) <dark_gray>» <gradient:#ffd270:white>{message}"
+  mod: "{mod} &f$hoverName({displayname}) <dark_gray>» <gradient:#a3ff9e:white>{message}"
+  admin: "{admin} &f$hoverName({displayname}) <dark_gray>» <gradient:#bac8ff:white><b>{message}"
+  owner: "{owner} &f$hoverName({displayname}) <dark_gray>» <gradient:#ff9195:white><b>{message}"
 
 # Placeholders, it allows you to make a shorter text, you can use some prefixes, characters etc. 
+# You can use here PAPI placeholders.
 placeholders:
-  { displayname }: "<displayname>"
-    { name }: "<name>"
-    { message }: "<message>"
-    { prefix }: "<b><gradient:#29fbff:#38b3ff>ChatFormatter</gradient></b>"
-    { member }: "<b><color:#6e6764>Member</color></b>"
-    { admin }: "<b><color:#ff4400>Admin</color></b>"
-    { arrow_right }: "»"
-    { arrow_left }: "«"
+  {displayname}: "<displayname>"
+    {name}: "<name>"
+    {message}: "<message>"
+    {member}: "<#6e6764>Member"
+    {vip}: "<gold>VIP"
+    {mod}: "<b><#00c900>Mod</b>"
+    {admin}: "<b><#6e86ff>Admin</b>"
+    {owner}: "<b><gradient:#c40000:#e04b4b>Owner</b>"
+    {rankDescription}: "<dark_gray>Rank: <white>%vault_group%"
+    {joinDate}: "<dark_gray>Joined: <white>%player_first_join_date%"
+    {health}: "<dark_gray>Health: <red>%player_health%"
+    {lvl}: "<dark_gray>LVL: <gold>%player_level%"
+    {privateMessage}: "<gradient:#36ff39:#75ff75><i>Click to send private message</i></gradient>"
+
+# This section is made for experienced users
+# It is used to shorten the text even more and keep the clean file!
+templates:
+  - "$hoverName($name) -> '<hover:show_text:'<dark_gray>Name: <white>$name<br><br>{rankDescription}<br>{joinDate}<br>{health}<br>{lvl}<br><br>{privateMessage}'><click:suggest_command:'/msg {displayname} '>{displayname}</click></hover>'"
 ```
 
 
