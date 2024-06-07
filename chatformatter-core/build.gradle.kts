@@ -10,8 +10,8 @@ dependencies {
     testImplementation("org.spigotmc:spigot-api:$spigotApiVersion")
 
     // Kyori Adventure & MiniMessage
-    val adventureVersion = "4.3.2"
-    val miniMessageVersion = "4.16.0"
+    val adventureVersion = "4.3.3"
+    val miniMessageVersion = "4.17.0"
     implementation("net.kyori:adventure-platform-bukkit:$adventureVersion")
     implementation("net.kyori:adventure-text-minimessage:$miniMessageVersion")
     testImplementation("net.kyori:adventure-platform-bukkit:$adventureVersion")
@@ -26,7 +26,7 @@ dependencies {
     implementation("org.bstats:bstats-bukkit:3.0.2")
 
     // PlaceholderAPI & Vault
-    compileOnly("me.clip:placeholderapi:2.11.5")
+    compileOnly("me.clip:placeholderapi:2.11.6")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
 
     // GitCheck
@@ -38,7 +38,7 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.2")
     testImplementation("org.mockito:mockito-core:5.12.0")
     testImplementation("org.mockito:mockito-junit-jupiter:5.12.0")
-    testImplementation("me.clip:placeholderapi:2.11.5")
+    testImplementation("me.clip:placeholderapi:2.11.6")
     testImplementation("org.assertj:assertj-core:3.26.0")
 }
 
