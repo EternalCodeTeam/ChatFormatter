@@ -7,8 +7,8 @@
 [![Available on Hangar](https://raw.githubusercontent.com/vLuckyyy/badges/main/avaiable-on-hangar.svg)](https://hangar.papermc.io/EternalCodeTeam/EternalChatFormatter)
 
 [![Discord](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/social/discord-plural_vector.svg)](https://discord.gg/FQ7jmGBd6c)
-[![Docs](https://raw.githubusercontent.com/vLuckyyy/badges/main/read-the-documentation.svg)](https://raw.githubusercontent.com/vLuckyyy/badges/main/read-the-documentation.svg)
-[![bStats](https://raw.githubusercontent.com/vLuckyyy/badges/main/available-on-bstats.svg)](https://docs.eternalcode.pl/eternalcore/introduction)
+[![Docs](https://raw.githubusercontent.com/vLuckyyy/badges/main/read-the-documentation.svg)](https://docs.eternalcode.pl/eternalcore/introduction)
+[![bStats](https://raw.githubusercontent.com/vLuckyyy/badges/main/available-on-bstats.svg)](https://bstats.org/plugin/bukkit/ChatForrmatter/15199)
 
 </div>
 
