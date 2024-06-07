@@ -128,18 +128,18 @@ format:
 # You can use here PAPI placeholders.
 placeholders:
   {displayname}: "<displayname>"
-    {name}: "<name>"
-    {message}: "<message>"
-    {member}: "<#6e6764>Member"
-    {vip}: "<gold>VIP"
-    {mod}: "<b><#00c900>Mod</b>"
-    {admin}: "<b><#6e86ff>Admin</b>"
-    {owner}: "<b><gradient:#c40000:#e04b4b>Owner</b>"
-    {rankDescription}: "<dark_gray>Rank: <white>%vault_group%"
-    {joinDate}: "<dark_gray>Joined: <white>%player_first_join_date%"
-    {health}: "<dark_gray>Health: <red>%player_health%"
-    {lvl}: "<dark_gray>LVL: <gold>%player_level%"
-    {privateMessage}: "<gradient:#36ff39:#75ff75><i>Click to send private message</i></gradient>"
+  {name}: "<name>"
+  {message}: "<message>"
+  {member}: "<#6e6764>Member"
+  {vip}: "<gold>VIP"
+  {mod}: "<b><#00c900>Mod</b>"
+  {admin}: "<b><#6e86ff>Admin</b>"
+  {owner}: "<b><gradient:#c40000:#e04b4b>Owner</b>"
+  {rankDescription}: "<dark_gray>Rank: <white>%vault_group%"
+  {joinDate}: "<dark_gray>Joined: <white>%player_first_join_date%"
+  {health}: "<dark_gray>Health: <red>%player_health%"
+  {lvl}: "<dark_gray>LVL: <gold>%player_level%"
+  {privateMessage}: "<gradient:#36ff39:#75ff75><i>Click to send private message</i></gradient>"
 
 # This section is made for experienced users
 # It is used to shorten the text even more and keep the clean file!
