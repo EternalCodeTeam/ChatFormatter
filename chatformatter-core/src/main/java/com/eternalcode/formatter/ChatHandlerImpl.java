@@ -64,6 +64,7 @@ class ChatHandlerImpl implements ChatHandler {
         .put("chatformatter.selector", StandardTags.selector())
         .put("chatformatter.keybind", StandardTags.keybind())
         .put("chatformatter.newline", StandardTags.newline())
+        .put("chatformatter.rainbow", StandardTags.rainbow())
         .build();
 
     private static final GsonComponentSerializer GSON = GsonComponentSerializer.gson();
