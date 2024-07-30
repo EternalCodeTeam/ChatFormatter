@@ -39,7 +39,8 @@ bukkit {
                 "chatformatter.translatable",
                 "chatformatter.selector",
                 "chatformatter.keybind",
-                "chatformatter.newline"
+                "chatformatter.newline",
+                "chatformatter.rainbow"
             )
             default = Default.OP
         }
@@ -67,6 +68,7 @@ bukkit {
         register("chatformatter.selector") { default = Default.OP }
         register("chatformatter.keybind") { default = Default.OP }
         register("chatformatter.newline") { default = Default.OP }
+        register("chatformatter.rainbow") { default = Default.OP }
 
         register("chatformatter.color.*") {
             children = listOf(
