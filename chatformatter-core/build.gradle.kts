@@ -10,7 +10,7 @@ dependencies {
     testImplementation("org.spigotmc:spigot-api:$spigotApiVersion")
 
     // Kyori Adventure & MiniMessage
-    val adventureVersion = "4.3.3"
+    val adventureVersion = "4.3.4"
     val miniMessageVersion = "4.17.0"
     implementation("net.kyori:adventure-platform-bukkit:$adventureVersion")
     implementation("net.kyori:adventure-text-minimessage:$miniMessageVersion")
@@ -18,7 +18,7 @@ dependencies {
     testImplementation("net.kyori:adventure-text-minimessage:$miniMessageVersion")
 
     // CDN Configs
-    val cdnVersion = "1.14.4"
+    val cdnVersion = "1.14.5"
     implementation("net.dzikoysk:cdn:$cdnVersion")
     testImplementation("net.dzikoysk:cdn:$cdnVersion")
 
@@ -33,13 +33,13 @@ dependencies {
     implementation("com.eternalcode:gitcheck:1.0.0")
 
     // JUnit 5
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.2")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.3")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.3")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.3")
     testImplementation("org.mockito:mockito-core:5.12.0")
     testImplementation("org.mockito:mockito-junit-jupiter:5.12.0")
     testImplementation("me.clip:placeholderapi:2.11.6")
-    testImplementation("org.assertj:assertj-core:3.26.0")
+    testImplementation("org.assertj:assertj-core:3.26.3")
 }
 
 tasks {
