@@ -53,6 +53,7 @@
 | `chatformatter.selector`                  | `<selector>`                                                            |
 | `chatformatter.keybind`                   | `<key>`                                                                 |
 | `chatformatter.newline`                   | `<newline>`                                                             |
+| `chatformatter.rainbow`                   | `<rainbow>`                                                             |
 | `chatformatter.color.*`                   | `<red>`, `<blue>`, etc.                                                 |
 | `chatformatter.legacycolor`               | `&c`, `&4`, `&l`, etc.                                                  |
 | `chatformatter.color.black`               | `<black>`                                                               |
