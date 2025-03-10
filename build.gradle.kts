@@ -85,7 +85,7 @@ runPaper {
 }
 
 tasks.runServer {
-    minecraftVersion("1.20.4")
+    minecraftVersion("1.21.4")
     dependsOn("shadowAll")
     pluginJars = files("/build/libs/ChatFormatter v${project.version}.jar")
 }
