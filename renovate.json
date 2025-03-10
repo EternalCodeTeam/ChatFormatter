@@ -1,52 +1,44 @@
 {
-    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-    "dependencyDashboard": true,
-    "extends": [
-        "config:base"
-    ],
-    "groupName": "all dependencies",
-    "groupSlug": "all",
-    "lockFileMaintenance": {
-        "enabled": false
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base"
+  ],
+  "groupName": "all dependencies",
+  "groupSlug": "all",
+  "lockFileMaintenance": {
+    "enabled": false
+  },
+  "packageRules": [
+    {
+      "groupName": "all minor and patch dependencies",
+      "groupSlug": "minor-patch",
+      "matchPackagePatterns": [
+        "*"
+      ],
+      "excludePackagePatterns": ["org.spigotmc*"],
+      "updateTypes": ["minor", "patch"],
+      "automerge": true
     },
-    "separateMajorMinor": true,
-    "pruneStaleBranches": true,
-    "commitMessagePrefix": "dependency:",
-    "packageRules": [
-        {
-            "groupName": "patch",
-            "matchPackagePatterns": [
-                "*"
-            ],
-            "excludePackagePatterns": ["org.spigotmc*"],
-            "updateTypes": ["patch"],
-            "automerge": true
-        },
-        {
-            "groupName": "minor",
-            "matchPackagePatterns": [
-                "*"
-            ],
-            "excludePackagePatterns": ["org.spigotmc*"],
-            "updateTypes": ["minor"],
-            "automerge": true
-        },
-        {
-            "groupName": "all-major",
-            "matchPackagePatterns": [
-                "*"
-            ],
-            "updateTypes": ["major"],
-            "excludePackagePatterns": ["org.spigotmc*"],
-            "automerge": false
-        },
-        {
-            "groupName": "spigotmc",
-            "matchPackagePatterns": [
-                "org.spigotmc*"
-            ],
-            "allowedVersions": "/^\\d+\\.\\d+(\\.\\d+)?-R\\d+\\.\\d+-SNAPSHOT$/",
-            "automerge": false
-        }
-    ]
+    {
+      "groupName": "all major dependencies",
+      "groupSlug": "major",
+      "matchPackagePatterns": [
+        "*"
+      ],
+      "excludePackagePatterns": ["org.spigotmc*"],
+      "updateTypes": ["major"],
+      "automerge": false
+    },
+    {
+      "groupName": "spigot dependencies",
+      "groupSlug": "spigotmc",
+      "matchPackagePatterns": [
+        "org.spigotmc*"
+      ],
+      "automerge": false
+    }
+  ],
+  "separateMajorMinor": true,
+  "pruneStaleBranches": true,
+  "commitMessagePrefix": "[Renovate]"
 }
