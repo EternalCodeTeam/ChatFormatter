@@ -10,7 +10,7 @@ dependencies {
     testImplementation("org.spigotmc:spigot-api:$spigotApiVersion")
 
     // Kyori Adventure & MiniMessage
-    val adventureVersion = "4.3.3"
+    val adventureVersion = "4.3.4"
     val miniMessageVersion = "4.19.0"
     implementation("net.kyori:adventure-platform-bukkit:$adventureVersion")
     implementation("net.kyori:adventure-text-minimessage:$miniMessageVersion")
@@ -18,7 +18,7 @@ dependencies {
     testImplementation("net.kyori:adventure-text-minimessage:$miniMessageVersion")
 
     // CDN Configs
-    val cdnVersion = "1.14.4"
+    val cdnVersion = "1.14.6"
     implementation("net.dzikoysk:cdn:$cdnVersion")
     testImplementation("net.dzikoysk:cdn:$cdnVersion")
 
