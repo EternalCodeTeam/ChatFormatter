@@ -7,7 +7,7 @@ import java.util.jar.JarOutputStream
 plugins{
     id("eternalcode.java")
     id("com.github.johnrengelman.shadow")
-    id("xyz.jpenilla.run-paper") version "2.3.0"
+    id("xyz.jpenilla.run-paper") version "2.3.1"
 }
 
 tasks.create("shadowAll") {
