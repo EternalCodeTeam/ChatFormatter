@@ -1,7 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base"
+    "config:recommended"
   ],
   "groupName": "all dependencies",
   "groupSlug": "all",
@@ -12,30 +12,35 @@
     {
       "groupName": "all minor and patch dependencies",
       "groupSlug": "minor-patch",
-      "matchPackagePatterns": [
-        "*"
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
       ],
-      "excludePackagePatterns": ["org.spigotmc*"],
-      "updateTypes": ["minor", "patch"],
-      "automerge": true
+      "automerge": true,
+      "matchPackageNames": [
+        "*",
+        "!/org.spigotmc*/"
+      ]
     },
     {
       "groupName": "all major dependencies",
       "groupSlug": "major",
-      "matchPackagePatterns": [
-        "*"
+      "matchUpdateTypes": [
+        "major"
       ],
-      "excludePackagePatterns": ["org.spigotmc*"],
-      "updateTypes": ["major"],
-      "automerge": false
+      "automerge": false,
+      "matchPackageNames": [
+        "*",
+        "!/org.spigotmc*/"
+      ]
     },
     {
       "groupName": "spigot dependencies",
       "groupSlug": "spigotmc",
-      "matchPackagePatterns": [
-        "org.spigotmc*"
-      ],
-      "automerge": false
+      "automerge": false,
+      "matchPackageNames": [
+        "/org.spigotmc*/"
+      ]
     }
   ],
   "separateMajorMinor": true,
