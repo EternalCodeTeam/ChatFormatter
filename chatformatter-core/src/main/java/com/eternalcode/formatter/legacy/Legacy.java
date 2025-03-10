@@ -19,6 +19,7 @@ public final class Legacy {
     public static final Pattern AMPERSAND_PATTERN = Pattern.compile("(?i)" + AMPERSAND + "([0-9A-FK-ORX#])");
     public static final Pattern SHADOW_PATTERN = Pattern.compile("(?i)" + SHADOW + "[0-9A-FK-ORX#]");
     public static final Pattern HEX_PATTERN = Pattern.compile("(?i)" + AMPERSAND + "#([0-9A-F]{6})");
+    public static final Pattern HEX_COLOR_PATTERN = Pattern.compile("(?i)&x(&[0-9A-F]){6}");
 
     public static final Map<String, String> codeTranslations = new ImmutableMap.Builder<String, String>()
             .put("0", "<black>")
@@ -96,7 +97,12 @@ public final class Legacy {
     }
 
     public static String legacyToAdventure(String input) {
-        String result = HEX_PATTERN.matcher(input).replaceAll(matchResult -> {
+        String result = HEX_COLOR_PATTERN.matcher(input).replaceAll(matchResult -> {
+            String hexColor = matchResult.group().replace("&x", "").replace("&", "");
+            return "<#" + hexColor + ">";
+        });
+
+        result = HEX_PATTERN.matcher(result).replaceAll(matchResult -> {
             String hex = matchResult.group(1);
             return "<#" + hex + ">";
         });
