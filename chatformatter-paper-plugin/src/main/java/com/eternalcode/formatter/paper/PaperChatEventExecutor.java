@@ -30,7 +30,7 @@ class PaperChatEventExecutor implements EventExecutor {
         }
 
         paperEvent.renderer((source, sourceDisplayName, message, viewer) -> {
-            String jsonMessage = GSON.serialize(message);
+            String jsonMessage = GSON.serialize(paperEvent.message());
             Optional<Player> optionalViewer = viewer.get(Identity.UUID)
                 .map(uuid -> source.getServer().getPlayer(uuid));
 
