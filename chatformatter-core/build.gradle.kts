@@ -18,7 +18,7 @@ dependencies {
     testImplementation("net.kyori:adventure-text-minimessage:$miniMessageVersion")
 
     // CDN Configs
-    val cdnVersion = "1.14.6"
+    val cdnVersion = "1.14.8"
     implementation("net.dzikoysk:cdn:$cdnVersion")
     testImplementation("net.dzikoysk:cdn:$cdnVersion")
 
