@@ -131,40 +131,10 @@ class ChatHandlerImpl implements ChatHandler {
 
     private TagResolver.Single messagePlaceholder(Player sender, String rawMessage) {
         TagResolver permittedTags = this.providePermittedTags(sender);
+        rawMessage = rawMessage.replace('§', '&');
         String safeMessage = Legacy.selectiveLegacyToAdventure(rawMessage, code -> Legacy.hasPermissionForLegacyCode(sender, code));
         Component componentMessage = EMPTY_MESSAGE_DESERIALIZER.deserialize(safeMessage, permittedTags);
         return Placeholder.component("message", componentMessage);
-    }
-
-    private boolean hasPermissionForLegacyCode(Player sender, String code) {
-        if (sender.hasPermission(PERMISSION_ALL) || sender.hasPermission("chatformatter.color.*") || sender.hasPermission("chatformatter.decorations.*")) {
-            return true;
-        }
-        switch (code.toLowerCase()) {
-            case "0": return sender.hasPermission("chatformatter.color.black");
-            case "1": return sender.hasPermission("chatformatter.color.dark_blue");
-            case "2": return sender.hasPermission("chatformatter.color.dark_green");
-            case "3": return sender.hasPermission("chatformatter.color.dark_aqua");
-            case "4": return sender.hasPermission("chatformatter.color.dark_red");
-            case "5": return sender.hasPermission("chatformatter.color.dark_purple");
-            case "6": return sender.hasPermission("chatformatter.color.gold");
-            case "7": return sender.hasPermission("chatformatter.color.gray");
-            case "8": return sender.hasPermission("chatformatter.color.dark_gray");
-            case "9": return sender.hasPermission("chatformatter.color.blue");
-            case "a": return sender.hasPermission("chatformatter.color.green");
-            case "b": return sender.hasPermission("chatformatter.color.aqua");
-            case "c": return sender.hasPermission("chatformatter.color.red");
-            case "d": return sender.hasPermission("chatformatter.color.light_purple");
-            case "e": return sender.hasPermission("chatformatter.color.yellow");
-            case "f": return sender.hasPermission("chatformatter.color.white");
-            case "k": return sender.hasPermission("chatformatter.decorations.obfuscated");
-            case "l": return sender.hasPermission("chatformatter.decorations.bold");
-            case "m": return sender.hasPermission("chatformatter.decorations.strikethrough");
-            case "n": return sender.hasPermission("chatformatter.decorations.underlined");
-            case "o": return sender.hasPermission("chatformatter.decorations.italic");
-            case "r": return sender.hasPermission("chatformatter.reset");
-            default: return false;
-        }
     }
 
     private TagResolver providePermittedTags(Player player) {
