@@ -72,7 +72,6 @@ bukkit {
 
         register("chatformatter.color.*") {
             children = listOf(
-                "chatformatter.legacycolor",
                 "chatformatter.color.black",
                 "chatformatter.color.dark_blue",
                 "chatformatter.color.dark_green",

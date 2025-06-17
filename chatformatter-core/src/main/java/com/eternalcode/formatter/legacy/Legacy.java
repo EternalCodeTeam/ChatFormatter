@@ -7,6 +7,7 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.function.Predicate;
 
 public final class Legacy {
 
@@ -45,6 +46,31 @@ public final class Legacy {
             .put("o", "<italic>")
             .put("r", "<reset>")
             .build();
+
+    public static final Map<String, String> legacyCodeToPermission = new ImmutableMap.Builder<String, String>()
+        .put("0", "chatformatter.color.black")
+        .put("1", "chatformatter.color.dark_blue")
+        .put("2", "chatformatter.color.dark_green")
+        .put("3", "chatformatter.color.dark_aqua")
+        .put("4", "chatformatter.color.dark_red")
+        .put("5", "chatformatter.color.dark_purple")
+        .put("6", "chatformatter.color.gold")
+        .put("7", "chatformatter.color.gray")
+        .put("8", "chatformatter.color.dark_gray")
+        .put("9", "chatformatter.color.blue")
+        .put("a", "chatformatter.color.green")
+        .put("b", "chatformatter.color.aqua")
+        .put("c", "chatformatter.color.red")
+        .put("d", "chatformatter.color.light_purple")
+        .put("e", "chatformatter.color.yellow")
+        .put("f", "chatformatter.color.white")
+        .put("k", "chatformatter.decorations.obfuscated")
+        .put("l", "chatformatter.decorations.bold")
+        .put("m", "chatformatter.decorations.strikethrough")
+        .put("n", "chatformatter.decorations.underlined")
+        .put("o", "chatformatter.decorations.italic")
+        .put("r", "chatformatter.reset")
+        .build();
 
     private Legacy() {
     }
@@ -119,5 +145,46 @@ public final class Legacy {
         });
 
         return result;
+    }
+
+    public static String stripAmpersandCodes(String text) {
+        return AMPERSAND_PATTERN.matcher(text).replaceAll("");
+    }
+
+    public static String selectiveLegacyToAdventure(String input, Predicate<String> codeAllowed) {
+        String result = HEX_COLOR_PATTERN.matcher(input).replaceAll(matchResult -> {
+            String hexColor = matchResult.group().replace("&x", "").replace("&", "");
+            return "<#" + hexColor + ">";
+        });
+
+        result = HEX_PATTERN.matcher(result).replaceAll(matchResult -> {
+            String hex = matchResult.group(1);
+            return "<#" + hex + ">";
+        });
+
+        result = AMPERSAND_PATTERN.matcher(result).replaceAll(matchResult -> {
+            String color = matchResult.group(1).toLowerCase();
+            String adventure = codeTranslations.get(color);
+            if (adventure != null && codeAllowed.test(color)) {
+                return adventure;
+            }
+            return "&" + color;
+        });
+
+        return result;
+    }
+
+    public static boolean hasPermissionForLegacyCode(org.bukkit.entity.Player sender, String code) {
+        if (hasWildcardPermission(sender)) {
+            return true;
+        }
+        String perm = legacyCodeToPermission.get(code.toLowerCase());
+        return perm != null && sender.hasPermission(perm);
+    }
+
+    private static boolean hasWildcardPermission(org.bukkit.entity.Player sender) {
+        return sender.hasPermission("chatformatter.*")
+            || sender.hasPermission("chatformatter.color.*")
+            || sender.hasPermission("chatformatter.decorations.*");
     }
 }
