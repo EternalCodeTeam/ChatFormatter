@@ -1,171 +1,94 @@
 package com.eternalcode.formatter.legacy;
 
 import com.google.common.collect.ImmutableMap;
-import net.kyori.adventure.text.Component;
+import java.util.function.Predicate;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
 import java.util.Map;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.function.Predicate;
 
 public final class Legacy {
 
+    private static final Pattern COLOR_LEGACY_PATTERN = Pattern.compile("(?i)&([0-9A-FK-ORX#])");
+    private static final Pattern HEX_LEGACY_PATTERN = Pattern.compile("(?i)&#([0-9A-F]{6})");
+    private static final Pattern HEX_LEGACY_VANILLA_PATTERN = Pattern.compile("(?i)&x(&[0-9A-F]){6}");
 
-    public static final char AMPERSAND = '&';
-    public static final char SECTION = '\u00A7';
-    public static final String SHADOW = "<ampersand>";
+    private static final Map<Character, String> codeTranslations = new ImmutableMap.Builder<Character, String>()
+        .put('0', "<black>")
+        .put('1', "<dark_blue>")
+        .put('2', "<dark_green>")
+        .put('3', "<dark_aqua>")
+        .put('4', "<dark_red>")
+        .put('5', "<dark_purple>")
+        .put('6', "<gold>")
+        .put('7', "<gray>")
+        .put('8', "<dark_gray>")
+        .put('9', "<blue>")
+        .put('a', "<green>")
+        .put('b', "<aqua>")
+        .put('c', "<red>")
+        .put('d', "<light_purple>")
+        .put('e', "<yellow>")
+        .put('f', "<white>")
+        .put('k', "<obfuscated>")
+        .put('l', "<bold>")
+        .put('m', "<strikethrough>")
+        .put('n', "<underlined>")
+        .put('o', "<italic>")
+        .put('r', "<reset>")
+        .build();
 
-    public static final Pattern ALL_PATTERN = Pattern.compile(".*");
-    public static final Pattern AMPERSAND_PATTERN = Pattern.compile("(?i)" + AMPERSAND + "([0-9A-FK-ORX#])");
-    public static final Pattern SHADOW_PATTERN = Pattern.compile("(?i)" + SHADOW + "[0-9A-FK-ORX#]");
-    public static final Pattern HEX_PATTERN = Pattern.compile("(?i)" + AMPERSAND + "#([0-9A-F]{6})");
-    public static final Pattern HEX_COLOR_PATTERN = Pattern.compile("(?i)&x(&[0-9A-F]){6}");
-
-    public static final Map<String, String> codeTranslations = new ImmutableMap.Builder<String, String>()
-            .put("0", "<black>")
-            .put("1", "<dark_blue>")
-            .put("2", "<dark_green>")
-            .put("3", "<dark_aqua>")
-            .put("4", "<dark_red>")
-            .put("5", "<dark_purple>")
-            .put("6", "<gold>")
-            .put("7", "<gray>")
-            .put("8", "<dark_gray>")
-            .put("9", "<blue>")
-            .put("a", "<green>")
-            .put("b", "<aqua>")
-            .put("c", "<red>")
-            .put("d", "<light_purple>")
-            .put("e", "<yellow>")
-            .put("f", "<white>")
-            .put("k", "<obfuscated>")
-            .put("l", "<bold>")
-            .put("m", "<strikethrough>")
-            .put("n", "<underlined>")
-            .put("o", "<italic>")
-            .put("r", "<reset>")
-            .build();
-
-    public static final Map<String, String> legacyCodeToPermission = new ImmutableMap.Builder<String, String>()
-        .put("0", "chatformatter.color.black")
-        .put("1", "chatformatter.color.dark_blue")
-        .put("2", "chatformatter.color.dark_green")
-        .put("3", "chatformatter.color.dark_aqua")
-        .put("4", "chatformatter.color.dark_red")
-        .put("5", "chatformatter.color.dark_purple")
-        .put("6", "chatformatter.color.gold")
-        .put("7", "chatformatter.color.gray")
-        .put("8", "chatformatter.color.dark_gray")
-        .put("9", "chatformatter.color.blue")
-        .put("a", "chatformatter.color.green")
-        .put("b", "chatformatter.color.aqua")
-        .put("c", "chatformatter.color.red")
-        .put("d", "chatformatter.color.light_purple")
-        .put("e", "chatformatter.color.yellow")
-        .put("f", "chatformatter.color.white")
-        .put("k", "chatformatter.decorations.obfuscated")
-        .put("l", "chatformatter.decorations.bold")
-        .put("m", "chatformatter.decorations.strikethrough")
-        .put("n", "chatformatter.decorations.underlined")
-        .put("o", "chatformatter.decorations.italic")
-        .put("r", "chatformatter.reset")
+    private static final Map<Character, String> legacyCodeToPermission = new ImmutableMap.Builder<Character, String>()
+        .put('0', "chatformatter.color.black")
+        .put('1', "chatformatter.color.dark_blue")
+        .put('2', "chatformatter.color.dark_green")
+        .put('3', "chatformatter.color.dark_aqua")
+        .put('4', "chatformatter.color.dark_red")
+        .put('5', "chatformatter.color.dark_purple")
+        .put('6', "chatformatter.color.gold")
+        .put('7', "chatformatter.color.gray")
+        .put('8', "chatformatter.color.dark_gray")
+        .put('9', "chatformatter.color.blue")
+        .put('a', "chatformatter.color.green")
+        .put('b', "chatformatter.color.aqua")
+        .put('c', "chatformatter.color.red")
+        .put('d', "chatformatter.color.light_purple")
+        .put('e', "chatformatter.color.yellow")
+        .put('f', "chatformatter.color.white")
+        .put('k', "chatformatter.decorations.obfuscated")
+        .put('l', "chatformatter.decorations.bold")
+        .put('m', "chatformatter.decorations.strikethrough")
+        .put('n', "chatformatter.decorations.underlined")
+        .put('o', "chatformatter.decorations.italic")
+        .put('r', "chatformatter.reset")
         .build();
 
     private Legacy() {
     }
 
-    public static final LegacyComponentSerializer LEGACY_AMPERSAND_SERIALIZER = LegacyComponentSerializer.builder()
-        .hexColors()
-        .character('&')
-        .hexCharacter('#')
-        .useUnusualXRepeatedCharacterHexFormat()
-        .build();
-
     public static String clearSection(String text) {
-        return text.replace(SECTION, AMPERSAND);
-    }
-
-    public static String ampersandToPlaceholder(String text) {
-        StringBuilder builder = new StringBuilder(text);
-        Matcher colorMatcher = AMPERSAND_PATTERN.matcher(builder.toString());
-
-        int matched = 0;
-        while (colorMatcher.find()) {
-            String color = colorMatcher.group(0);
-
-            builder.replace(colorMatcher.start() + matched, colorMatcher.end() + matched, SHADOW + color.charAt(1));
-            matched += SHADOW.length() - 1;
-        }
-
-        return builder.toString();
-    }
-
-    static Component placeholderToAmpersand(Component component) {
-        return component.replaceText(shadowBuilder -> shadowBuilder
-            .match(ALL_PATTERN)
-            .replacement((matchResult, builder) -> Component.text(Legacy.placeholderToAmpersand(matchResult.group()))));
-    }
-
-    static String placeholderToAmpersand(String text) {
-        Matcher matcher = SHADOW_PATTERN.matcher(text);
-        StringBuilder builder = new StringBuilder(text);
-
-        int matched = 0;
-        while (matcher.find()) {
-            int length = (matcher.end() - matcher.start()) - 1;
-            builder.replace(matcher.start() + matched, matcher.end() + matched - 1, String.valueOf(AMPERSAND));
-            matched -= length;
-            matched += 1;
-        }
-
-        return builder.toString();
+        return text.replace('§', '&');
     }
 
     public static String legacyToAdventure(String input) {
-        String result = HEX_COLOR_PATTERN.matcher(input).replaceAll(matchResult -> {
+        return legacyToAdventure(input, permission -> true);
+    }
+
+    public static String legacyToAdventure(String input, Predicate<String> hasPermission) {
+        String result = HEX_LEGACY_VANILLA_PATTERN.matcher(input).replaceAll(matchResult -> {
             String hexColor = matchResult.group().replace("&x", "").replace("&", "");
             return "<#" + hexColor + ">";
         });
 
-        result = HEX_PATTERN.matcher(result).replaceAll(matchResult -> {
+        result = HEX_LEGACY_PATTERN.matcher(result).replaceAll(matchResult -> {
             String hex = matchResult.group(1);
             return "<#" + hex + ">";
         });
 
-        result = AMPERSAND_PATTERN.matcher(result).replaceAll(matchResult -> {
-            String color = matchResult.group(1);
-            String adventure = codeTranslations.get(color.toLowerCase());
-
-            if (adventure == null) {
-                return matchResult.group();
-            }
-
-            return adventure;
-        });
-
-        return result;
-    }
-
-    public static String stripAmpersandCodes(String text) {
-        return AMPERSAND_PATTERN.matcher(text).replaceAll("");
-    }
-
-    public static String selectiveLegacyToAdventure(String input, Predicate<String> codeAllowed) {
-        String result = HEX_COLOR_PATTERN.matcher(input).replaceAll(matchResult -> {
-            String hexColor = matchResult.group().replace("&x", "").replace("&", "");
-            return "<#" + hexColor + ">";
-        });
-
-        result = HEX_PATTERN.matcher(result).replaceAll(matchResult -> {
-            String hex = matchResult.group(1);
-            return "<#" + hex + ">";
-        });
-
-        result = AMPERSAND_PATTERN.matcher(result).replaceAll(matchResult -> {
-            String color = matchResult.group(1).toLowerCase();
+        result = COLOR_LEGACY_PATTERN.matcher(result).replaceAll(matchResult -> {
+            char color = matchResult.group(1).toLowerCase().charAt(0);
             String adventure = codeTranslations.get(color);
-            if (adventure != null && codeAllowed.test(color)) {
+            if (adventure != null && hasPermissionForLegacyCode(hasPermission, color)) {
                 return adventure;
             }
             return "&" + color;
@@ -174,17 +97,17 @@ public final class Legacy {
         return result;
     }
 
-    public static boolean hasPermissionForLegacyCode(org.bukkit.entity.Player sender, String code) {
-        if (hasWildcardPermission(sender)) {
+    private static boolean hasPermissionForLegacyCode(Predicate<String> hasPermission, char code) {
+        if (hasWildcardPermission(hasPermission)) {
             return true;
         }
-        String perm = legacyCodeToPermission.get(code.toLowerCase());
-        return perm != null && sender.hasPermission(perm);
+        String permission = legacyCodeToPermission.get(code);
+        return permission != null && hasPermission.test(permission);
     }
 
-    private static boolean hasWildcardPermission(org.bukkit.entity.Player sender) {
-        return sender.hasPermission("chatformatter.*")
-            || sender.hasPermission("chatformatter.color.*")
-            || sender.hasPermission("chatformatter.decorations.*");
+    private static boolean hasWildcardPermission(Predicate<String> hasPermission) {
+        return hasPermission.test("chatformatter.*")
+            || hasPermission.test("chatformatter.color.*")
+            || hasPermission.test("chatformatter.decorations.*");
     }
 }

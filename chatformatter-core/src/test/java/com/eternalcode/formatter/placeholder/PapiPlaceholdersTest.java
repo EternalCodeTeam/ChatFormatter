@@ -1,6 +1,7 @@
 package com.eternalcode.formatter.placeholder;
 
 import com.eternalcode.formatter.config.PluginConfig;
+import com.eternalcode.formatter.placeholderapi.PlaceholderAPIInitializer;
 import com.eternalcode.formatter.template.TemplateService;
 import me.clip.placeholderapi.PlaceholderAPI;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -30,12 +31,13 @@ class PapiPlaceholdersTest {
         registry = new PlaceholderRegistry();
         templateService = new TemplateService(pluginConfig);
 
-        registry.playerStack(new ConfiguredPlaceholderAPIStack(pluginConfig));
-        registry.playerStack(new PlaceholderAPIStack());
+        registry.addReplacer(new ConfiguredReplacer(pluginConfig));
+        PlaceholderAPIInitializer.initialize(null, registry);
     }
 
     @BeforeEach
-    void setUp() {        // mock the PlaceholderAPI plugin (staic methods)
+    void setUp() {
+        // mock the PlaceholderAPI plugin (staic methods)
         mockStatic = mockStatic(PlaceholderAPI.class);
         mockStatic.when(() -> PlaceholderAPI.setPlaceholders(isNull(Player.class), anyString())).thenAnswer(invocation -> invocation.<String>getArgument(1)
             .replace("%vault_group%", "--VIP--")

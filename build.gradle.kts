@@ -88,4 +88,8 @@ tasks.runServer {
     minecraftVersion("1.21.4")
     dependsOn("shadowAll")
     pluginJars = files("/build/libs/ChatFormatter v${project.version}.jar")
+    // We need to start the server with Java 21, but jar is built with Java 17
+    javaLauncher.set(javaToolchains.launcherFor {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    })
 }

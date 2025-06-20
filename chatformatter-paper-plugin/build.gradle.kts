@@ -12,7 +12,7 @@ bukkit {
     prefix = "ChatFormatter"
     author = "EternalCodeTeam"
     name = "ChatFormatter"
-    depend = listOf("PlaceholderAPI", "Vault")
+    softDepend = listOf("PlaceholderAPI", "Vault")
     version = "${project.version}"
 
     commands {
