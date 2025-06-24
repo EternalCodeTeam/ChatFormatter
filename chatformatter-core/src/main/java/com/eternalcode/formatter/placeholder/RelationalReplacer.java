@@ -2,7 +2,7 @@ package com.eternalcode.formatter.placeholder;
 
 import org.bukkit.entity.Player;
 
-public interface PlayerRelationalPlaceholderStack {
+public interface RelationalReplacer {
 
     String apply(String text, Player target, Player viewer);
 }

@@ -11,14 +11,15 @@ dependencies {
 
     // Kyori Adventure & MiniMessage
     val adventureVersion = "4.4.0"
-    val miniMessageVersion = "4.21.0"
-    implementation("net.kyori:adventure-platform-bukkit:$adventureVersion")
+    val miniMessageVersion = "4.23.0"
+    implementation("net.kyori:adventure-api:$miniMessageVersion")
     implementation("net.kyori:adventure-text-minimessage:$miniMessageVersion")
+    implementation("net.kyori:adventure-platform-bukkit:$adventureVersion")
     testImplementation("net.kyori:adventure-platform-bukkit:$adventureVersion")
     testImplementation("net.kyori:adventure-text-minimessage:$miniMessageVersion")
 
     // CDN Configs
-    val cdnVersion = "1.14.8"
+    val cdnVersion = "1.14.9"
     implementation("net.dzikoysk:cdn:$cdnVersion")
     testImplementation("net.dzikoysk:cdn:$cdnVersion")
 
@@ -33,9 +34,12 @@ dependencies {
     implementation("com.eternalcode:gitcheck:1.0.0")
 
     // JUnit 5
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.13.1")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:5.13.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.13.1")
+    testImplementation(platform("org.junit:junit-bom:5.13.1"))
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testImplementation("org.junit.jupiter:junit-jupiter-params")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+
     testImplementation("org.mockito:mockito-core:5.18.0")
     testImplementation("org.mockito:mockito-junit-jupiter:5.18.0")
     testImplementation("me.clip:placeholderapi:2.11.6")
