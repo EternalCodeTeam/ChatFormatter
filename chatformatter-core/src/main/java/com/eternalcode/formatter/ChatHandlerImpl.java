@@ -1,8 +1,8 @@
 package com.eternalcode.formatter;
 
+import com.eternalcode.formatter.adventure.AdventureUrlPostProcessor;
 import java.util.Optional;
 import net.kyori.adventure.text.serializer.json.JSONOptions;
-import static net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.builder;
 import static net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacySection;
 
 import com.eternalcode.formatter.adventure.TextColorTagResolver;
@@ -75,6 +75,7 @@ class ChatHandlerImpl implements ChatHandler {
         .build();
 
     private static final MiniMessage EMPTY_MESSAGE_DESERIALIZER = MiniMessage.builder()
+         .postProcessor(new AdventureUrlPostProcessor())
         .tags(TagResolver.empty())
         .build();
 

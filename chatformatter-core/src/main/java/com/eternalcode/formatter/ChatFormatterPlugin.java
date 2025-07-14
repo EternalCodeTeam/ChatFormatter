@@ -16,11 +16,9 @@ import com.google.common.base.Stopwatch;
 import net.kyori.adventure.platform.AudienceProvider;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.concurrent.TimeUnit;
 
