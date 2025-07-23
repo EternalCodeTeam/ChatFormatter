@@ -10,7 +10,7 @@ dependencies {
     testImplementation("org.spigotmc:spigot-api:$spigotApiVersion")
 
     // Kyori Adventure & MiniMessage
-    val adventureVersion = "4.4.0"
+    val adventureVersion = "4.4.1-SNAPSHOT"
     val miniMessageVersion = "4.23.0"
     implementation("net.kyori:adventure-api:$miniMessageVersion")
     implementation("net.kyori:adventure-text-minimessage:$miniMessageVersion")
