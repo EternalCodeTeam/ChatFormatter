@@ -7,7 +7,7 @@ dependencies {
     // Spigot API
     val spigotApiVersion = "1.19.3-R0.1-SNAPSHOT"
     compileOnly("org.spigotmc:spigot-api:$spigotApiVersion")
-    testImplementation("org.spigotmc:spigot-api:$spigotApiVersion")
+    testCompileOnly("org.spigotmc:spigot-api:$spigotApiVersion")
 
     // Kyori Adventure & MiniMessage
     val adventureVersion = "4.4.1-SNAPSHOT"
@@ -39,6 +39,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-params")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine")
 
     testImplementation("org.mockito:mockito-core:5.18.0")
     testImplementation("org.mockito:mockito-junit-jupiter:5.18.0")
