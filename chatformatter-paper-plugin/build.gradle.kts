@@ -12,7 +12,7 @@ bukkit {
     prefix = "ChatFormatter"
     author = "EternalCodeTeam"
     name = "ChatFormatter"
-    depend = listOf("PlaceholderAPI", "Vault")
+    softDepend = listOf("PlaceholderAPI", "Vault")
     version = "${project.version}"
 
     commands {
@@ -72,7 +72,6 @@ bukkit {
 
         register("chatformatter.color.*") {
             children = listOf(
-                "chatformatter.legacycolor",
                 "chatformatter.color.black",
                 "chatformatter.color.dark_blue",
                 "chatformatter.color.dark_green",

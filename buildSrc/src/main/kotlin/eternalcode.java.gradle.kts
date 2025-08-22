@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "com.eternalcode"
-version = "1.2.1"
+version = "1.3.2"
 
 repositories {
     mavenCentral()
@@ -13,6 +13,7 @@ repositories {
     maven { url = uri("https://repo.extendedclip.com/content/repositories/placeholderapi/") }
     maven { url = uri("https://jitpack.io") }
     maven { url = uri("https://repo.eternalcode.pl/releases") }
+    maven(url = "https://s01.oss.sonatype.org/content/repositories/snapshots/")
 }
 
 java {
