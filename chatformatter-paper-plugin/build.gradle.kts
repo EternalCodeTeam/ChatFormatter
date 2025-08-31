@@ -2,8 +2,8 @@ import net.minecrell.pluginyml.bukkit.BukkitPluginDescription.Permission.Default
 
 plugins {
     id("eternalcode.java")
-    id("net.minecrell.plugin-yml.bukkit")
-    id("com.github.johnrengelman.shadow")
+    id("de.eldoria.plugin-yml.bukkit")
+    id("com.gradleup.shadow")
 }
 
 bukkit {

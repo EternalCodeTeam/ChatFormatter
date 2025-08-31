@@ -4,13 +4,13 @@ import java.util.jar.JarEntry
 import java.util.jar.JarFile
 import java.util.jar.JarOutputStream
 
-plugins{
+plugins {
     id("eternalcode.java")
-    id("com.github.johnrengelman.shadow")
-    id("xyz.jpenilla.run-paper") version "2.3.1"
+    id("com.gradleup.shadow")
+    id("xyz.jpenilla.run-paper") version "3.0.0-beta.1"
 }
 
-tasks.create("shadowAll") {
+tasks.register("shadowAll") {
     group = "shadow"
 
     val projects = listOf(
@@ -64,8 +64,7 @@ fun merge(archiveFileName: String, projects: List<Project>) {
                             outputJar.putNextEntry(newEntry)
                             outputJar.write(bytes)
                             outputJar.closeEntry()
-                        }
-                        catch (exception: IOException) {
+                        } catch (exception: IOException) {
                             if (exception.message?.contains("duplicate entry: ") == true) {
                                 continue
                             }
