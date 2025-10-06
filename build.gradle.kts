@@ -6,7 +6,7 @@ import java.util.jar.JarOutputStream
 
 plugins{
     id("eternalcode.java")
-    id("com.github.johnrengelman.shadow")
+    id("com.gradleup.shadow")
     id("xyz.jpenilla.run-paper") version "3.0.1"
 }
 
@@ -85,7 +85,7 @@ runPaper {
 }
 
 tasks.runServer {
-    minecraftVersion("1.21.4")
+    minecraftVersion("1.21.9")
     dependsOn("shadowAll")
     pluginJars = files("/build/libs/ChatFormatter v${project.version}.jar")
     // We need to start the server with Java 21, but jar is built with Java 17
