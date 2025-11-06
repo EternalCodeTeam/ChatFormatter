@@ -37,18 +37,18 @@ fun ShadowJar.mergeJars(archiveFileName: String, projects: List<Project>) {
         "libs/$archiveFileName"
     )
     val outputDir = outputFile.parentFile
-        ?: throw IllegalStateException("Kurwa, nie mogę znaleźć katalogu wyjściowego")
+        ?: throw IllegalStateException("Cannot find output directory")
 
     if (!outputDir.exists() && !outputDir.mkdirs()) {
-        throw IllegalStateException("Nie udało się stworzyć katalogu: ${outputDir.absolutePath}")
+        throw IllegalStateException("Failed to create directory: ${outputDir.absolutePath}")
     }
 
     if (outputFile.exists() && !outputFile.delete()) {
-        throw IllegalStateException("Nie można usunąć istniejącego pliku: ${outputFile.absolutePath}")
+        throw IllegalStateException("Cannot delete existing file: ${outputFile.absolutePath}")
     }
 
     if (!outputFile.createNewFile()) {
-        throw IllegalStateException("Nie można utworzyć pliku wyjściowego: ${outputFile.absolutePath}")
+        throw IllegalStateException("Cannot create output file: ${outputFile.absolutePath}")
     }
 
     mergeShadowJarsIntoOutput(outputFile, projects)
