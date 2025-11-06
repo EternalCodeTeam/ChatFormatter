@@ -7,7 +7,7 @@ import java.util.jar.JarOutputStream
 plugins{
     id("eternalcode.java")
     id("com.gradleup.shadow")
-    id("xyz.jpenilla.run-paper") version "3.0.1"
+    id("xyz.jpenilla.run-paper") version "3.0.2"
 }
 
 tasks.create("shadowAll") {
