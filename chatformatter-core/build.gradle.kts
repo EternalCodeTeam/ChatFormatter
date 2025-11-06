@@ -27,7 +27,7 @@ dependencies {
     implementation("org.bstats:bstats-bukkit:3.1.0")
 
     // PlaceholderAPI & Vault
-    compileOnly("me.clip:placeholderapi:2.11.6")
+    compileOnly("me.clip:placeholderapi:2.11.7")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
 
     // GitCheck
@@ -42,7 +42,7 @@ dependencies {
 
     testImplementation("org.mockito:mockito-core:5.20.0")
     testImplementation("org.mockito:mockito-junit-jupiter:5.20.0")
-    testImplementation("me.clip:placeholderapi:2.11.6")
+    testImplementation("me.clip:placeholderapi:2.11.7")
     testImplementation("org.assertj:assertj-core:3.27.6")
 }
 
