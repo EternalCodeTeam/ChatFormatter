@@ -106,7 +106,6 @@ class ChatHandlerImpl implements ChatHandler {
             ? this.placeholderRegistry.format(format, sender)
             : this.placeholderRegistry.format(format, sender, viewer.get());
 
-        format = Legacy.clearSection(format);
         format = Legacy.legacyToAdventure(format);
 
         Component renderedMessage = this.miniMessage.deserialize(format, this.createTags(chatMessage));
@@ -128,16 +127,15 @@ class ChatHandlerImpl implements ChatHandler {
     }
 
     private TagResolver.Single displayNamePlaceholder(Player sender) {
-        return Placeholder.parsed("displayname", Legacy.clearSection(sender.getDisplayName()));
+        return Placeholder.parsed("displayname", Legacy.legacyToAdventure(sender.getDisplayName()));
     }
 
     private TagResolver.Single namePlaceholder(Player sender) {
-        return Placeholder.parsed("name", Legacy.clearSection(sender.getName()));
+        return Placeholder.parsed("name", sender.getName());
     }
 
     private TagResolver.Single messagePlaceholder(Player sender, String rawMessage) {
         TagResolver permittedTags = this.providePermittedTags(sender);
-        rawMessage = Legacy.clearSection(rawMessage);
         rawMessage = Legacy.legacyToAdventure(rawMessage, permission -> sender.hasPermission(permission));
         Component componentMessage = EMPTY_MESSAGE_DESERIALIZER.deserialize(rawMessage, permittedTags);
         return Placeholder.component("message", componentMessage);

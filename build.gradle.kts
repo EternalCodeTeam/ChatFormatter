@@ -92,4 +92,6 @@ tasks.runServer {
     javaLauncher.set(javaToolchains.launcherFor {
         languageVersion.set(JavaLanguageVersion.of(21))
     })
+    downloadPlugins.modrinth("luckperms", "v5.5.0-bukkit")
+    downloadPlugins.modrinth("VaultUnlocked", "2.16.0")
 }
