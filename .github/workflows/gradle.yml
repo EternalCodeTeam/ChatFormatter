@@ -34,7 +34,7 @@ jobs:
       - name: Build with Gradle
         uses: gradle/gradle-build-action@093dfe9d598ec5a42246855d09b49dc76803c005
         with:
-          arguments: shadowAll
+          arguments: shadowChatFormatter
       - name: Upload a ChatFormatter Artifact
         uses: actions/upload-artifact@v5.0.0
         with:
