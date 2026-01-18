@@ -36,7 +36,7 @@ jobs:
         with:
           arguments: shadowChatFormatter
       - name: Upload a ChatFormatter Artifact
-        uses: actions/upload-artifact@v5.0.0
+        uses: actions/upload-artifact@v6.0.0
         with:
           name: 'Successfully build ChatFormatter'
           path: build/libs/ChatFormatter v*.jar
