@@ -14,7 +14,7 @@ class PlaceholderAPIReplacer implements Replacer, RelationalReplacer {
 
     @Override
     public String apply(String text, Player target, Player viewer) {
-        return PlaceholderAPI.setRelationalPlaceholders(target, viewer, text);
+        return PlaceholderAPI.setRelationalPlaceholders(viewer, target, text);
     }
 
 }
