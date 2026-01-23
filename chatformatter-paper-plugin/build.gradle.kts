@@ -40,7 +40,8 @@ bukkit {
                 "chatformatter.selector",
                 "chatformatter.keybind",
                 "chatformatter.newline",
-                "chatformatter.rainbow"
+                "chatformatter.rainbow",
+                "chatformatter.unsafe"
             )
             default = Default.OP
         }
@@ -69,6 +70,10 @@ bukkit {
         register("chatformatter.keybind") { default = Default.OP }
         register("chatformatter.newline") { default = Default.OP }
         register("chatformatter.rainbow") { default = Default.OP }
+        register("chatformatter.unsafe") { 
+            description = "Allows using unsafe MiniMessage tags like <click> and <hover>"
+            default = Default.OP 
+        }
 
         register("chatformatter.color.*") {
             children = listOf(
