@@ -11,18 +11,18 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.jspecify.annotations.NonNull;
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 class ChatFormatterCommand implements CommandExecutor, TabCompleter {
 
-    public static final String RELOAD_PERMISSION = "chatformatter.reload";
     private static final String RELOAD_MESSAGE = "<b><gradient:#29fbff:#38b3ff>ChatFormatter:</gradient></b> <green>Successfully reloaded configs in %sms!";
+    public static final String RELOAD_PERMISSION = "chatformatter.reload";
+
     private final ConfigManager configManager;
     private final AudienceProvider provider;
     private final MiniMessage miniMessage;
@@ -34,57 +34,39 @@ class ChatFormatterCommand implements CommandExecutor, TabCompleter {
     }
 
     @Override
-    public boolean onCommand(@NonNull CommandSender sender, @NonNull Command command, @NonNull String label, String[] args) {
-        if (args.length == 0) {
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (args.length == 0 || !args[0].equalsIgnoreCase("reload")) {
             sender.sendMessage(command.getUsage());
             return true;
         }
 
-        String subCommand = args[0].toLowerCase();
+        if (sender.hasPermission(RELOAD_PERMISSION)) {
+            Stopwatch stopwatch = Stopwatch.createStarted();
 
-        return switch (subCommand) {
-            case "reload" -> this.handleReload(sender);
-            default -> {
-                sender.sendMessage(command.getUsage());
-                yield true;
-            }
-        };
-    }
+            this.configManager.loadAndRenderConfigs();
+            long millis = stopwatch.elapsed(TimeUnit.MILLISECONDS);
 
-    private boolean handleReload(CommandSender sender) {
-        if (!sender.hasPermission(RELOAD_PERMISSION)) {
-            return false;
-        }
-
-        Stopwatch stopwatch = Stopwatch.createStarted();
-
-        this.configManager.loadAndRenderConfigs();
-        long millis = stopwatch.elapsed(TimeUnit.MILLISECONDS);
-
-        Component deserialized = this.miniMessage.deserialize(String.format(RELOAD_MESSAGE, millis));
-        Audience audience = sender instanceof Player player
+            Component deserialized = this.miniMessage.deserialize(String.format(RELOAD_MESSAGE, millis));
+            Audience audience = sender instanceof Player player
                 ? this.provider.player(player.getUniqueId())
                 : this.provider.console();
 
-        audience.sendMessage(deserialized);
+            audience.sendMessage(deserialized);
 
-        return true;
+            return true;
+        }
+
+        return false;
     }
+
 
     @Nullable
     @Override
-    public List<String> onTabComplete(@NonNull CommandSender sender, @NonNull Command command, @NonNull String label, @NonNull String[] args) {
-        if (args.length == 1) {
-            List<String> completions = new ArrayList<>();
-
-            if (sender.hasPermission(RELOAD_PERMISSION) && "reload".startsWith(args[0].toLowerCase())) {
-                completions.add("reload");
-            }
-
-            return completions;
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        if (args.length == 1 && sender.hasPermission(RELOAD_PERMISSION)) {
+            return List.of("reload");
         }
 
         return Collections.emptyList();
     }
 }
-
