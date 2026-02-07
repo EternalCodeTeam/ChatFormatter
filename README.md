@@ -26,6 +26,7 @@
 - Template System
 - Custom Placeholders System
 - Per-permission miniMessages Tags (see permissions below)
+- Mentions System - mention players with @playername and they will hear a sound
 
 ## 🔗 Useful links:
 
@@ -78,6 +79,7 @@
 | `chatformatter.keybind`                   | `<key>`                                                                                               |
 | `chatformatter.nbt`                       | `<nbt>`                                                                                               |
 | `chatformatter.reload`                    | `/chatformatter reload`                                                                               |
+| `chatformatter.mentiontoggle`             | `/chatformatter mentiontoggle` - toggle mention sounds on/off                                         |
 | `chatformatter.receiveupdates`            | receive update announcements for this plugin                                                          |
 
 ### config.yml
@@ -151,6 +153,20 @@ placeholders:
 # It is used to shorten the text even more and keep the clean file!
 templates:
   - "$hoverName($name) -> '<hover:show_text:'<dark_gray>Name: <white>$name<br><br>{rankDescription}<br>{joinDate}<br>{health}<br>{lvl}<br><br>{privateMessage}'><click:suggest_command:'/msg {displayname} '>{displayname}</click></hover>'"
+
+# Mention system settings
+mentions:
+  # When a player mentions another player with @playername, the mentioned player will hear a sound
+  enabled: true
+  # The sound to play when a player is mentioned
+  # Available sounds: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html
+  sound: "BLOCK_NOTE_BLOCK_PLING"
+  # The volume of the mention sound (0.0 to 1.0)
+  volume: 1.0
+  # The pitch of the mention sound (0.5 to 2.0)
+  pitch: 1.0
+  # Whether mention sounds are enabled by default for new players
+  enabledByDefault: true
 ```
 
 
