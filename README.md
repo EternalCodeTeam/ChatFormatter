@@ -35,9 +35,7 @@
 
 ## 🔑 Permissions:
 
-> **Note:** Each color and decoration permission (e.g., `chatformatter.color.white`, `chatformatter.reset`,
-`chatformatter.decorations.bold`) grants access to both the legacy code (e.g., `&f`, `&r`, `&l`) and the MiniMessage
-> tag (e.g., `<white>`, `<reset>`, `<bold>`).
+> **Note:** Each color and decoration permission (e.g., `chatformatter.color.white`, `chatformatter.reset`, `chatformatter.decorations.bold`) grants access to both the legacy code (e.g., `&f`, `&r`, `&l`) and the MiniMessage tag (e.g., `<white>`, `<reset>`, `<bold>`).
 
 | **Permission**                            | **Access**                                                                                            |
 |:------------------------------------------|:------------------------------------------------------------------------------------------------------|
@@ -149,7 +147,6 @@ placeholders:
   {health}: "<dark_gray>Health: <red>%player_health%"
   {lvl}: "<dark_gray>LVL: <gold>%player_level%"
   {privateMessage}: "<gradient:#36ff39:#75ff75><i>Click to send private message</i></gradient>"
-
 
 # This section is made for experienced users
 # It is used to shorten the text even more and keep the clean file!

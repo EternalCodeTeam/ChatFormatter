@@ -103,7 +103,4 @@ public class PluginConfig implements ChatSettings, TemplateRepository {
         return this.templates;
     }
 
-    public MentionConfig getMentionConfig() {
-        return this.mentions;
-    }
 }

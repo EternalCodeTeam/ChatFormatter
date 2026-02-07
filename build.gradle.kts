@@ -12,35 +12,65 @@ plugins {
     id("xyz.jpenilla.run-paper") version "3.0.2"
 }
 
+tasks.register<ShadowJar>("shadowChatFormatter") {
+    this.group = "build"
+
+    val targetProjects = listOf(
+        project(":chatformatter-core"),
+        project(":chatformatter-paper-plugin")
+    )
+
+    for (targetProject in targetProjects) {
+        this.dependsOn("${targetProject.name}:shadowJar")
+    }
+
+    val projectVersion = project.version.toString()
+    val outputFile = project.layout.buildDirectory.file("libs/ChatFormatter v${projectVersion}.jar")
+        .map { it.asFile }
+
+    val shadowJarFiles = targetProjects
+        .map { targetProject -> targetProject.tasks.named("shadowJar", ShadowJar::class.java).get().archiveFile.get().asFile }
+
+    val merger = JarMerger(outputFile.get(), shadowJarFiles)
+
+    inputs.files(shadowJarFiles)
+    outputs.files(outputFile)
+
+    doLast {
+        merger.mergeJars()
+    }
+}
+
 class JarMerger(
     private val outputFile: File,
     private val inputFiles: List<File>
 ) : Serializable {
 
-    fun merge() {
-        val outputDir = this.outputFile.parentFile
+    fun mergeJars() {
+        val outputDir = outputFile.parentFile
             ?: throw IllegalStateException("Cannot find output directory")
 
         if (!outputDir.exists() && !outputDir.mkdirs()) {
             throw IllegalStateException("Failed to create directory: ${outputDir.absolutePath}")
         }
 
-        if (this.outputFile.exists() && !this.outputFile.delete()) {
-            throw IllegalStateException("Cannot delete existing file: ${this.outputFile.absolutePath}")
+        if (outputFile.exists() && !outputFile.delete()) {
+            throw IllegalStateException("Cannot delete existing file: ${outputFile.absolutePath}")
         }
 
-        if (!this.outputFile.createNewFile()) {
-            throw IllegalStateException("Cannot create output file: ${this.outputFile.absolutePath}")
+        if (!outputFile.createNewFile()) {
+            throw IllegalStateException("Cannot create output file: ${outputFile.absolutePath}")
         }
 
-        JarOutputStream(FileOutputStream(this.outputFile)).use { outputJar ->
+        JarOutputStream(FileOutputStream(outputFile)).use { outputJar ->
             val processedEntries = mutableSetOf<String>()
 
-            for (jarFile in this.inputFiles) {
-                this.processJarFile(jarFile, outputJar, processedEntries)
+            for (jarFile in inputFiles) {
+                processJarFile(jarFile, outputJar, processedEntries)
             }
         }
     }
+
 
     private fun processJarFile(
         jarFile: File,
@@ -54,7 +84,7 @@ class JarMerger(
                 }
 
                 try {
-                    this.copyJarEntry(sourceJar, entry, outputJar)
+                    copyJarEntry(sourceJar, entry, outputJar)
                     processedEntries.add(entry.name)
                 } catch (exception: IOException) {
                     if (exception.message?.contains("duplicate entry:") != true) {
@@ -80,35 +110,7 @@ class JarMerger(
         outputJar.write(entryBytes)
         outputJar.closeEntry()
     }
-}
 
-tasks.register<ShadowJar>("shadowChatFormatter") {
-    this.group = "build"
-
-    val targetProjects = listOf(
-        project(":chatformatter-core"),
-        project(":chatformatter-paper-plugin")
-    )
-
-    for (targetProject in targetProjects) {
-        this.dependsOn("${targetProject.name}:shadowJar")
-    }
-
-    val projectVersion = project.version.toString()
-    val outputFile = project.layout.buildDirectory.file("libs/ChatFormatter v${projectVersion}.jar").get().asFile
-    val shadowJarFiles = targetProjects.flatMap { targetProject ->
-        targetProject.tasks.named("shadowJar", ShadowJar::class.java)
-            .get()
-            .outputs
-            .files
-            .files
-    }
-
-    val merger = JarMerger(outputFile, shadowJarFiles)
-
-    this.doLast {
-        merger.merge()
-    }
 }
 
 runPaper {

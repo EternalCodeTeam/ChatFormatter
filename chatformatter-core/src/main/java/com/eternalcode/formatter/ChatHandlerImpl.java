@@ -3,7 +3,6 @@ package com.eternalcode.formatter;
 import com.eternalcode.formatter.adventure.AdventureUrlPostProcessor;
 import com.eternalcode.formatter.adventure.TextColorTagResolver;
 import com.eternalcode.formatter.legacy.Legacy;
-import com.eternalcode.formatter.mention.MentionService;
 import com.eternalcode.formatter.placeholder.PlaceholderRegistry;
 import com.eternalcode.formatter.rank.ChatRankProvider;
 import com.eternalcode.formatter.template.TemplateService;
@@ -86,15 +85,13 @@ class ChatHandlerImpl implements ChatHandler {
     private final ChatRankProvider rankProvider;
     private final PlaceholderRegistry placeholderRegistry;
     private final TemplateService templateService;
-    private final MentionService mentionService;
 
-    ChatHandlerImpl(MiniMessage miniMessage, ChatSettings settings, ChatRankProvider rankProvider, PlaceholderRegistry placeholderRegistry, TemplateService templateService, MentionService mentionService) {
+    ChatHandlerImpl(MiniMessage miniMessage, ChatSettings settings, ChatRankProvider rankProvider, PlaceholderRegistry placeholderRegistry, TemplateService templateService) {
         this.miniMessage = miniMessage;
         this.settings = settings;
         this.rankProvider = rankProvider;
         this.placeholderRegistry = placeholderRegistry;
         this.templateService = templateService;
-        this.mentionService = mentionService;
     }
 
     @Override
@@ -113,11 +110,7 @@ class ChatHandlerImpl implements ChatHandler {
 
         Component renderedMessage = this.miniMessage.deserialize(format, this.createTags(chatMessage));
 
-        // Detect mentions in the original message
-        String rawMessage = legacySection().serialize(GSON.deserialize(chatMessage.jsonMessage()));
-        List<Player> mentionedPlayers = this.mentionService.detectMentions(rawMessage);
-
-        return new ChatRenderedMessage(sender, GSON.serialize(renderedMessage), mentionedPlayers);
+        return new ChatRenderedMessage(sender, GSON.serialize(renderedMessage));
     }
 
     private TagResolver createTags(ChatMessage chatMessage) {
