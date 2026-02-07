@@ -62,7 +62,13 @@ public class MentionSettings {
     private void save() {
         try {
             if (!this.dataFile.exists()) {
-                this.dataFile.getParentFile().mkdirs();
+                File parentDir = this.dataFile.getParentFile();
+                if (parentDir != null && !parentDir.exists()) {
+                    if (!parentDir.mkdirs()) {
+                        this.logger.warning("Failed to create directories for mention settings");
+                        return;
+                    }
+                }
                 this.dataFile.createNewFile();
             }
 

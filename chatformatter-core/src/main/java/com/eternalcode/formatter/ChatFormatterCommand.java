@@ -51,18 +51,14 @@ class ChatFormatterCommand implements CommandExecutor, TabCompleter {
 
         String subCommand = args[0].toLowerCase();
 
-        switch (subCommand) {
-            case "reload" -> {
-                return this.handleReload(sender);
-            }
-            case "mentiontoggle" -> {
-                return this.handleMentionToggle(sender);
-            }
+        return switch (subCommand) {
+            case "reload" -> this.handleReload(sender);
+            case "mentiontoggle" -> this.handleMentionToggle(sender);
             default -> {
                 sender.sendMessage(command.getUsage());
-                return true;
+                yield true;
             }
-        }
+        };
     }
 
     private boolean handleReload(CommandSender sender) {
