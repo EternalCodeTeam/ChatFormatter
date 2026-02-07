@@ -1,5 +1,6 @@
 package com.eternalcode.formatter;
 
+import com.eternalcode.formatter.mention.MentionService;
 import com.eternalcode.formatter.rank.ChatRankProvider;
 import com.eternalcode.formatter.template.TemplateService;
 import com.eternalcode.formatter.placeholder.PlaceholderRegistry;
@@ -13,5 +14,7 @@ public interface ChatFormatterApi {
     ChatRankProvider getRankProvider();
 
     ChatHandler getChatHandler();
+
+    MentionService getMentionService();
 
 }
