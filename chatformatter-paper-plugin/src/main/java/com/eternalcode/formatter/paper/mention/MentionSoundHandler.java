@@ -34,9 +34,7 @@ public class MentionSoundHandler {
         }
 
         for (Player player : mentionedPlayers) {
-            if (this.mentionService.shouldPlaySound(player)) {
-                player.playSound(player.getLocation(), sound, config.volume, config.pitch);
-            }
+            player.playSound(player.getLocation(), sound, config.volume, config.pitch);
         }
     }
 }

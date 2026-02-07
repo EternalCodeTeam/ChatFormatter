@@ -2,11 +2,11 @@ package com.eternalcode.formatter;
 
 import com.eternalcode.formatter.config.ConfigManager;
 import com.eternalcode.formatter.config.PluginConfig;
+import com.eternalcode.formatter.mention.MentionConfig;
 import com.eternalcode.formatter.mention.MentionService;
-import com.eternalcode.formatter.mention.MentionSettings;
 import com.eternalcode.formatter.placeholder.ConfiguredReplacer;
-import com.eternalcode.formatter.placeholderapi.PlaceholderAPIInitializer;
 import com.eternalcode.formatter.placeholder.PlaceholderRegistry;
+import com.eternalcode.formatter.placeholderapi.PlaceholderAPIInitializer;
 import com.eternalcode.formatter.rank.ChatRankProvider;
 import com.eternalcode.formatter.rank.VaultInitializer;
 import com.eternalcode.formatter.template.TemplateService;
@@ -49,8 +49,7 @@ public class ChatFormatterPlugin implements ChatFormatterApi {
 
         // Initialize mention service
         MentionConfig mentionConfig = pluginConfig.getMentionConfig();
-        MentionSettings mentionSettings = new MentionSettings(plugin.getDataFolder(), plugin.getLogger(), mentionConfig);
-        this.mentionService = new MentionService(server, mentionConfig, mentionSettings);
+        this.mentionService = new MentionService(server, mentionConfig);
 
         AudienceProvider audienceProvider = BukkitAudiences.create(plugin);
         MiniMessage miniMessage = MiniMessage.miniMessage();
@@ -59,7 +58,7 @@ public class ChatFormatterPlugin implements ChatFormatterApi {
 
         this.chatHandler = new ChatHandlerImpl(miniMessage, pluginConfig, this.rankProvider, this.placeholderRegistry, this.templateService, this.mentionService);
 
-        server.getPluginCommand("chatformatter").setExecutor(new ChatFormatterCommand(configManager, audienceProvider, miniMessage, this.mentionService));
+        server.getPluginCommand("chatformatter").setExecutor(new ChatFormatterCommand(configManager, audienceProvider, miniMessage));
         server.getPluginManager().registerEvents(new UpdaterController(updaterService, pluginConfig, audienceProvider, miniMessage), plugin);
 
         ChatFormatterApiProvider.enable(this);

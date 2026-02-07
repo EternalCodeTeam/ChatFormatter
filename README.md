@@ -35,7 +35,9 @@
 
 ## 🔑 Permissions:
 
-> **Note:** Each color and decoration permission (e.g., `chatformatter.color.white`, `chatformatter.reset`, `chatformatter.decorations.bold`) grants access to both the legacy code (e.g., `&f`, `&r`, `&l`) and the MiniMessage tag (e.g., `<white>`, `<reset>`, `<bold>`).
+> **Note:** Each color and decoration permission (e.g., `chatformatter.color.white`, `chatformatter.reset`,
+`chatformatter.decorations.bold`) grants access to both the legacy code (e.g., `&f`, `&r`, `&l`) and the MiniMessage
+> tag (e.g., `<white>`, `<reset>`, `<bold>`).
 
 | **Permission**                            | **Access**                                                                                            |
 |:------------------------------------------|:------------------------------------------------------------------------------------------------------|
@@ -79,7 +81,6 @@
 | `chatformatter.keybind`                   | `<key>`                                                                                               |
 | `chatformatter.nbt`                       | `<nbt>`                                                                                               |
 | `chatformatter.reload`                    | `/chatformatter reload`                                                                               |
-| `chatformatter.mentiontoggle`             | `/chatformatter mentiontoggle` - toggle mention sounds on/off                                         |
 | `chatformatter.receiveupdates`            | receive update announcements for this plugin                                                          |
 
 ### config.yml
@@ -135,19 +136,19 @@ format:
 # Placeholders, it allows you to make a shorter text, you can use some prefixes, characters etc. 
 # You can use here PAPI placeholders.
 placeholders:
-  {displayname}: "<displayname>"
-  {name}: "<name>"
-  {message}: "<message>"
-  {member}: "<#6e6764>Member"
-  {vip}: "<gold>VIP"
-  {mod}: "<b><#00c900>Mod</b>"
-  {admin}: "<b><#6e86ff>Admin</b>"
-  {owner}: "<b><gradient:#c40000:#e04b4b>Owner</b>"
-  {rankDescription}: "<dark_gray>Rank: <white>%vault_group%"
-  {joinDate}: "<dark_gray>Joined: <white>%player_first_join_date%"
-  {health}: "<dark_gray>Health: <red>%player_health%"
-  {lvl}: "<dark_gray>LVL: <gold>%player_level%"
-  {privateMessage}: "<gradient:#36ff39:#75ff75><i>Click to send private message</i></gradient>"
+  { displayname }: "<displayname>"
+    { name }: "<name>"
+    { message }: "<message>"
+    { member }: "<#6e6764>Member"
+    { vip }: "<gold>VIP"
+    { mod }: "<b><#00c900>Mod</b>"
+    { admin }: "<b><#6e86ff>Admin</b>"
+    { owner }: "<b><gradient:#c40000:#e04b4b>Owner</b>"
+    { rankDescription }: "<dark_gray>Rank: <white>%vault_group%"
+    { joinDate }: "<dark_gray>Joined: <white>%player_first_join_date%"
+    { health }: "<dark_gray>Health: <red>%player_health%"
+    { lvl }: "<dark_gray>LVL: <gold>%player_level%"
+    { privateMessage }: "<gradient:#36ff39:#75ff75><i>Click to send private message</i></gradient>"
 
 # This section is made for experienced users
 # It is used to shorten the text even more and keep the clean file!
@@ -165,8 +166,6 @@ mentions:
   volume: 1.0
   # The pitch of the mention sound (0.5 to 2.0)
   pitch: 1.0
-  # Whether mention sounds are enabled by default for new players
-  enabledByDefault: true
 ```
 
 

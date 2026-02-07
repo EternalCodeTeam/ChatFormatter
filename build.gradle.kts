@@ -119,10 +119,11 @@ tasks.runServer {
     minecraftVersion("1.21.11")
     dependsOn("shadowChatFormatter")
     pluginJars.from(layout.buildDirectory.file("libs/ChatFormatter v${project.version}.jar"))
-    jvmArgs("-Dcom.mojang.eula.agree=true")
+    jvmArgs("-Dcom.mojang.eula.agree=true", "-XX:+AllowEnhancedClassRedefinition")
 
     javaLauncher.set(
         javaToolchains.launcherFor {
+            this.vendor = JvmVendorSpec.JETBRAINS
             this.languageVersion.set(JavaLanguageVersion.of(21))
         }
     )
