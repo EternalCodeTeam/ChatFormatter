@@ -1,6 +1,9 @@
 package com.eternalcode.formatter;
 
 import com.eternalcode.formatter.adventure.AdventureUrlPostProcessor;
+import com.eternalcode.formatter.mention.MentionService;
+
+import java.util.List;
 import java.util.Optional;
 import net.kyori.adventure.text.serializer.json.JSONOptions;
 import static net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacySection;
@@ -22,7 +25,6 @@ import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 class ChatHandlerImpl implements ChatHandler {
@@ -85,13 +87,15 @@ class ChatHandlerImpl implements ChatHandler {
     private final ChatRankProvider rankProvider;
     private final PlaceholderRegistry placeholderRegistry;
     private final TemplateService templateService;
+    private final MentionService mentionService;
 
-    ChatHandlerImpl(MiniMessage miniMessage, ChatSettings settings, ChatRankProvider rankProvider, PlaceholderRegistry placeholderRegistry, TemplateService templateService) {
+    ChatHandlerImpl(MiniMessage miniMessage, ChatSettings settings, ChatRankProvider rankProvider, PlaceholderRegistry placeholderRegistry, TemplateService templateService, MentionService mentionService) {
         this.miniMessage = miniMessage;
         this.settings = settings;
         this.rankProvider = rankProvider;
         this.placeholderRegistry = placeholderRegistry;
         this.templateService = templateService;
+        this.mentionService = mentionService;
     }
 
     @Override
@@ -110,7 +114,11 @@ class ChatHandlerImpl implements ChatHandler {
 
         Component renderedMessage = this.miniMessage.deserialize(format, this.createTags(chatMessage));
 
-        return new ChatRenderedMessage(sender, GSON.serialize(renderedMessage));
+        // Detect mentions in the original message
+        String rawMessage = legacySection().serialize(GSON.deserialize(chatMessage.jsonMessage()));
+        List<Player> mentionedPlayers = this.mentionService.detectMentions(rawMessage, sender);
+
+        return new ChatRenderedMessage(sender, GSON.serialize(renderedMessage), mentionedPlayers);
     }
 
     private TagResolver createTags(ChatMessage chatMessage) {

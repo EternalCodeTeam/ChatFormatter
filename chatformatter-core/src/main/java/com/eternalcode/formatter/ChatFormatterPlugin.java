@@ -2,6 +2,8 @@ package com.eternalcode.formatter;
 
 import com.eternalcode.formatter.config.ConfigManager;
 import com.eternalcode.formatter.config.PluginConfig;
+import com.eternalcode.formatter.mention.MentionService;
+import com.eternalcode.formatter.mention.MentionSettings;
 import com.eternalcode.formatter.placeholder.ConfiguredReplacer;
 import com.eternalcode.formatter.placeholderapi.PlaceholderAPIInitializer;
 import com.eternalcode.formatter.placeholder.PlaceholderRegistry;
@@ -26,6 +28,7 @@ public class ChatFormatterPlugin implements ChatFormatterApi {
     private final TemplateService templateService;
     private final ChatRankProvider rankProvider;
     private final ChatHandler chatHandler;
+    private final MentionService mentionService;
 
     public ChatFormatterPlugin(Plugin plugin) {
         Server server = plugin.getServer();
@@ -44,14 +47,19 @@ public class ChatFormatterPlugin implements ChatFormatterApi {
         this.rankProvider = VaultInitializer.initialize(server);
         UpdaterService updaterService = new UpdaterService(plugin.getDescription());
 
+        // Initialize mention service
+        MentionConfig mentionConfig = pluginConfig.getMentionConfig();
+        MentionSettings mentionSettings = new MentionSettings(plugin.getDataFolder(), plugin.getLogger(), mentionConfig);
+        this.mentionService = new MentionService(server, mentionConfig, mentionSettings);
+
         AudienceProvider audienceProvider = BukkitAudiences.create(plugin);
         MiniMessage miniMessage = MiniMessage.miniMessage();
         // bStats metrics
         new Metrics(plugin, 15199);
 
-        this.chatHandler = new ChatHandlerImpl(miniMessage, pluginConfig, this.rankProvider, this.placeholderRegistry, this.templateService);
+        this.chatHandler = new ChatHandlerImpl(miniMessage, pluginConfig, this.rankProvider, this.placeholderRegistry, this.templateService, this.mentionService);
 
-        server.getPluginCommand("chatformatter").setExecutor(new ChatFormatterCommand(configManager, audienceProvider, miniMessage));
+        server.getPluginCommand("chatformatter").setExecutor(new ChatFormatterCommand(configManager, audienceProvider, miniMessage, this.mentionService));
         server.getPluginManager().registerEvents(new UpdaterController(updaterService, pluginConfig, audienceProvider, miniMessage), plugin);
 
         ChatFormatterApiProvider.enable(this);
@@ -81,6 +89,11 @@ public class ChatFormatterPlugin implements ChatFormatterApi {
     @Override
     public ChatHandler getChatHandler() {
         return this.chatHandler;
+    }
+
+    @Override
+    public MentionService getMentionService() {
+        return this.mentionService;
     }
 
 }
