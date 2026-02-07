@@ -1,17 +1,27 @@
 package com.eternalcode.formatter.legacy;
 
 import com.google.common.collect.ImmutableMap;
+import java.util.Set;
 import java.util.function.Predicate;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
 import java.util.Map;
 import java.util.regex.Pattern;
+import org.jetbrains.annotations.VisibleForTesting;
 
 public final class Legacy {
 
     private static final Pattern COLOR_LEGACY_PATTERN = Pattern.compile("(?i)&([0-9A-FK-ORX#])");
     private static final Pattern HEX_LEGACY_PATTERN = Pattern.compile("(?i)&#([0-9A-F]{6})");
     private static final Pattern HEX_LEGACY_VANILLA_PATTERN = Pattern.compile("(?i)&x(&[0-9A-F]){6}");
+
+    private static final Set<Character> COLORS = Set.of(
+        '0', '1', '2', '3', '4', '5', '6', '7',
+        '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'
+    );
+
+    private static final Set<Character> DECORATIONS = Set.of(
+        'k', 'l', 'm', 'n', 'o'
+    );
 
     private static final Map<Character, String> codeTranslations = new ImmutableMap.Builder<Character, String>()
         .put('0', "<black>")
@@ -66,7 +76,8 @@ public final class Legacy {
     private Legacy() {
     }
 
-    public static String clearSection(String text) {
+    @VisibleForTesting
+    static String clearSection(String text) {
         return text.replace('§', '&');
     }
 
@@ -75,7 +86,8 @@ public final class Legacy {
     }
 
     public static String legacyToAdventure(String input, Predicate<String> hasPermission) {
-        String result = HEX_LEGACY_VANILLA_PATTERN.matcher(input).replaceAll(matchResult -> {
+        String result = clearSection(input);
+        result = HEX_LEGACY_VANILLA_PATTERN.matcher(result).replaceAll(matchResult -> {
             String hexColor = matchResult.group().replace("&x", "").replace("&", "");
             return "<#" + hexColor + ">";
         });
@@ -98,16 +110,17 @@ public final class Legacy {
     }
 
     private static boolean hasPermissionForLegacyCode(Predicate<String> hasPermission, char code) {
-        if (hasWildcardPermission(hasPermission)) {
+        if (hasPermission.test("chatformatter.*")) {
+            return true;
+        }
+        if (COLORS.contains(code) && hasPermission.test("chatformatter.color.*")) {
+            return true;
+        }
+        if (DECORATIONS.contains(code) && hasPermission.test("chatformatter.decorations.*")) {
             return true;
         }
         String permission = legacyCodeToPermission.get(code);
         return permission != null && hasPermission.test(permission);
     }
 
-    private static boolean hasWildcardPermission(Predicate<String> hasPermission) {
-        return hasPermission.test("chatformatter.*")
-            || hasPermission.test("chatformatter.color.*")
-            || hasPermission.test("chatformatter.decorations.*");
-    }
 }

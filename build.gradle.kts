@@ -1,3 +1,4 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import java.io.FileOutputStream
 import java.io.IOException
 import java.util.jar.JarEntry
@@ -7,88 +8,125 @@ import java.util.jar.JarOutputStream
 plugins {
     id("eternalcode.java")
     id("com.gradleup.shadow")
-    id("xyz.jpenilla.run-paper") version "3.0.0-beta.1"
+    id("xyz.jpenilla.run-paper") version "3.0.2"
 }
 
-tasks.register("shadowAll") {
-    group = "shadow"
+tasks.register<ShadowJar>("shadowChatFormatter") {
+    this.group = "build"
 
-    val projects = listOf(
+    val targetProjects = listOf(
         project(":chatformatter-core"),
         project(":chatformatter-paper-plugin")
     )
 
-    for (project in projects) {
-        dependsOn(project.name + ":shadowJar")
+    for (targetProject in targetProjects) {
+        this.dependsOn("${targetProject.name}:shadowJar")
     }
 
-    doLast {
-        merge("ChatFormatter v${project.version}.jar", projects)
+    this.doLast {
+        this@register.mergeJars(
+            "ChatFormatter v${project.version}.jar",
+            targetProjects
+        )
     }
 }
 
-fun merge(archiveFileName: String, projects: List<Project>) {
-    val outputFile = File(project.layout.buildDirectory.asFile.get(), "libs/${archiveFileName}")
-    val outputDir = outputFile.parentFile ?: throw RuntimeException("Could not get output directory")
+fun ShadowJar.mergeJars(archiveFileName: String, projects: List<Project>) {
+    val outputFile = File(
+        this.project.layout.buildDirectory.asFile.get(),
+        "libs/$archiveFileName"
+    )
+    val outputDir = outputFile.parentFile
+        ?: throw IllegalStateException("Cannot find output directory")
 
     if (!outputDir.exists() && !outputDir.mkdirs()) {
-        throw RuntimeException("Could not create output directory")
+        throw IllegalStateException("Failed to create directory: ${outputDir.absolutePath}")
     }
 
-    if (outputFile.exists()) {
-        outputFile.delete()
+    if (outputFile.exists() && !outputFile.delete()) {
+        throw IllegalStateException("Cannot delete existing file: ${outputFile.absolutePath}")
     }
 
     if (!outputFile.createNewFile()) {
-        throw RuntimeException("Could not find output file to merge")
+        throw IllegalStateException("Cannot create output file: ${outputFile.absolutePath}")
     }
 
+    mergeShadowJarsIntoOutput(outputFile, projects)
+}
+
+private fun mergeShadowJarsIntoOutput(
+    outputFile: File,
+    projects: List<Project>
+) {
     JarOutputStream(FileOutputStream(outputFile)).use { outputJar ->
-        for (project in projects) {
-            val shadowJar = project.tasks.shadowJar.get()
+        val processedEntries = mutableSetOf<String>()
 
-            for (file in shadowJar.outputs.files.files) {
-                JarFile(file).use { jarFile ->
-                    for (entry in jarFile.entries()) {
-                        if (entry.isDirectory) {
-                            continue
-                        }
+        for (targetProject in projects) {
+            val shadowJarTask = targetProject.tasks.named("shadowJar", ShadowJar::class.java).get()
 
-                        val bytes = jarFile.getInputStream(entry).readBytes()
-                        val newEntry = JarEntry(entry.name)
+            for (jarFile in shadowJarTask.outputs.files.files) {
+                processJarFile(jarFile, outputJar, processedEntries)
+            }
+        }
+    }
+}
 
-                        newEntry.setTime(System.currentTimeMillis())
-                        newEntry.setSize(bytes.size.toLong())
+private fun processJarFile(
+    jarFile: File,
+    outputJar: JarOutputStream,
+    processedEntries: MutableSet<String>
+) {
+    JarFile(jarFile).use { sourceJar ->
+        for (entry in sourceJar.entries()) {
+            if (entry.isDirectory || processedEntries.contains(entry.name)) {
+                continue
+            }
 
-                        try {
-                            outputJar.putNextEntry(newEntry)
-                            outputJar.write(bytes)
-                            outputJar.closeEntry()
-                        } catch (exception: IOException) {
-                            if (exception.message?.contains("duplicate entry: ") == true) {
-                                continue
-                            }
-
-                            exception.printStackTrace()
-                        }
-                    }
+            try {
+                copyJarEntry(sourceJar, entry, outputJar)
+                processedEntries.add(entry.name)
+            } catch (exception: IOException) {
+                if (exception.message?.contains("duplicate entry:") != true) {
+                    throw exception
                 }
             }
         }
     }
+}
 
+private fun copyJarEntry(
+    sourceJar: JarFile,
+    entry: JarEntry,
+    outputJar: JarOutputStream
+) {
+    val entryBytes = sourceJar.getInputStream(entry).use { it.readBytes() }
+    val newEntry = JarEntry(entry.name).apply {
+        this.time = System.currentTimeMillis()
+        this.size = entryBytes.size.toLong()
+    }
+
+    outputJar.putNextEntry(newEntry)
+    outputJar.write(entryBytes)
+    outputJar.closeEntry()
 }
 
 runPaper {
-    disablePluginJarDetection()
+    this.disablePluginJarDetection()
 }
 
 tasks.runServer {
-    minecraftVersion("1.21.4")
-    dependsOn("shadowAll")
-    pluginJars = files("/build/libs/ChatFormatter v${project.version}.jar")
-    // We need to start the server with Java 21, but jar is built with Java 17
-    javaLauncher.set(javaToolchains.launcherFor {
-        languageVersion.set(JavaLanguageVersion.of(21))
-    })
+    minecraftVersion("1.21.10")
+    dependsOn("shadowChatFormatter")
+    pluginJars.from(layout.buildDirectory.file("libs/ChatFormatter v${project.version}.jar"))
+
+    javaLauncher.set(
+        javaToolchains.launcherFor {
+            this.languageVersion.set(JavaLanguageVersion.of(21))
+        }
+    )
+
+    downloadPlugins {
+        this.modrinth("luckperms", "v5.5.0-bukkit")
+        this.modrinth("VaultUnlocked", "2.16.0")
+    }
 }

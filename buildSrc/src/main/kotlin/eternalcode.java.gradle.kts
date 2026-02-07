@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "com.eternalcode"
-version = "1.3.3"
+version = "1.3.5"
 
 repositories {
     mavenCentral()

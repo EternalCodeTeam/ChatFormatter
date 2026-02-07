@@ -2,8 +2,6 @@ package com.eternalcode.formatter;
 
 import com.eternalcode.formatter.config.ConfigManager;
 import com.eternalcode.formatter.config.PluginConfig;
-import com.eternalcode.formatter.legacy.LegacyPostProcessor;
-import com.eternalcode.formatter.legacy.LegacyPreProcessor;
 import com.eternalcode.formatter.placeholder.ConfiguredReplacer;
 import com.eternalcode.formatter.placeholderapi.PlaceholderAPIInitializer;
 import com.eternalcode.formatter.placeholder.PlaceholderRegistry;
@@ -47,11 +45,7 @@ public class ChatFormatterPlugin implements ChatFormatterApi {
         UpdaterService updaterService = new UpdaterService(plugin.getDescription());
 
         AudienceProvider audienceProvider = BukkitAudiences.create(plugin);
-        MiniMessage miniMessage = MiniMessage.builder()
-            .preProcessor(new LegacyPreProcessor())
-            .postProcessor(new LegacyPostProcessor())
-            .build();
-
+        MiniMessage miniMessage = MiniMessage.miniMessage();
         // bStats metrics
         new Metrics(plugin, 15199);
 

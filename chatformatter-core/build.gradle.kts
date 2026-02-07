@@ -11,7 +11,7 @@ dependencies {
 
     // Kyori Adventure & MiniMessage
     val adventureVersion = "4.4.1"
-    val miniMessageVersion = "4.24.0"
+    val miniMessageVersion = "4.26.1"
     implementation("net.kyori:adventure-api:$miniMessageVersion")
     implementation("net.kyori:adventure-text-minimessage:$miniMessageVersion")
     implementation("net.kyori:adventure-platform-bukkit:$adventureVersion")
@@ -27,23 +27,23 @@ dependencies {
     implementation("org.bstats:bstats-bukkit:3.1.0")
 
     // PlaceholderAPI & Vault
-    compileOnly("me.clip:placeholderapi:2.11.6")
+    compileOnly("me.clip:placeholderapi:2.12.1")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
 
     // GitCheck
     implementation("com.eternalcode:gitcheck:1.0.0")
 
     // JUnit 5
-    testImplementation(platform("org.junit:junit-bom:5.13.4"))
+    testImplementation(platform("org.junit:junit-bom:6.0.2"))
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testImplementation("org.junit.jupiter:junit-jupiter-params")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 
-    testImplementation("org.mockito:mockito-core:5.19.0")
-    testImplementation("org.mockito:mockito-junit-jupiter:5.19.0")
-    testImplementation("me.clip:placeholderapi:2.11.6")
-    testImplementation("org.assertj:assertj-core:3.27.4")
+    testImplementation("org.mockito:mockito-core:5.21.0")
+    testImplementation("org.mockito:mockito-junit-jupiter:5.21.0")
+    testImplementation("me.clip:placeholderapi:2.12.1")
+    testImplementation("org.assertj:assertj-core:3.27.7")
 }
 
 tasks {
