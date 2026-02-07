@@ -24,7 +24,7 @@ public class MentionDetector {
 
         while (matcher.find()) {
             String playerName = matcher.group(1);
-            Player player = this.server.getPlayerExact(playerName);
+            Player player = this.server.getPlayer(playerName);
 
             if (player != null && player.isOnline()) {
                 mentionedPlayers.add(player);
