@@ -1,6 +1,7 @@
 package com.eternalcode.formatter;
 
 import com.eternalcode.formatter.adventure.AdventureUrlPostProcessor;
+import de.themoep.minedown.adventure.MineDown;
 import java.util.Optional;
 import net.kyori.adventure.text.serializer.json.JSONOptions;
 import static net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacySection;
@@ -137,7 +138,14 @@ class ChatHandlerImpl implements ChatHandler {
     private TagResolver.Single messagePlaceholder(Player sender, String rawMessage) {
         TagResolver permittedTags = this.providePermittedTags(sender);
         rawMessage = Legacy.legacyToAdventure(rawMessage, permission -> sender.hasPermission(permission));
-        Component componentMessage = EMPTY_MESSAGE_DESERIALIZER.deserialize(rawMessage, permittedTags);
+
+        Component componentMessage;
+        if (this.settings.isMineDownEnabled()) {
+            componentMessage = MineDown.parse(rawMessage);
+        } else {
+            componentMessage = EMPTY_MESSAGE_DESERIALIZER.deserialize(rawMessage, permittedTags);
+        }
+
         return Placeholder.component("message", componentMessage);
     }
 
