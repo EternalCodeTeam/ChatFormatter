@@ -1,6 +1,6 @@
 plugins {
     id("eternalcode.java")
-    id("com.github.johnrengelman.shadow")
+    id("com.gradleup.shadow")
 }
 
 dependencies {
@@ -10,31 +10,40 @@ dependencies {
     testImplementation("org.spigotmc:spigot-api:$spigotApiVersion")
 
     // Kyori Adventure & MiniMessage
-    val adventureVersion = "4.3.2"
-    val miniMessageVersion = "4.16.0"
-    implementation("net.kyori:adventure-platform-bukkit:$adventureVersion")
+    val adventureVersion = "4.4.1"
+    val miniMessageVersion = "4.26.1"
+    implementation("net.kyori:adventure-api:$miniMessageVersion")
     implementation("net.kyori:adventure-text-minimessage:$miniMessageVersion")
+    implementation("net.kyori:adventure-platform-bukkit:$adventureVersion")
     testImplementation("net.kyori:adventure-platform-bukkit:$adventureVersion")
     testImplementation("net.kyori:adventure-text-minimessage:$miniMessageVersion")
 
     // CDN Configs
-    val cdnVersion = "1.14.4"
+    val cdnVersion = "1.14.9"
     implementation("net.dzikoysk:cdn:$cdnVersion")
     testImplementation("net.dzikoysk:cdn:$cdnVersion")
 
     // bStats
-    implementation("org.bstats:bstats-bukkit:3.0.2")
+    implementation("org.bstats:bstats-bukkit:3.1.0")
 
     // PlaceholderAPI & Vault
-    compileOnly("me.clip:placeholderapi:2.11.5")
+    compileOnly("me.clip:placeholderapi:2.12.2")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
 
     // GitCheck
     implementation("com.eternalcode:gitcheck:1.0.0")
 
     // JUnit 5
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.2")
+    testImplementation(platform("org.junit:junit-bom:6.0.3"))
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testImplementation("org.junit.jupiter:junit-jupiter-params")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+
+    testImplementation("org.mockito:mockito-core:5.21.0")
+    testImplementation("org.mockito:mockito-junit-jupiter:5.21.0")
+    testImplementation("me.clip:placeholderapi:2.12.2")
+    testImplementation("org.assertj:assertj-core:3.27.7")
 }
 
 tasks {

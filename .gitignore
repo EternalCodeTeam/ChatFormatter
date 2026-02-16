@@ -4,11 +4,10 @@
 *.iws
 .idea/
 .gradle/
-out/
 build/
-node_modules/
 dist/
 run/
+.kotlin
 
 .DS_Store
 [Dd]esktop.ini

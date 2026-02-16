@@ -2,57 +2,46 @@ package com.eternalcode.formatter.placeholder;
 
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
+import org.jetbrains.annotations.Nullable;
 
 public class PlaceholderRegistry {
 
-    private final Map<String, Placeholder> placeholders = new HashMap<>();
-    private final Map<String, PlayerPlaceholder> playerPlaceholders = new HashMap<>();
+    private final Set<Replacer> replacers = new HashSet<>();
+    private final Set<RelationalReplacer> relationalReplacers = new HashSet<>();
 
-    private final Set<PlaceholderStack> stacks = new HashSet<>();
-    private final Set<PlayerPlaceholderStack> playerStacks = new HashSet<>();
-
-    public void placeholder(String key, Placeholder placeholder) {
-        this.placeholders.put(key, placeholder);
+    public void addReplacer(Replacer stack) {
+        this.replacers.add(stack);
     }
 
-    public void playerPlaceholder(String key, PlayerPlaceholder placeholder) {
-        this.playerPlaceholders.put(key, placeholder);
-    }
-
-    public void stack(PlaceholderStack stack) {
-        this.stacks.add(stack);
-    }
-
-    public void playerStack(PlayerPlaceholderStack stack) {
-        this.playerStacks.add(stack);
-    }
-
-    public String format(String text) {
-        for (PlaceholderStack stack : this.stacks) {
-            text = stack.apply(text);
-        }
-
-        for (Map.Entry<String, Placeholder> entry : this.placeholders.entrySet()) {
-            text = text.replace(entry.getKey(), entry.getValue().extract());
-        }
-
-        return text;
+    public void addRelationalReplacer(RelationalReplacer stack) {
+        this.relationalReplacers.add(stack);
     }
 
     public String format(String text, Player target) {
-        for (PlayerPlaceholderStack stack : this.playerStacks) {
-            text = stack.apply(text, target);
-        }
+        return this.format(text, target, null);
+    }
 
-        for (Map.Entry<String, PlayerPlaceholder> entry : this.playerPlaceholders.entrySet()) {
-            text = text.replace(entry.getKey(), entry.getValue().extract(target));
-        }
+    public String format(String text, Player target, @Nullable Player viewer) {
+        int iterations = 0;
+        String beforeReplacements;
 
-        return this.format(text);
+        do {
+            beforeReplacements = text;
+
+            if (viewer != null) {
+                for (RelationalReplacer stack : this.relationalReplacers) {
+                    text = stack.apply(text, target, viewer);
+                }
+            }
+
+            for (Replacer stack : this.replacers) {
+                text = stack.apply(text, target);
+            }
+        } while (!text.equals(beforeReplacements) && iterations++ < 10);
+
+        return text;
     }
 
 }

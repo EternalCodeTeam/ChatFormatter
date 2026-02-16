@@ -1,11 +1,12 @@
 package com.eternalcode.formatter;
 
+import com.eternalcode.formatter.adventure.AdventureUrlPostProcessor;
+import java.util.Optional;
+import net.kyori.adventure.text.serializer.json.JSONOptions;
 import static net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacySection;
 
 import com.eternalcode.formatter.adventure.TextColorTagResolver;
 import com.eternalcode.formatter.legacy.Legacy;
-import com.eternalcode.formatter.legacy.LegacyPostMessageProcessor;
-import com.eternalcode.formatter.legacy.LegacyPreProcessor;
 import com.eternalcode.formatter.rank.ChatRankProvider;
 import com.eternalcode.formatter.template.TemplateService;
 import com.eternalcode.formatter.placeholder.PlaceholderRegistry;
@@ -27,8 +28,23 @@ import java.util.Map;
 class ChatHandlerImpl implements ChatHandler {
 
     private static final String PERMISSION_ALL = "chatformatter.*";
-    private static final String PERMISSION_LEGACY = "chatformatter.legacycolor";
     private static final Map<String, TagResolver> TAG_RESOLVERS_BY_PERMISSION = new ImmutableMap.Builder<String, TagResolver>()
+        .put("chatformatter.decorations.*", StandardTags.decorations())
+        .put("chatformatter.decorations.bold", StandardTags.decorations(TextDecoration.BOLD))
+        .put("chatformatter.decorations.italic", StandardTags.decorations(TextDecoration.ITALIC))
+        .put("chatformatter.decorations.underlined", StandardTags.decorations(TextDecoration.UNDERLINED))
+        .put("chatformatter.decorations.strikethrough", StandardTags.decorations(TextDecoration.STRIKETHROUGH))
+        .put("chatformatter.decorations.obfuscated", StandardTags.decorations(TextDecoration.OBFUSCATED))
+        .put("chatformatter.reset", StandardTags.reset())
+        .put("chatformatter.newline", StandardTags.newline())
+        .put("chatformatter.shadow", StandardTags.shadowColor())
+        .put("chatformatter.gradient", StandardTags.gradient())
+        .put("chatformatter.rainbow", StandardTags.rainbow())
+        .put("chatformatter.pride", StandardTags.pride())
+        .put("chatformatter.transition", StandardTags.transition())
+        .put("chatformatter.hover", StandardTags.hoverEvent())
+        .put("chatformatter.click", StandardTags.clickEvent())
+        .put("chatformatter.insertion", StandardTags.insertion())
         .put("chatformatter.color.*", StandardTags.color())
         .put("chatformatter.color.black", TextColorTagResolver.of(NamedTextColor.BLACK))
         .put("chatformatter.color.dark_blue", TextColorTagResolver.of(NamedTextColor.DARK_BLUE))
@@ -46,30 +62,21 @@ class ChatHandlerImpl implements ChatHandler {
         .put("chatformatter.color.light_purple", TextColorTagResolver.of(NamedTextColor.LIGHT_PURPLE))
         .put("chatformatter.color.yellow", TextColorTagResolver.of(NamedTextColor.YELLOW))
         .put("chatformatter.color.white", TextColorTagResolver.of(NamedTextColor.WHITE))
-        .put("chatformatter.decorations.*", StandardTags.decorations())
-        .put("chatformatter.decorations.bold", StandardTags.decorations(TextDecoration.BOLD))
-        .put("chatformatter.decorations.italic", StandardTags.decorations(TextDecoration.ITALIC))
-        .put("chatformatter.decorations.underlined", StandardTags.decorations(TextDecoration.UNDERLINED))
-        .put("chatformatter.decorations.strikethrough", StandardTags.decorations(TextDecoration.STRIKETHROUGH))
-        .put("chatformatter.decorations.obfuscated", StandardTags.decorations(TextDecoration.OBFUSCATED))
-        .put("chatformatter.reset", StandardTags.reset())
-        .put("chatformatter.gradient", StandardTags.gradient())
-        .put("chatformatter.hover", StandardTags.hoverEvent())
-        .put("chatformatter.click", StandardTags.clickEvent())
-        .put("chatformatter.insfertion", StandardTags.insertion())
-        .put("chatformatter.font", StandardTags.font())
-        .put("chatformatter.transition", StandardTags.transition())
-        .put("chatformatter.translatable", StandardTags.translatable())
+        .put("chatformatter.score", StandardTags.score())
         .put("chatformatter.selector", StandardTags.selector())
+        .put("chatformatter.translatable", TagResolver.resolver(StandardTags.translatable(), StandardTags.translatableFallback()))
+        .put("chatformatter.font", StandardTags.font())
         .put("chatformatter.keybind", StandardTags.keybind())
-        .put("chatformatter.newline", StandardTags.newline())
+        .put("chatformatter.nbt", StandardTags.nbt())
         .build();
 
-    private static final GsonComponentSerializer GSON = GsonComponentSerializer.gson();
+    private static final GsonComponentSerializer GSON = GsonComponentSerializer.builder()
+        .editOptions(builder -> builder.values(JSONOptions.compatibility()))
+        .build();
+
     private static final MiniMessage EMPTY_MESSAGE_DESERIALIZER = MiniMessage.builder()
+         .postProcessor(new AdventureUrlPostProcessor())
         .tags(TagResolver.empty())
-        .preProcessor(new LegacyPreProcessor())
-        .postProcessor(new LegacyPostMessageProcessor())
         .build();
 
     private final MiniMessage miniMessage;
@@ -90,13 +97,15 @@ class ChatHandlerImpl implements ChatHandler {
     @Override
     public ChatRenderedMessage process(ChatMessage chatMessage) {
         Player sender = chatMessage.sender();
+        Optional<Player> viewer = chatMessage.viewer();
 
         String format = this.settings.getRawFormat(this.rankProvider.getRank(sender));
 
         format = this.templateService.applyTemplates(format);
-        format = this.placeholderRegistry.format(format, sender);
+        format = viewer.isEmpty()
+            ? this.placeholderRegistry.format(format, sender)
+            : this.placeholderRegistry.format(format, sender, viewer.get());
 
-        format = Legacy.clearSection(format);
         format = Legacy.legacyToAdventure(format);
 
         Component renderedMessage = this.miniMessage.deserialize(format, this.createTags(chatMessage));
@@ -118,20 +127,17 @@ class ChatHandlerImpl implements ChatHandler {
     }
 
     private TagResolver.Single displayNamePlaceholder(Player sender) {
-        return Placeholder.parsed("displayname", Legacy.clearSection(sender.getDisplayName()));
+        return Placeholder.parsed("displayname", Legacy.legacyToAdventure(sender.getDisplayName()));
     }
 
     private TagResolver.Single namePlaceholder(Player sender) {
-        return Placeholder.parsed("name", Legacy.clearSection(sender.getName()));
+        return Placeholder.parsed("name", sender.getName());
     }
 
     private TagResolver.Single messagePlaceholder(Player sender, String rawMessage) {
-        String safeMessage = sender.hasPermission(PERMISSION_LEGACY)
-                ? rawMessage
-                : Legacy.ampersandToPlaceholder(rawMessage);
-
-        Component componentMessage = EMPTY_MESSAGE_DESERIALIZER.deserialize(safeMessage, this.providePermittedTags(sender));
-
+        TagResolver permittedTags = this.providePermittedTags(sender);
+        rawMessage = Legacy.legacyToAdventure(rawMessage, permission -> sender.hasPermission(permission));
+        Component componentMessage = EMPTY_MESSAGE_DESERIALIZER.deserialize(rawMessage, permittedTags);
         return Placeholder.component("message", componentMessage);
     }
 

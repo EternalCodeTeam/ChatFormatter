@@ -2,12 +2,11 @@ package com.eternalcode.formatter;
 
 import com.eternalcode.formatter.config.ConfigManager;
 import com.eternalcode.formatter.config.PluginConfig;
-import com.eternalcode.formatter.legacy.LegacyPostProcessor;
-import com.eternalcode.formatter.legacy.LegacyPreProcessor;
-import com.eternalcode.formatter.placeholder.PlaceholderAPIStack;
+import com.eternalcode.formatter.placeholder.ConfiguredReplacer;
+import com.eternalcode.formatter.placeholderapi.PlaceholderAPIInitializer;
 import com.eternalcode.formatter.placeholder.PlaceholderRegistry;
 import com.eternalcode.formatter.rank.ChatRankProvider;
-import com.eternalcode.formatter.rank.VaultRankProvider;
+import com.eternalcode.formatter.rank.VaultInitializer;
 import com.eternalcode.formatter.template.TemplateService;
 import com.eternalcode.formatter.updater.UpdaterController;
 import com.eternalcode.formatter.updater.UpdaterService;
@@ -18,7 +17,6 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.concurrent.TimeUnit;
 
@@ -38,23 +36,20 @@ public class ChatFormatterPlugin implements ChatFormatterApi {
 
         PluginConfig pluginConfig = configManager.getPluginConfig();
 
-        this.placeholderRegistry = new PlaceholderRegistry();
-        this.placeholderRegistry.stack(pluginConfig);
         if (server.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
-            this.placeholderRegistry.playerStack(new PlaceholderAPIStack());
-        }
+            this.placeholderRegistry = new PlaceholderRegistry();
+            PlaceholderAPIInitializer.initialize(server, this.placeholderRegistry);
+            this.placeholderRegistry.addReplacer(new ConfiguredReplacer(pluginConfig));
+        }  
+
         this.templateService = new TemplateService(pluginConfig);
-        this.rankProvider = new VaultRankProvider(server);
+        this.rankProvider = VaultInitializer.initialize(server);
         UpdaterService updaterService = new UpdaterService(plugin.getDescription());
 
         AudienceProvider audienceProvider = BukkitAudiences.create(plugin);
-        MiniMessage miniMessage = MiniMessage.builder()
-            .preProcessor(new LegacyPreProcessor())
-            .postProcessor(new LegacyPostProcessor())
-            .build();
-
+        MiniMessage miniMessage = MiniMessage.miniMessage();
         // bStats metrics
-        new Metrics((JavaPlugin) plugin, 15199);
+        new Metrics(plugin, 15199);
 
         this.chatHandler = new ChatHandlerImpl(miniMessage, pluginConfig, this.rankProvider, this.placeholderRegistry, this.templateService);
 

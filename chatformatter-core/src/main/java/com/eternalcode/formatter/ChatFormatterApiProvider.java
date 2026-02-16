@@ -19,5 +19,4 @@ public final class ChatFormatterApiProvider {
 
         return chatFormatterAPI;
     }
-
 }

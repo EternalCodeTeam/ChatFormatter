@@ -3,7 +3,7 @@ import net.minecrell.pluginyml.bukkit.BukkitPluginDescription.Permission.Default
 plugins {
     id("eternalcode.java")
     id("net.minecrell.plugin-yml.bukkit")
-    id("com.github.johnrengelman.shadow")
+    id("com.gradleup.shadow")
 }
 
 bukkit {
@@ -12,8 +12,7 @@ bukkit {
     prefix = "ChatFormatter"
     author = "EternalCodeTeam"
     name = "ChatFormatter"
-    depend = listOf("Vault")
-    softDepend = listOf("PlaceholderAPI")
+    softDepend = listOf("PlaceholderAPI", "Vault")
     version = "${project.version}"
 
     commands {
@@ -40,7 +39,8 @@ bukkit {
                 "chatformatter.translatable",
                 "chatformatter.selector",
                 "chatformatter.keybind",
-                "chatformatter.newline"
+                "chatformatter.newline",
+                "chatformatter.rainbow"
             )
             default = Default.OP
         }
@@ -68,10 +68,10 @@ bukkit {
         register("chatformatter.selector") { default = Default.OP }
         register("chatformatter.keybind") { default = Default.OP }
         register("chatformatter.newline") { default = Default.OP }
+        register("chatformatter.rainbow") { default = Default.OP }
 
         register("chatformatter.color.*") {
             children = listOf(
-                "chatformatter.legacycolor",
                 "chatformatter.color.black",
                 "chatformatter.color.dark_blue",
                 "chatformatter.color.dark_green",
