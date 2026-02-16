@@ -12,7 +12,7 @@ public class MentionConfig implements Serializable {
     @Description("# When a player mentions another player with @playername, the mentioned player will hear a sound")
     public boolean enabled = true;
 
-    @Description({ " ", "# The sound to play when a player is mentioned" })
+    @Description("# The sound to play when a player is mentioned")
     @Description("# Available sounds: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html")
     public String sound = "BLOCK_NOTE_BLOCK_PLING";
 
