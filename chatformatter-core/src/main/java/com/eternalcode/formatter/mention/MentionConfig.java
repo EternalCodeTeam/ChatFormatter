@@ -16,7 +16,7 @@ public class MentionConfig implements Serializable {
     @Description("# Available sounds: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html")
     public String sound = "BLOCK_NOTE_BLOCK_PLING";
 
-    @Description({ " ", "# The volume of the mention sound (0.0 to 1.0)" })
+    @Description("# The volume of the mention sound (0.0 to 1.0)")
     public float volume = 1.0f;
 
     @Description({ " ", "# The pitch of the mention sound (0.5 to 2.0)" })
