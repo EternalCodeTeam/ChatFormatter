@@ -17,6 +17,4 @@ public class MentionListener implements Listener {
     void onMention(AsyncPlayerChatEvent event) {
         this.mentionService.mentionPlayers(event.getMessage());
     }
-
-
 }
