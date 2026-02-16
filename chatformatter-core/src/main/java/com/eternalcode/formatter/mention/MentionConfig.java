@@ -8,7 +8,7 @@ import java.io.Serializable;
 @Contextual
 public class MentionConfig implements Serializable {
 
-    @Description({ " ", "# Mention system configuration" })
+    @Description("# Mention system configuration")
     @Description("# When a player mentions another player with @playername, the mentioned player will hear a sound")
     public boolean enabled = true;
 
