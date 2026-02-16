@@ -12,14 +12,17 @@ import java.util.regex.Pattern;
 
 public class MentionService {
 
-    private static final Pattern MENTION_PATTERN = Pattern.compile("@([a-zA-Z0-9_]{3,16})");
+    private static final Pattern MENTION_PATTERN = Pattern.compile("([a-zA-Z0-9_]{3,16})");
+    private static final Pattern AT_MENTION_PATTERN = Pattern.compile("@([a-zA-Z0-9_]{3,16})");
 
     private final Server server;
     private final PluginConfig config;
+    private final MentionPlayerSettings playerSettings;
 
-    public MentionService(Server server, PluginConfig config) {
+    public MentionService(Server server, PluginConfig config, MentionPlayerSettings playerSettings) {
         this.server = server;
         this.config = config;
+        this.playerSettings = playerSettings;
     }
 
     void mentionPlayers(String message) {
@@ -27,7 +30,9 @@ public class MentionService {
         Sound sound = loadSound();
 
         for (Player player : mentionedPlayers) {
-            player.playSound(player.getLocation(), sound, config.mentions.volume, config.mentions.pitch);
+            if (this.playerSettings.isMentionSoundEnabled(player.getUniqueId())) {
+                player.playSound(player.getLocation(), sound, config.mentions.volume, config.mentions.pitch);
+            }
         }
     }
 
@@ -37,11 +42,23 @@ public class MentionService {
         }
 
         List<Player> mentionedPlayers = new ArrayList<>();
-        Matcher matcher = MENTION_PATTERN.matcher(message);
+
+        Matcher matcher;
+        if (this.config.mentions.requireAtCharacter) {
+            matcher = AT_MENTION_PATTERN.matcher(message);
+        } else {
+            matcher = MENTION_PATTERN.matcher(message);
+        }
 
         while (matcher.find()) {
             String playerName = matcher.group(1);
-            Player player = this.server.getPlayer(playerName);
+            Player player;
+
+            if (this.config.mentions.requireFullPlayerName) {
+                player = server.getPlayerExact(playerName);
+            } else {
+                player = server.getPlayer(playerName);
+            }
 
             if (player != null && player.isOnline()) {
                 mentionedPlayers.add(player);

@@ -2,9 +2,10 @@ package com.eternalcode.formatter;
 
 import com.eternalcode.formatter.config.ConfigManager;
 import com.eternalcode.formatter.config.PluginConfig;
-import com.eternalcode.formatter.mention.MentionConfig;
 import com.eternalcode.formatter.mention.MentionListener;
+import com.eternalcode.formatter.mention.MentionPlayerSettings;
 import com.eternalcode.formatter.mention.MentionService;
+import com.eternalcode.formatter.mention.controller.MentionSuggestionsController;
 import com.eternalcode.formatter.placeholder.ConfiguredReplacer;
 import com.eternalcode.formatter.placeholder.PlaceholderRegistry;
 import com.eternalcode.formatter.placeholderapi.PlaceholderAPIInitializer;
@@ -55,14 +56,15 @@ public class ChatFormatterPlugin implements ChatFormatterApi {
         new Metrics(plugin, 15199);
 
         this.chatHandler = new ChatHandlerImpl(miniMessage, pluginConfig, this.rankProvider, this.placeholderRegistry, this.templateService);
+        MentionPlayerSettings mentionPlayerSettings = new MentionPlayerSettings(plugin.getDataFolder(), plugin.getLogger(), configManager.getPluginConfig().mentions);
 
-        server.getPluginCommand("chatformatter").setExecutor(new ChatFormatterCommand(configManager, audienceProvider, miniMessage));
 
-        // Mentions
-        this.mentionService = new MentionService(server, pluginConfig);
+        server.getPluginCommand("chatformatter").setExecutor(new ChatFormatterCommand(configManager, audienceProvider, miniMessage, mentionPlayerSettings));
+
+        this.mentionService = new MentionService(server, pluginConfig, mentionPlayerSettings);
         server.getPluginManager().registerEvents(new MentionListener(mentionService), plugin);
+        server.getPluginManager().registerEvents(new MentionSuggestionsController(), plugin);
 
-        // Update checker
         server.getPluginManager().registerEvents(new UpdaterController(updaterService, pluginConfig, audienceProvider, miniMessage), plugin);
 
         ChatFormatterApiProvider.enable(this);
