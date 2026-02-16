@@ -19,6 +19,6 @@ public class MentionConfig implements Serializable {
     @Description("# The volume of the mention sound (0.0 to 1.0)")
     public float volume = 1.0f;
 
-    @Description({ " ", "# The pitch of the mention sound (0.5 to 2.0)" })
+    @Description("# The pitch of the mention sound (0.5 to 2.0)")
     public float pitch = 1.0f;
 }
