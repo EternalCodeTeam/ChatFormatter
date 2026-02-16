@@ -15,8 +15,6 @@ public class MentionListener implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     void onMention(AsyncPlayerChatEvent event) {
-        mentionService.mentionPlayers(event.getMessage());
+        this.mentionService.mentionPlayers(event.getMessage());
     }
-
-
 }
