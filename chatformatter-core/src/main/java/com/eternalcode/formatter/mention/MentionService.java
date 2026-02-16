@@ -1,14 +1,14 @@
 package com.eternalcode.formatter.mention;
 
 import com.eternalcode.formatter.config.PluginConfig;
-import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import org.bukkit.Server;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MentionService {
 
@@ -23,10 +23,10 @@ public class MentionService {
     }
 
     void mentionPlayers(String message) {
-        List<Player> players = detectMentions(message);
+        List<Player> mentionedPlayers = this.detectMentions(message);
         Sound sound = loadSound();
 
-        for (Player player : players) {
+        for (Player player : mentionedPlayers) {
             player.playSound(player.getLocation(), sound, config.mentions.volume, config.mentions.pitch);
         }
     }

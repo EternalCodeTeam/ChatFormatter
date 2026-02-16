@@ -16,14 +16,13 @@ import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.text.minimessage.tag.standard.StandardTags;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import net.kyori.adventure.text.serializer.json.JSONOptions;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
-import static net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacySection;
 
 class ChatHandlerImpl implements ChatHandler {
 
@@ -117,7 +116,7 @@ class ChatHandlerImpl implements ChatHandler {
         Player sender = chatMessage.sender();
 
         Component message = GSON.deserialize(chatMessage.jsonMessage());
-        String serialize = legacySection().serialize(message);
+        String serialize = LegacyComponentSerializer.legacySection().serialize(message);
 
         TagResolver.Single displayNamePlaceholder = displayNamePlaceholder(sender);
         TagResolver.Single namePlaceholder = namePlaceholder(sender);
