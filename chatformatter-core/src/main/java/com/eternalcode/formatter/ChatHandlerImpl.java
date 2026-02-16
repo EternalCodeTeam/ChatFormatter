@@ -1,15 +1,11 @@
 package com.eternalcode.formatter;
 
 import com.eternalcode.formatter.adventure.AdventureUrlPostProcessor;
-import java.util.Optional;
-import net.kyori.adventure.text.serializer.json.JSONOptions;
-import static net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacySection;
-
 import com.eternalcode.formatter.adventure.TextColorTagResolver;
 import com.eternalcode.formatter.legacy.Legacy;
+import com.eternalcode.formatter.placeholder.PlaceholderRegistry;
 import com.eternalcode.formatter.rank.ChatRankProvider;
 import com.eternalcode.formatter.template.TemplateService;
-import com.eternalcode.formatter.placeholder.PlaceholderRegistry;
 import com.google.common.collect.ImmutableMap;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -19,11 +15,16 @@ import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.text.minimessage.tag.standard.StandardTags;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
+import net.kyori.adventure.text.serializer.json.JSONOptions;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+
+import static net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacySection;
 
 class ChatHandlerImpl implements ChatHandler {
 
@@ -83,10 +84,11 @@ class ChatHandlerImpl implements ChatHandler {
 
     private final ChatSettings settings;
     private final ChatRankProvider rankProvider;
+    @Nullable
     private final PlaceholderRegistry placeholderRegistry;
     private final TemplateService templateService;
 
-    ChatHandlerImpl(MiniMessage miniMessage, ChatSettings settings, ChatRankProvider rankProvider, PlaceholderRegistry placeholderRegistry, TemplateService templateService) {
+    ChatHandlerImpl(MiniMessage miniMessage, ChatSettings settings, ChatRankProvider rankProvider, @Nullable PlaceholderRegistry placeholderRegistry, TemplateService templateService) {
         this.miniMessage = miniMessage;
         this.settings = settings;
         this.rankProvider = rankProvider;
@@ -102,9 +104,12 @@ class ChatHandlerImpl implements ChatHandler {
         String format = this.settings.getRawFormat(this.rankProvider.getRank(sender));
 
         format = this.templateService.applyTemplates(format);
-        format = viewer.isEmpty()
-            ? this.placeholderRegistry.format(format, sender)
-            : this.placeholderRegistry.format(format, sender, viewer.get());
+
+        if (this.placeholderRegistry != null) {
+            format = viewer.isEmpty()
+                ? this.placeholderRegistry.format(format, sender)
+                : this.placeholderRegistry.format(format, sender, viewer.get());
+        }
 
         format = Legacy.legacyToAdventure(format);
 

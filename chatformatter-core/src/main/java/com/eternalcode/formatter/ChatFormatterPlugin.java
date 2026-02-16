@@ -3,8 +3,8 @@ package com.eternalcode.formatter;
 import com.eternalcode.formatter.config.ConfigManager;
 import com.eternalcode.formatter.config.PluginConfig;
 import com.eternalcode.formatter.placeholder.ConfiguredReplacer;
-import com.eternalcode.formatter.placeholderapi.PlaceholderAPIInitializer;
 import com.eternalcode.formatter.placeholder.PlaceholderRegistry;
+import com.eternalcode.formatter.placeholderapi.PlaceholderAPIInitializer;
 import com.eternalcode.formatter.rank.ChatRankProvider;
 import com.eternalcode.formatter.rank.VaultInitializer;
 import com.eternalcode.formatter.template.TemplateService;
@@ -17,11 +17,13 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
+import org.jspecify.annotations.Nullable;
 
 import java.util.concurrent.TimeUnit;
 
 public class ChatFormatterPlugin implements ChatFormatterApi {
 
+    @Nullable
     private final PlaceholderRegistry placeholderRegistry;
     private final TemplateService templateService;
     private final ChatRankProvider rankProvider;
@@ -40,7 +42,11 @@ public class ChatFormatterPlugin implements ChatFormatterApi {
             this.placeholderRegistry = new PlaceholderRegistry();
             PlaceholderAPIInitializer.initialize(server, this.placeholderRegistry);
             this.placeholderRegistry.addReplacer(new ConfiguredReplacer(pluginConfig));
-        }  
+            plugin.getLogger().info("PlaceholderAPI integration enabled");
+        } else {
+            this.placeholderRegistry = null;
+            plugin.getLogger().info("PlaceholderAPI not found - running without placeholder support");
+        }
 
         this.templateService = new TemplateService(pluginConfig);
         this.rankProvider = VaultInitializer.initialize(server);
@@ -66,6 +72,7 @@ public class ChatFormatterPlugin implements ChatFormatterApi {
     }
 
     @Override
+    @Nullable
     public PlaceholderRegistry getPlaceholderRegistry() {
         return this.placeholderRegistry;
     }
