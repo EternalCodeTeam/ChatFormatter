@@ -30,6 +30,9 @@ dependencies {
     compileOnly("me.clip:placeholderapi:2.12.1")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
 
+    // LuckPerms API
+    compileOnly("net.luckperms:api:5.4")
+
     // GitCheck
     implementation("com.eternalcode:gitcheck:1.0.0")
 

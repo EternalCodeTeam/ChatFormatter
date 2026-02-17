@@ -56,8 +56,7 @@ public class ChatFormatterPlugin implements ChatFormatterApi {
         new Metrics(plugin, 15199);
 
         this.chatHandler = new ChatHandlerImpl(miniMessage, pluginConfig, this.rankProvider, this.placeholderRegistry, this.templateService);
-        MentionPlayerSettings mentionPlayerSettings = new MentionPlayerSettings(plugin.getDataFolder(), plugin.getLogger(), configManager.getPluginConfig().mentions);
-
+        MentionPlayerSettings mentionPlayerSettings = new MentionPlayerSettings(server, plugin.getLogger(), configManager.getPluginConfig().mentions);
 
         server.getPluginCommand("chatformatter").setExecutor(new ChatFormatterCommand(configManager, audienceProvider, miniMessage, mentionPlayerSettings));
 
