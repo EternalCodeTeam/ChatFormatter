@@ -2,6 +2,7 @@ package com.eternalcode.formatter;
 
 import com.eternalcode.formatter.config.ConfigManager;
 import com.eternalcode.formatter.config.PluginConfig;
+import com.eternalcode.formatter.mention.LuckPermsHook;
 import com.eternalcode.formatter.mention.MentionListener;
 import com.eternalcode.formatter.mention.MentionPlayerSettings;
 import com.eternalcode.formatter.mention.MentionService;
@@ -56,7 +57,7 @@ public class ChatFormatterPlugin implements ChatFormatterApi {
         new Metrics(plugin, 15199);
 
         this.chatHandler = new ChatHandlerImpl(miniMessage, pluginConfig, this.rankProvider, this.placeholderRegistry, this.templateService);
-        MentionPlayerSettings mentionPlayerSettings = new MentionPlayerSettings(server, plugin.getLogger(), configManager.getPluginConfig().mentions);
+        MentionPlayerSettings mentionPlayerSettings = new MentionPlayerSettings(plugin.getLogger(), configManager.getPluginConfig().mentions, LuckPermsHook.initialize(server, plugin.getLogger()));
 
         server.getPluginCommand("chatformatter").setExecutor(new ChatFormatterCommand(configManager, audienceProvider, miniMessage, mentionPlayerSettings));
 

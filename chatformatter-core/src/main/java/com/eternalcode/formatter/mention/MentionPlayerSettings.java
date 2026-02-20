@@ -1,75 +1,34 @@
 package com.eternalcode.formatter.mention;
 
-import net.luckperms.api.LuckPerms;
-import net.luckperms.api.LuckPermsProvider;
-import net.luckperms.api.model.user.User;
-import net.luckperms.api.node.types.MetaNode;
-import org.bukkit.Server;
-
+import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
 
 public class MentionPlayerSettings {
 
-    private static final String MENTION_SOUND_META_KEY = "chatformatter-mention-sound";
-
     private final Logger logger;
     private final MentionConfig config;
-    private final Server server;
-    private LuckPerms luckPerms;
+    private final Optional<LuckPermsHook> luckPermsHook;
 
-    public MentionPlayerSettings(Server server, Logger logger, MentionConfig config) {
-        this.server = server;
+    public MentionPlayerSettings(Logger logger, MentionConfig config, Optional<LuckPermsHook> luckPermsHook) {
         this.logger = logger;
         this.config = config;
-        this.initializeLuckPerms();
-    }
-
-    private void initializeLuckPerms() {
-        if (!this.server.getPluginManager().isPluginEnabled("LuckPerms")) {
-            this.logger.warning("LuckPerms is not installed! Mention sound toggle feature will not work.");
-            return;
-        }
-
-        try {
-            this.luckPerms = LuckPermsProvider.get();
-        } catch (IllegalStateException e) {
-            this.logger.warning("Failed to initialize LuckPerms API: " + e.getMessage());
-        }
+        this.luckPermsHook = luckPermsHook;
     }
 
     public boolean isMentionSoundEnabled(UUID uuid) {
-        if (this.luckPerms == null) {
-            return this.config.enabled;
-        }
-
-        User user = this.luckPerms.getUserManager().getUser(uuid);
-        if (user == null) {
-            return this.config.enabled;
-        }
-
-        String metaValue = user.getCachedData().getMetaData().getMetaValue(MENTION_SOUND_META_KEY);
-        if (metaValue == null) {
-            return this.config.enabled;
-        }
-
-        return Boolean.parseBoolean(metaValue);
+        return this.luckPermsHook
+            .flatMap(hook -> hook.getMentionSoundEnabled(uuid))
+            .orElse(this.config.enabled);
     }
 
     public void setMentionSoundEnabled(UUID uuid, boolean enabled) {
-        if (this.luckPerms == null) {
+        if (this.luckPermsHook.isEmpty()) {
             this.logger.warning("Cannot set mention sound preference - LuckPerms is not available!");
             return;
         }
 
-        this.luckPerms.getUserManager().modifyUser(uuid, user -> {
-            user.data().clear(node ->
-                node instanceof MetaNode metaNode && metaNode.getMetaKey().equals(MENTION_SOUND_META_KEY)
-            );
-
-            MetaNode metaNode = MetaNode.builder(MENTION_SOUND_META_KEY, Boolean.toString(enabled)).build();
-            user.data().add(metaNode);
-        });
+        this.luckPermsHook.get().setMentionSoundEnabled(uuid, enabled);
     }
 
     public boolean toggleMentionSound(UUID uuid) {
