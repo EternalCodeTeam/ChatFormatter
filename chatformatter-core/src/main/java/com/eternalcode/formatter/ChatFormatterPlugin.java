@@ -2,9 +2,14 @@ package com.eternalcode.formatter;
 
 import com.eternalcode.formatter.config.ConfigManager;
 import com.eternalcode.formatter.config.PluginConfig;
+import com.eternalcode.formatter.mention.LuckPermsHook;
+import com.eternalcode.formatter.mention.MentionListener;
+import com.eternalcode.formatter.mention.MentionPlayerSettings;
+import com.eternalcode.formatter.mention.MentionService;
+import com.eternalcode.formatter.mention.controller.MentionSuggestionsController;
 import com.eternalcode.formatter.placeholder.ConfiguredReplacer;
-import com.eternalcode.formatter.placeholderapi.PlaceholderAPIInitializer;
 import com.eternalcode.formatter.placeholder.PlaceholderRegistry;
+import com.eternalcode.formatter.placeholderapi.PlaceholderAPIInitializer;
 import com.eternalcode.formatter.rank.ChatRankProvider;
 import com.eternalcode.formatter.rank.VaultInitializer;
 import com.eternalcode.formatter.template.TemplateService;
@@ -26,6 +31,7 @@ public class ChatFormatterPlugin implements ChatFormatterApi {
     private final TemplateService templateService;
     private final ChatRankProvider rankProvider;
     private final ChatHandler chatHandler;
+    private final MentionService mentionService;
 
     public ChatFormatterPlugin(Plugin plugin) {
         Server server = plugin.getServer();
@@ -36,6 +42,7 @@ public class ChatFormatterPlugin implements ChatFormatterApi {
 
         PluginConfig pluginConfig = configManager.getPluginConfig();
 
+        // PlaceholderAPI support
         this.placeholderRegistry = new PlaceholderRegistry();
         PlaceholderAPIInitializer.initialize(server, this.placeholderRegistry);
         this.placeholderRegistry.addReplacer(new ConfiguredReplacer(pluginConfig));
@@ -50,8 +57,14 @@ public class ChatFormatterPlugin implements ChatFormatterApi {
         new Metrics(plugin, 15199);
 
         this.chatHandler = new ChatHandlerImpl(miniMessage, pluginConfig, this.rankProvider, this.placeholderRegistry, this.templateService);
+        MentionPlayerSettings mentionPlayerSettings = new MentionPlayerSettings(plugin.getLogger(), configManager.getPluginConfig().mentions, LuckPermsHook.initialize(server, plugin.getLogger()));
 
-        server.getPluginCommand("chatformatter").setExecutor(new ChatFormatterCommand(configManager, audienceProvider, miniMessage));
+        server.getPluginCommand("chatformatter").setExecutor(new ChatFormatterCommand(configManager, audienceProvider, miniMessage, mentionPlayerSettings));
+
+        this.mentionService = new MentionService(server, pluginConfig, mentionPlayerSettings);
+        server.getPluginManager().registerEvents(new MentionListener(mentionService), plugin);
+        server.getPluginManager().registerEvents(new MentionSuggestionsController(), plugin);
+
         server.getPluginManager().registerEvents(new UpdaterController(updaterService, pluginConfig, audienceProvider, miniMessage), plugin);
 
         ChatFormatterApiProvider.enable(this);
@@ -81,6 +94,11 @@ public class ChatFormatterPlugin implements ChatFormatterApi {
     @Override
     public ChatHandler getChatHandler() {
         return this.chatHandler;
+    }
+
+    @Override
+    public MentionService getMentionService() {
+        return this.mentionService;
     }
 
 }

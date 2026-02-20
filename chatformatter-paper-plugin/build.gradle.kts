@@ -2,7 +2,7 @@ import net.minecrell.pluginyml.bukkit.BukkitPluginDescription.Permission.Default
 
 plugins {
     id("eternalcode.java")
-    id("net.minecrell.plugin-yml.bukkit")
+    id("de.eldoria.plugin-yml.bukkit")
     id("com.gradleup.shadow")
 }
 
@@ -12,7 +12,7 @@ bukkit {
     prefix = "ChatFormatter"
     author = "EternalCodeTeam"
     name = "ChatFormatter"
-    softDepend = listOf("PlaceholderAPI", "Vault")
+    softDepend = listOf("PlaceholderAPI", "Vault", "LuckPerms")
     version = "${project.version}"
 
     commands {
