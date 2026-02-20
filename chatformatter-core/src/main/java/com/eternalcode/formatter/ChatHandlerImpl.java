@@ -28,6 +28,7 @@ import java.util.Map;
 class ChatHandlerImpl implements ChatHandler {
 
     private static final String PERMISSION_ALL = "chatformatter.*";
+    private static final String PERMISSION_UNSAFE = "chatformatter.unsafe";
     private static final Map<String, TagResolver> TAG_RESOLVERS_BY_PERMISSION = new ImmutableMap.Builder<String, TagResolver>()
         .put("chatformatter.decorations.*", StandardTags.decorations())
         .put("chatformatter.decorations.bold", StandardTags.decorations(TextDecoration.BOLD))
@@ -142,19 +143,36 @@ class ChatHandlerImpl implements ChatHandler {
     }
 
     private TagResolver providePermittedTags(Player player) {
-        List<TagResolver> tagResolvers = new ArrayList<>();
+        boolean isUnsafeAllowed = player.hasPermission(PERMISSION_UNSAFE);
 
-        if (player.hasPermission(PERMISSION_ALL)) {
+        if (isUnsafeAllowed && player.hasPermission(PERMISSION_ALL)) {
             return TagResolver.standard();
         }
 
+        List<TagResolver> tagResolvers = new ArrayList<>();
+
         for (Map.Entry<String, TagResolver> entry : TAG_RESOLVERS_BY_PERMISSION.entrySet()) {
-            if (player.hasPermission(entry.getKey())) {
+            String permission = entry.getKey();
+
+            if (this.isUnsafePermission(permission) && !isUnsafeAllowed) {
+                continue;
+            }
+
+            if (player.hasPermission(permission) || player.hasPermission(PERMISSION_ALL)) {
                 tagResolvers.add(entry.getValue());
             }
         }
 
         return TagResolver.resolver(tagResolvers);
+    }
+
+    private boolean isUnsafePermission(String permission) {
+        return permission.contains("click")
+                || permission.contains("hover")
+                || permission.contains("insertion")
+                || permission.contains("score")
+                || permission.contains("selector")
+                || permission.contains("nbt");
     }
 
 }
