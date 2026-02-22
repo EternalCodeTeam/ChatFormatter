@@ -37,10 +37,6 @@ public class MentionService {
     }
 
     private List<Player> detectMentions(String message) {
-        if (!this.config.mentions.enabled) {
-            return List.of();
-        }
-
         List<Player> mentionedPlayers = new ArrayList<>();
 
         Matcher matcher;
