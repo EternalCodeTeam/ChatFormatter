@@ -80,7 +80,7 @@
 | `chatformatter.nbt`                       | `<nbt>`                                                                                               |
 | `chatformatter.reload`                    | `/chatformatter reload`                                                                               |
 | `chatformatter.receiveupdates`            | receive update announcements for this plugin                                                          |
-| `chatformatter.mentiontoggle`             | toggle mention sound (`/chatforrmatter mentiontoggle`)                                                |
+| `chatformatter.mentiontoggle`             | toggle mention sound (`/chatformatter mentiontoggle`)                                                |
 
 ### config.yml
 
