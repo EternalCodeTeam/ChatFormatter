@@ -26,7 +26,7 @@
 - Template System
 - Custom Placeholders System
 - Per-permission miniMessages Tags (see permissions below)
-- Mentions System - mention players with @playername and they will hear a sound
+- Mentions System - mention players with @playername and they will hear a sound (toggleable through `/chatformatter mentiontoggle`)
 
 ## 🔗 Useful links:
 
@@ -80,6 +80,7 @@
 | `chatformatter.nbt`                       | `<nbt>`                                                                                               |
 | `chatformatter.reload`                    | `/chatformatter reload`                                                                               |
 | `chatformatter.receiveupdates`            | receive update announcements for this plugin                                                          |
+| `chatformatter.mentiontoggle`             | toggle mention sound (`/chatformatter mentiontoggle`)                                                |
 
 ### config.yml
 
