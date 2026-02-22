@@ -22,8 +22,8 @@ import java.util.concurrent.TimeUnit;
 class ChatFormatterCommand implements CommandExecutor, TabCompleter {
 
     private static final String RELOAD_MESSAGE = "<b><gradient:#29fbff:#38b3ff>ChatFormatter:</gradient></b> <green>Successfully reloaded configs in %sms!";
-    private static final String PLAYER_ONLY_MESSAGE = "<b><gradient:#29fbff:#38b3ff>ChatFormatter:</gradient></b> <red>Only players can use this command!";
-    private static final String TOGGLED_MESSAGE = "<b><gradient:#29fbff:#38b3ff>ChatFormatter:</gradient></b> <green>Toggled mention sound";
+    private static final String PLAYER_ONLY = "<b><gradient:#29fbff:#38b3ff>ChatFormatter:</gradient></b> <red>Only players can use this command!";
+    private static final String TOGGLED_MENTION = "<b><gradient:#29fbff:#38b3ff>ChatFormatter:</gradient></b> <green>Toggled mention sound";
     private static final String RELOAD_PERMISSION = "chatformatter.reload";
     private static final String MENTION_TOGGLE_PERMISSION = "chatformatter.mentiontoggle";
 
@@ -68,13 +68,13 @@ class ChatFormatterCommand implements CommandExecutor, TabCompleter {
         // /chatformatter mentiontoggle
         if (args[0].equalsIgnoreCase("mentiontoggle")) {
             if (!(sender instanceof Player player)) {
-                audience.sendMessage(this.miniMessage.deserialize(PLAYER_ONLY_MESSAGE));
+                audience.sendMessage(this.miniMessage.deserialize(PLAYER_ONLY));
                 return true;
             }
 
             if (sender.hasPermission(MENTION_TOGGLE_PERMISSION)) {
                 boolean enabled = this.playerSettings.toggleMentionSound(player.getUniqueId());
-                audience.sendMessage(this.miniMessage.deserialize(TOGGLED_MESSAGE + (enabled ? " <green>on." : " <red>off.")));
+                audience.sendMessage(this.miniMessage.deserialize(TOGGLED_MENTION + (enabled ? " <green>on." : " <red>off.")));
                 return true;
             }
         }
