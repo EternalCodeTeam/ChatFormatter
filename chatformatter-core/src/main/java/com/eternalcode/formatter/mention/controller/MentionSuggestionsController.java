@@ -28,6 +28,10 @@ public class MentionSuggestionsController implements Listener {
         List<String> completions = new ArrayList<>();
 
         for (Player player : allPlayers) {
+            if (player.isInvisible()) { // Vanish compatibility
+                continue;
+            }
+
             String s = "@" + player.getName();
             completions.add(s);
         }
