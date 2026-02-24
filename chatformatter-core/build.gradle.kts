@@ -24,7 +24,7 @@ dependencies {
     testImplementation("net.dzikoysk:cdn:$cdnVersion")
 
     // bStats
-    implementation("org.bstats:bstats-bukkit:3.1.0")
+    implementation("org.bstats:bstats-bukkit:3.2.1")
 
     // PlaceholderAPI & Vault
     compileOnly("me.clip:placeholderapi:2.12.2")
