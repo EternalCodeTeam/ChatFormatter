@@ -40,3 +40,4 @@ jobs:
         with:
           name: 'Successfully build ChatFormatter'
           path: build/libs/ChatFormatter v*.jar
+          archive: false
