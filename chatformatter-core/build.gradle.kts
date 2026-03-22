@@ -24,10 +24,10 @@ dependencies {
     testImplementation("net.dzikoysk:cdn:$cdnVersion")
 
     // bStats
-    implementation("org.bstats:bstats-bukkit:3.1.0")
+    implementation("org.bstats:bstats-bukkit:3.2.1")
 
     // PlaceholderAPI & Vault
-    compileOnly("me.clip:placeholderapi:2.12.1")
+    compileOnly("me.clip:placeholderapi:2.12.2")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
 
     // LuckPerms API
@@ -37,15 +37,15 @@ dependencies {
     implementation("com.eternalcode:gitcheck:1.0.0")
 
     // JUnit 5
-    testImplementation(platform("org.junit:junit-bom:6.0.2"))
+    testImplementation(platform("org.junit:junit-bom:6.0.3"))
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testImplementation("org.junit.jupiter:junit-jupiter-params")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 
-    testImplementation("org.mockito:mockito-core:5.21.0")
-    testImplementation("org.mockito:mockito-junit-jupiter:5.21.0")
-    testImplementation("me.clip:placeholderapi:2.12.1")
+    testImplementation("org.mockito:mockito-core:5.22.0")
+    testImplementation("org.mockito:mockito-junit-jupiter:5.22.0")
+    testImplementation("me.clip:placeholderapi:2.12.2")
     testImplementation("org.assertj:assertj-core:3.27.7")
 }
 
