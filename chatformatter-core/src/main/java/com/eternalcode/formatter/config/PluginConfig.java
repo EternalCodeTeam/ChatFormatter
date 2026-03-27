@@ -51,7 +51,7 @@ public class PluginConfig implements ChatSettings, TemplateRepository {
     })
     public String defaultFormat = "{displayname} » {message}";
     @Description({ " ", "# Here you can set different formats for each rank.",
-            "# Remember! Rank name must be exactly the same as in you permission plugin configuration.",
+            "# Note: Rank name matching is case-insensitive (Elite, elite, ELITE will all match).",
             "# If player have more than one rank remember to correctly setup rank weight configuration" })
     public Map<String, String> format = new ImmutableMap.Builder<String, String>()
             .put("default", "{member} &7$hoverName({displayname}) &8» <gradient:#d4d4d4:white>{message} ")
@@ -78,11 +78,10 @@ public class PluginConfig implements ChatSettings, TemplateRepository {
             .put("{privateMessage}", "<gradient:#36ff39:#75ff75><i>Click to send private message</i></gradient>")
             .build();
 
-    @Description({ " ", "# This section is made for experienced users" , "# It is used to shorten the text even more and keep the clean file!" })
+    @Description({ " ", "# This section is made for experienced users", "# It is used to shorten the text even more and keep the clean file!" })
     public List<Template> templates = new ImmutableList.Builder<Template>()
             .add(Template.of("hoverName", List.of("name"), "<hover:show_text:'<dark_gray>Name: <white>$name<br><br>{rankDescription}<br>{joinDate}<br>{health}<br>{lvl}<br><br>{privateMessage}'><click:suggest_command:'/msg {displayname} '>{displayname}</click></hover>"))
             .build();
-
 
     @Override
     public boolean isReceiveUpdates() {
@@ -91,7 +90,19 @@ public class PluginConfig implements ChatSettings, TemplateRepository {
 
     @Override
     public String getRawFormat(String rank) {
-        return this.format.getOrDefault(rank, this.defaultFormat);
+        if (rank == null) {
+            return this.defaultFormat;
+        }
+
+        String normalizedRank = rank.toLowerCase();
+
+        for (Map.Entry<String, String> entry : this.format.entrySet()) {
+            if (entry.getKey().toLowerCase().equals(normalizedRank)) {
+                return entry.getValue();
+            }
+        }
+
+        return this.defaultFormat;
     }
 
     @Override
