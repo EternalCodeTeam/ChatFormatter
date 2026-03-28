@@ -32,8 +32,8 @@ public class MentionSuggestionsController implements Listener {
                 continue;
             }
 
-            String s = "@" + player.getName();
-            completions.add(s);
+            String mention = "@" + player.getName();
+            completions.add(mention);
         }
 
         for (Player player : allPlayers) {
