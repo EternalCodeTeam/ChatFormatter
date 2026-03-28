@@ -1,6 +1,7 @@
 package com.eternalcode.formatter.mention;
 
 import com.eternalcode.formatter.config.PluginConfig;
+import com.eternalcode.formatter.mention.service.MentionService;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

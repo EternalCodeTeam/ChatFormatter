@@ -1,6 +1,6 @@
 package com.eternalcode.formatter.mention.controller;
 
-import org.bukkit.Bukkit;
+import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,6 +13,12 @@ import java.util.List;
 
 public class MentionSuggestionsController implements Listener {
 
+    private final Server server;
+
+    public MentionSuggestionsController(Server server) {
+        this.server = server;
+    }
+
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         this.updateChatSuggestions();
@@ -24,7 +30,7 @@ public class MentionSuggestionsController implements Listener {
     }
 
     private void updateChatSuggestions() {
-        Collection<? extends Player> allPlayers = Bukkit.getOnlinePlayers();
+        Collection<? extends Player> allPlayers = this.server.getOnlinePlayers();
         List<String> completions = new ArrayList<>();
 
         for (Player player : allPlayers) {

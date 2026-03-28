@@ -1,34 +1,25 @@
 package com.eternalcode.formatter.mention;
 
-import java.util.Optional;
+import com.eternalcode.formatter.mention.service.MentionMetadataService;
+
 import java.util.UUID;
-import java.util.logging.Logger;
 
 public class MentionPlayerSettings {
 
-    private final Logger logger;
     private final MentionConfig config;
-    private final Optional<LuckPermsHook> luckPermsHook;
+    private final MentionMetadataService metadataService;
 
-    public MentionPlayerSettings(Logger logger, MentionConfig config, Optional<LuckPermsHook> luckPermsHook) {
-        this.logger = logger;
+    public MentionPlayerSettings(MentionConfig config, MentionMetadataService metadataService) {
         this.config = config;
-        this.luckPermsHook = luckPermsHook;
+        this.metadataService = metadataService;
     }
 
     public boolean isMentionSoundEnabled(UUID uuid) {
-        return this.luckPermsHook
-            .flatMap(hook -> hook.getMentionSoundEnabled(uuid))
-            .orElse(this.config.enabled);
+        return this.metadataService.getMentionSoundEnabled(uuid).orElse(this.config.enabled);
     }
 
     public void setMentionSoundEnabled(UUID uuid, boolean enabled) {
-        if (this.luckPermsHook.isEmpty()) {
-            this.logger.warning("Cannot set mention sound preference - LuckPerms is not available!");
-            return;
-        }
-
-        this.luckPermsHook.get().setMentionSoundEnabled(uuid, enabled);
+        this.metadataService.setMentionSoundEnabled(uuid, enabled);
     }
 
     public boolean toggleMentionSound(UUID uuid) {

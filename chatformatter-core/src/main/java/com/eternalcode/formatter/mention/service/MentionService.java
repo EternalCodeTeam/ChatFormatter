@@ -1,6 +1,7 @@
-package com.eternalcode.formatter.mention;
+package com.eternalcode.formatter.mention.service;
 
 import com.eternalcode.formatter.config.PluginConfig;
+import com.eternalcode.formatter.mention.MentionPlayerSettings;
 import org.bukkit.Server;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -25,7 +26,7 @@ public class MentionService {
         this.playerSettings = playerSettings;
     }
 
-    void mentionPlayers(String message) {
+    public void mentionPlayers(String message) {
         List<Player> mentionedPlayers = this.detectMentions(message);
         Sound sound = loadSound();
 
