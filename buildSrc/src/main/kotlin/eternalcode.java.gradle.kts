@@ -13,7 +13,7 @@ repositories {
     maven { url = uri("https://repo.extendedclip.com/content/repositories/placeholderapi/") }
     maven { url = uri("https://jitpack.io") }
     maven { url = uri("https://repo.eternalcode.pl/releases") }
-    maven(url = "https://s01.oss.sonatype.org/content/repositories/snapshots/")
+    maven { url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/") }
 }
 
 java {
