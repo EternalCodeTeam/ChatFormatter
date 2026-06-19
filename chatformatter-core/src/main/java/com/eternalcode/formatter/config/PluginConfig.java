@@ -23,6 +23,10 @@ public class PluginConfig implements ChatSettings, TemplateRepository {
     @Description({ " ", "# Do you want to receive updates about new versions of ChatFormatter?" })
     public boolean receiveUpdates = true;
 
+    @Description({ " ", "# Do you want to enable MineDown support? (Markdown-like formatting for Minecraft)",
+            "# See https://github.com/Phoenix616/MineDown for more information." })
+    public boolean mineDownSupport = false;
+
 
     @Description({ " ", "# Chat format for ranks (Vault) Support mini-messages and legacy colors" })
     @Description({ " ", "# We're recommending to use webui for mini-messages: https://webui.adventure.kyori.net/" })
@@ -87,6 +91,11 @@ public class PluginConfig implements ChatSettings, TemplateRepository {
     @Override
     public boolean isReceiveUpdates() {
         return this.receiveUpdates;
+    }
+
+    @Override
+    public boolean isMineDownEnabled() {
+        return this.mineDownSupport;
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.eternalcode.formatter;
 
 import com.eternalcode.formatter.adventure.AdventureUrlPostProcessor;
+import de.themoep.minedown.adventure.MineDown;
+import de.themoep.minedown.adventure.MineDownParser;
 import java.util.Optional;
 import net.kyori.adventure.text.serializer.json.JSONOptions;
 import static net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacySection;
@@ -135,9 +137,30 @@ class ChatHandlerImpl implements ChatHandler {
     }
 
     private TagResolver.Single messagePlaceholder(Player sender, String rawMessage) {
-        TagResolver permittedTags = this.providePermittedTags(sender);
-        rawMessage = Legacy.legacyToAdventure(rawMessage, permission -> sender.hasPermission(permission));
-        Component componentMessage = EMPTY_MESSAGE_DESERIALIZER.deserialize(rawMessage, permittedTags);
+        Component componentMessage;
+
+        if (this.settings.isMineDownEnabled()) {
+            MineDown mineDown = new MineDown(rawMessage);
+
+            if (!sender.hasPermission(PERMISSION_ALL)) {
+                if (!sender.hasPermission("chatformatter.decorations.*")) {
+                    mineDown.disable(MineDownParser.Option.SIMPLE_FORMATTING);
+                }
+                if (!(sender.hasPermission("chatformatter.hover") && sender.hasPermission("chatformatter.click"))) {
+                    mineDown.disable(MineDownParser.Option.ADVANCED_FORMATTING);
+                }
+                if (!sender.hasPermission("chatformatter.color.*")) {
+                    mineDown.disable(MineDownParser.Option.LEGACY_COLORS);
+                }
+            }
+
+            componentMessage = mineDown.toComponent();
+        } else {
+            TagResolver permittedTags = this.providePermittedTags(sender);
+            rawMessage = Legacy.legacyToAdventure(rawMessage, permission -> sender.hasPermission(permission));
+            componentMessage = EMPTY_MESSAGE_DESERIALIZER.deserialize(rawMessage, permittedTags);
+        }
+
         return Placeholder.component("message", componentMessage);
     }
 
