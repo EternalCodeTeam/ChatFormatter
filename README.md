@@ -77,6 +77,7 @@
 | `chatformatter.translatable`              | `<lang>`                                                                                              |
 | `chatformatter.keybind`                   | `<key>`                                                                                               |
 | `chatformatter.nbt`                       | `<nbt>`                                                                                               |
+| `chatformatter.unsafe`                    | **Required** to use unsafe tags (`<click>`, `<hover>`, etc.) in addition to the specific tag permission. |
 | `chatformatter.reload`                    | `/chatformatter reload`                                                                               |
 | `chatformatter.receiveupdates`            | receive update announcements for this plugin                                                          |
 
