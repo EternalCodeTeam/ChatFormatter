@@ -11,7 +11,7 @@ dependencies {
 
     // Kyori Adventure & MiniMessage
     val adventureVersion = "4.4.1"
-    val miniMessageVersion = "4.26.1"
+    val miniMessageVersion = "5.2.0"
     implementation("net.kyori:adventure-api:$miniMessageVersion")
     implementation("net.kyori:adventure-text-minimessage:$miniMessageVersion")
     implementation("net.kyori:adventure-platform-bukkit:$adventureVersion")
