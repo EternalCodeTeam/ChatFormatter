@@ -1,5 +1,6 @@
 package com.eternalcode.formatter.config;
 
+import com.eternalcode.formatter.mention.MentionConfig;
 import com.eternalcode.formatter.template.Template;
 import com.eternalcode.formatter.template.TemplateRepository;
 import com.google.common.collect.ImmutableList;
@@ -87,6 +88,9 @@ public class PluginConfig implements ChatSettings, TemplateRepository {
             .add(Template.of("hoverName", List.of("name"), "<hover:show_text:'<dark_gray>Name: <white>$name<br><br>{rankDescription}<br>{joinDate}<br>{health}<br>{lvl}<br><br>{privateMessage}'><click:suggest_command:'/msg {displayname} '>{displayname}</click></hover>"))
             .build();
 
+    @Description({ " ", "# Mention system settings" })
+    public MentionConfig mentions = new MentionConfig();
+
 
     @Override
     public boolean isReceiveUpdates() {
@@ -107,4 +111,5 @@ public class PluginConfig implements ChatSettings, TemplateRepository {
     public List<Template> getTemplates() {
         return this.templates;
     }
+
 }

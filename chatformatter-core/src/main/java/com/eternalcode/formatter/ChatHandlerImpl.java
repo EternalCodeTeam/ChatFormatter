@@ -3,15 +3,11 @@ package com.eternalcode.formatter;
 import com.eternalcode.formatter.adventure.AdventureUrlPostProcessor;
 import de.themoep.minedown.adventure.MineDown;
 import de.themoep.minedown.adventure.MineDownParser;
-import java.util.Optional;
-import net.kyori.adventure.text.serializer.json.JSONOptions;
-import static net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacySection;
-
 import com.eternalcode.formatter.adventure.TextColorTagResolver;
 import com.eternalcode.formatter.legacy.Legacy;
+import com.eternalcode.formatter.placeholder.PlaceholderRegistry;
 import com.eternalcode.formatter.rank.ChatRankProvider;
 import com.eternalcode.formatter.template.TemplateService;
-import com.eternalcode.formatter.placeholder.PlaceholderRegistry;
 import com.google.common.collect.ImmutableMap;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -21,11 +17,14 @@ import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.text.minimessage.tag.standard.StandardTags;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
+import net.kyori.adventure.text.serializer.json.JSONOptions;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 class ChatHandlerImpl implements ChatHandler {
 
@@ -77,7 +76,7 @@ class ChatHandlerImpl implements ChatHandler {
         .build();
 
     private static final MiniMessage EMPTY_MESSAGE_DESERIALIZER = MiniMessage.builder()
-         .postProcessor(new AdventureUrlPostProcessor())
+        .postProcessor(new AdventureUrlPostProcessor())
         .tags(TagResolver.empty())
         .build();
 
@@ -119,7 +118,7 @@ class ChatHandlerImpl implements ChatHandler {
         Player sender = chatMessage.sender();
 
         Component message = GSON.deserialize(chatMessage.jsonMessage());
-        String serialize = legacySection().serialize(message);
+        String serialize = LegacyComponentSerializer.legacySection().serialize(message);
 
         TagResolver.Single displayNamePlaceholder = displayNamePlaceholder(sender);
         TagResolver.Single namePlaceholder = namePlaceholder(sender);
