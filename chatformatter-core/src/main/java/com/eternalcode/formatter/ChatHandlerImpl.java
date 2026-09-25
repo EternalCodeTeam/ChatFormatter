@@ -1,10 +1,9 @@
 package com.eternalcode.formatter;
 
 import com.eternalcode.formatter.adventure.AdventureUrlPostProcessor;
-import de.themoep.minedown.adventure.MineDown;
-import de.themoep.minedown.adventure.MineDownParser;
 import com.eternalcode.formatter.adventure.TextColorTagResolver;
 import com.eternalcode.formatter.legacy.Legacy;
+import com.eternalcode.formatter.minedown.MineDown;
 import com.eternalcode.formatter.placeholder.PlaceholderRegistry;
 import com.eternalcode.formatter.rank.ChatRankProvider;
 import com.eternalcode.formatter.template.TemplateService;
@@ -136,30 +135,14 @@ class ChatHandlerImpl implements ChatHandler {
     }
 
     private TagResolver.Single messagePlaceholder(Player sender, String rawMessage) {
-        Component componentMessage;
+        TagResolver permittedTags = this.providePermittedTags(sender);
 
         if (this.settings.isMineDownEnabled()) {
-            MineDown mineDown = new MineDown(rawMessage);
-
-            if (!sender.hasPermission(PERMISSION_ALL)) {
-                if (!sender.hasPermission("chatformatter.decorations.*")) {
-                    mineDown.disable(MineDownParser.Option.SIMPLE_FORMATTING);
-                }
-                if (!(sender.hasPermission("chatformatter.hover") && sender.hasPermission("chatformatter.click"))) {
-                    mineDown.disable(MineDownParser.Option.ADVANCED_FORMATTING);
-                }
-                if (!sender.hasPermission("chatformatter.color.*")) {
-                    mineDown.disable(MineDownParser.Option.LEGACY_COLORS);
-                }
-            }
-
-            componentMessage = mineDown.toComponent();
-        } else {
-            TagResolver permittedTags = this.providePermittedTags(sender);
-            rawMessage = Legacy.legacyToAdventure(rawMessage, permission -> sender.hasPermission(permission));
-            componentMessage = EMPTY_MESSAGE_DESERIALIZER.deserialize(rawMessage, permittedTags);
+            rawMessage = MineDown.mineDownToAdventure(rawMessage, permittedTags);
         }
 
+        rawMessage = Legacy.legacyToAdventure(rawMessage, permission -> sender.hasPermission(permission));
+        Component componentMessage = EMPTY_MESSAGE_DESERIALIZER.deserialize(rawMessage, permittedTags);
         return Placeholder.component("message", componentMessage);
     }
 

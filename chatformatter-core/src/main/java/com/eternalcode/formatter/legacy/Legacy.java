@@ -1,10 +1,12 @@
 package com.eternalcode.formatter.legacy;
 
+import com.eternalcode.formatter.adventure.Urls;
 import com.google.common.collect.ImmutableMap;
 import java.util.Set;
 import java.util.function.Predicate;
 
 import java.util.Map;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.jetbrains.annotations.VisibleForTesting;
 
@@ -13,6 +15,9 @@ public final class Legacy {
     private static final Pattern COLOR_LEGACY_PATTERN = Pattern.compile("(?i)&([0-9A-FK-ORX#])");
     private static final Pattern HEX_LEGACY_PATTERN = Pattern.compile("(?i)&#([0-9A-F]{6})");
     private static final Pattern HEX_LEGACY_VANILLA_PATTERN = Pattern.compile("(?i)&x(&[0-9A-F]){6}");
+
+    // Private use character that temporarily replaces the '&' of a hex color that is not allowed
+    private static final char HIDDEN_AMPERSAND = '\uE002';
 
     private static final Set<Character> COLORS = Set.of(
         '0', '1', '2', '3', '4', '5', '6', '7',
@@ -86,13 +91,27 @@ public final class Legacy {
     }
 
     public static String legacyToAdventure(String input, Predicate<String> hasPermission) {
-        String result = clearSection(input);
-        result = HEX_LEGACY_VANILLA_PATTERN.matcher(result).replaceAll(matchResult -> {
+        return Urls.preserving(clearSection(input), text -> translate(text, hasPermission));
+    }
+
+    private static String translate(String input, Predicate<String> hasPermission) {
+        boolean hasHexPermission = hasPermissionForHex(hasPermission);
+
+        String result = HEX_LEGACY_VANILLA_PATTERN.matcher(input).replaceAll(matchResult -> {
+            if (!hasHexPermission) {
+                // Hide the '&' so the single color codes of this hex color are not translated below
+                return Matcher.quoteReplacement(matchResult.group().replace('&', HIDDEN_AMPERSAND));
+            }
+
             String hexColor = matchResult.group().replace("&x", "").replace("&", "");
             return "<#" + hexColor + ">";
         });
 
         result = HEX_LEGACY_PATTERN.matcher(result).replaceAll(matchResult -> {
+            if (!hasHexPermission) {
+                return Matcher.quoteReplacement(matchResult.group());
+            }
+
             String hex = matchResult.group(1);
             return "<#" + hex + ">";
         });
@@ -106,7 +125,12 @@ public final class Legacy {
             return "&" + color;
         });
 
-        return result;
+        return result.replace(HIDDEN_AMPERSAND, '&');
+    }
+
+    // Hex colors are allowed the same way as <#rrggbb> in MiniMessage, which requires chatformatter.color.*
+    private static boolean hasPermissionForHex(Predicate<String> hasPermission) {
+        return hasPermission.test("chatformatter.*") || hasPermission.test("chatformatter.color.*");
     }
 
     private static boolean hasPermissionForLegacyCode(Predicate<String> hasPermission, char code) {

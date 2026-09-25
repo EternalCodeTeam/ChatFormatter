@@ -36,9 +36,6 @@ dependencies {
     // GitCheck
     implementation("com.eternalcode:gitcheck:1.0.0")
 
-    // MineDown
-    implementation("de.themoep:minedown-adventure:1.7.6-SNAPSHOT")
-
     // JUnit 5
     testImplementation(platform("org.junit:junit-bom:6.1.2"))
     testImplementation("org.junit.jupiter:junit-jupiter-api")
@@ -78,7 +75,6 @@ tasks {
             "net.kyori",
             "org.bstats",
             "org.json",
-            "de.themoep.minedown",
         ).forEach { pack ->
             relocate(pack, "$prefix.$pack")
         }
