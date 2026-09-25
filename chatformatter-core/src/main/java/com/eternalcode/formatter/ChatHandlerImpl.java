@@ -3,6 +3,7 @@ package com.eternalcode.formatter;
 import com.eternalcode.formatter.adventure.AdventureUrlPostProcessor;
 import com.eternalcode.formatter.adventure.TextColorTagResolver;
 import com.eternalcode.formatter.legacy.Legacy;
+import com.eternalcode.formatter.minedown.MineDown;
 import com.eternalcode.formatter.placeholder.PlaceholderRegistry;
 import com.eternalcode.formatter.rank.ChatRankProvider;
 import com.eternalcode.formatter.template.TemplateService;
@@ -135,6 +136,11 @@ class ChatHandlerImpl implements ChatHandler {
 
     private TagResolver.Single messagePlaceholder(Player sender, String rawMessage) {
         TagResolver permittedTags = this.providePermittedTags(sender);
+
+        if (this.settings.isMineDownEnabled()) {
+            rawMessage = MineDown.mineDownToAdventure(rawMessage, permittedTags);
+        }
+
         rawMessage = Legacy.legacyToAdventure(rawMessage, permission -> sender.hasPermission(permission));
         Component componentMessage = EMPTY_MESSAGE_DESERIALIZER.deserialize(rawMessage, permittedTags);
         return Placeholder.component("message", componentMessage);

@@ -24,6 +24,16 @@ public class PluginConfig implements ChatSettings, TemplateRepository {
     @Description({ " ", "# Do you want to receive updates about new versions of ChatFormatter?" })
     public boolean receiveUpdates = true;
 
+    @Description({ " ", "# Do you want to enable MineDown syntax in player messages? (Markdown-like formatting for Minecraft)",
+        "# It works on top of MiniMessage and legacy colors, so all of them can be mixed in one message.",
+        "# Supported: **bold**, ##italic##, __underlined__, ~~strikethrough~~, ??obfuscated??, &red&, &#ff0000&,",
+        "# &#ff0000-#0000ff& (gradient), &rainbow&, [text](https://url), [text](/command),",
+        "# [text](red bold hover=Hover text), [text](suggest_command=/msg Steve), [text](copy_to_clipboard=...),",
+        "# [text](insert=...), [text](font=minecraft:uniform)",
+        "# Every MineDown element requires the same permission as its MiniMessage equivalent (e.g. **bold** -> chatformatter.decorations.bold).",
+        "# See https://github.com/Phoenix616/MineDown for more information." })
+    public boolean mineDownSupport = false;
+
 
     @Description({ " ", "# Chat format for ranks (Vault) Support mini-messages and legacy colors" })
     @Description({ " ", "# We're recommending to use webui for mini-messages: https://webui.adventure.kyori.net/" })
@@ -91,6 +101,11 @@ public class PluginConfig implements ChatSettings, TemplateRepository {
     @Override
     public boolean isReceiveUpdates() {
         return this.receiveUpdates;
+    }
+
+    @Override
+    public boolean isMineDownEnabled() {
+        return this.mineDownSupport;
     }
 
     @Override
