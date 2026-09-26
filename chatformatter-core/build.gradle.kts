@@ -31,7 +31,7 @@ dependencies {
     compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
 
     // LuckPerms API
-    compileOnly("net.luckperms:api:5.4")
+    compileOnly("net.luckperms:api:5.5")
 
     // GitCheck
     implementation("com.eternalcode:gitcheck:1.0.0")
