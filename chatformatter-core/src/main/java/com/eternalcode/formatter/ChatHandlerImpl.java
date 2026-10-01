@@ -80,7 +80,6 @@ class ChatHandlerImpl implements ChatHandler {
 
     private final MiniMessage miniMessage;
 
-
     private final ChatSettings settings;
     private final ChatRankProvider rankProvider;
     private final PlaceholderRegistry placeholderRegistry;
