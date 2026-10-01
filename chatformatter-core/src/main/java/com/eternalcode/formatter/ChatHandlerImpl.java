@@ -27,11 +27,6 @@ import java.util.Optional;
 class ChatHandlerImpl implements ChatHandler {
 
     private static final String PERMISSION_ALL = "chatformatter.*";
-
-    private static final String DISPLAY_NAME_PLACEHOLDER = "displayname";
-    private static final String NAME_PLACEHOLDER = "name";
-    private static final String MESSAGE_PLACEHOLDER = "message";
-
     private static final Map<String, TagResolver> TAG_RESOLVERS_BY_PERMISSION = new ImmutableMap.Builder<String, TagResolver>()
             .put("chatformatter.decorations.*", StandardTags.decorations())
             .put("chatformatter.decorations.bold", StandardTags.decorations(TextDecoration.BOLD))
@@ -85,6 +80,8 @@ class ChatHandlerImpl implements ChatHandler {
 
     private final MiniMessage miniMessage;
 
+    private final MiniMessage miniMessage;
+
     private final ChatSettings settings;
     private final ChatRankProvider rankProvider;
     private final PlaceholderRegistry placeholderRegistry;
@@ -129,18 +126,18 @@ class ChatHandlerImpl implements ChatHandler {
     }
 
     private TagResolver.Single displayNamePlaceholder(Player sender) {
-        return Placeholder.parsed(DISPLAY_NAME_PLACEHOLDER, Legacy.legacyToAdventure(sender.getDisplayName()));
+        return Placeholder.parsed("displayname", Legacy.legacyToAdventure(sender.getDisplayName()));
     }
 
     private TagResolver.Single namePlaceholder(Player sender) {
-        return Placeholder.parsed(NAME_PLACEHOLDER, sender.getName());
+        return Placeholder.parsed("name", sender.getName());
     }
 
     private TagResolver.Single messagePlaceholder(Player sender, Component message) {
         TagResolver permittedTags = this.providePermittedTags(sender);
         Component parsedMessage = this.parsePlayerText(message, sender, permittedTags);
 
-        return Placeholder.component(MESSAGE_PLACEHOLDER, parsedMessage);
+        return Placeholder.component("message", parsedMessage);
     }
 
     /**
@@ -170,9 +167,9 @@ class ChatHandlerImpl implements ChatHandler {
         if (player.hasPermission(PERMISSION_ALL)) {
             return TagResolver.standard();
         }
-
+        
         List<TagResolver> tagResolvers = new ArrayList<>();
-
+        
         for (Map.Entry<String, TagResolver> entry : TAG_RESOLVERS_BY_PERMISSION.entrySet()) {
             if (player.hasPermission(entry.getKey())) {
                 tagResolvers.add(entry.getValue());
@@ -181,5 +178,4 @@ class ChatHandlerImpl implements ChatHandler {
 
         return TagResolver.resolver(tagResolvers);
     }
-
 }
