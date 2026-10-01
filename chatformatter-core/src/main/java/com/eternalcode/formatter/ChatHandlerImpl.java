@@ -8,6 +8,7 @@ import com.eternalcode.formatter.rank.ChatRankProvider;
 import com.eternalcode.formatter.template.TemplateService;
 import com.google.common.collect.ImmutableMap;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -16,7 +17,6 @@ import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.text.minimessage.tag.standard.StandardTags;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import net.kyori.adventure.text.serializer.json.JSONOptions;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -114,15 +114,13 @@ class ChatHandlerImpl implements ChatHandler {
 
     private TagResolver createTags(ChatMessage chatMessage) {
         Player sender = chatMessage.sender();
-
         Component message = GSON.deserialize(chatMessage.jsonMessage());
-        String serialize = LegacyComponentSerializer.legacySection().serialize(message);
 
-        TagResolver.Single displayNamePlaceholder = displayNamePlaceholder(sender);
-        TagResolver.Single namePlaceholder = namePlaceholder(sender);
-        TagResolver.Single messagePlaceholder = messagePlaceholder(sender, serialize);
-
-        return TagResolver.resolver(displayNamePlaceholder, namePlaceholder, messagePlaceholder);
+        return TagResolver.resolver(
+            this.displayNamePlaceholder(sender),
+            this.namePlaceholder(sender),
+            this.messagePlaceholder(sender, message)
+        );
     }
 
     private TagResolver.Single displayNamePlaceholder(Player sender) {
@@ -133,20 +131,44 @@ class ChatHandlerImpl implements ChatHandler {
         return Placeholder.parsed("name", sender.getName());
     }
 
-    private TagResolver.Single messagePlaceholder(Player sender, String rawMessage) {
+    private TagResolver.Single messagePlaceholder(Player sender, Component message) {
         TagResolver permittedTags = this.providePermittedTags(sender);
-        rawMessage = Legacy.legacyToAdventure(rawMessage, permission -> sender.hasPermission(permission));
-        Component componentMessage = EMPTY_MESSAGE_DESERIALIZER.deserialize(rawMessage, permittedTags);
-        return Placeholder.component("message", componentMessage);
+        Component parsedMessage = this.parsePlayerText(message, sender, permittedTags);
+
+        return Placeholder.component("message", parsedMessage);
+    }
+
+    /**
+     * Parses only raw text content with permission-filtered tags.
+     * Styles already present on components (e.g. from AsyncChatDecorateEvent) are preserved.
+     */
+    private Component parsePlayerText(Component component, Player sender, TagResolver permittedTags) {
+        List<Component> parsedChildren = component.children()
+            .stream()
+            .map(child -> this.parsePlayerText(child, sender, permittedTags))
+            .toList();
+
+        if (!(component instanceof TextComponent textComponent)) {
+            return component.children(parsedChildren);
+        }
+
+        String rawContent = Legacy.legacyToAdventure(textComponent.content(), sender::hasPermission);
+        Component parsedContent = EMPTY_MESSAGE_DESERIALIZER.deserialize(rawContent, permittedTags);
+
+        return Component.text()
+            .style(textComponent.style())
+            .append(parsedContent)
+            .append(parsedChildren)
+            .build();
     }
 
     private TagResolver providePermittedTags(Player player) {
-        List<TagResolver> tagResolvers = new ArrayList<>();
-
         if (player.hasPermission(PERMISSION_ALL)) {
             return TagResolver.standard();
         }
-
+        
+        List<TagResolver> tagResolvers = new ArrayList<>();
+        
         for (Map.Entry<String, TagResolver> entry : TAG_RESOLVERS_BY_PERMISSION.entrySet()) {
             if (player.hasPermission(entry.getKey())) {
                 tagResolvers.add(entry.getValue());
@@ -155,5 +177,4 @@ class ChatHandlerImpl implements ChatHandler {
 
         return TagResolver.resolver(tagResolvers);
     }
-
 }
