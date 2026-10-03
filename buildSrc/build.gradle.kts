@@ -8,7 +8,7 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.4.10")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.4.20")
     implementation("com.gradleup.shadow:com.gradleup.shadow.gradle.plugin:9.5.1")
     implementation("de.eldoria.plugin-yml.bukkit:de.eldoria.plugin-yml.bukkit.gradle.plugin:0.8.0")
 
