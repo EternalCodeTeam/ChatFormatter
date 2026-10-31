@@ -100,7 +100,7 @@ bukkit {
 
 dependencies {
     compileOnly(project(":chatformatter-core"))
-    compileOnly("io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:26.3.build.235-stable")
 }
 
 tasks.shadowJar {
